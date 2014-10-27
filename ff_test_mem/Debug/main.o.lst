@@ -1,0 +1,577 @@
+   1              		.cpu arm926ej-s
+   2              		.eabi_attribute 27, 3
+   3              		.fpu neon
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 2
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"main.cpp"
+  23              	.Ltext0:
+  24              		.file 1 "../main.cpp"
+ 14633              		.align	2
+ 14634              		.code	16
+ 14635              		.thumb_func
+ 14637              	_Z41__static_initialization_and_destruction_0ii:
+ 14638              		.fnstart
+ 14639              	.LFB1011:
+   1:../main.cpp   **** #include "include/main.h"
+   2:../main.cpp   **** #include "include/ff_writer_engine.h"
+   3:../main.cpp   **** #include "include/vars.h"
+   4:../main.cpp   **** 
+   5:../main.cpp   **** int main()
+   6:../main.cpp   **** {
+   7:../main.cpp   **** 	FfWriterEngine *Writer = new FfWriterEngine();
+   8:../main.cpp   **** 	Log = new Logging("ff_test_mem.log", LOG_LEVEL);
+   9:../main.cpp   **** 	MainLoop = g_main_loop_new(NULL, FALSE);
+  10:../main.cpp   **** 	Writer->FirstStartRec();
+  11:../main.cpp   **** 	g_timeout_add_seconds_full(1000, 1, TimeoutCallback, (gpointer) Writer, NULL);
+  12:../main.cpp   **** 	Memory = Writer->GetMemoryConsumption();
+  13:../main.cpp   **** 	g_main_loop_run(MainLoop);
+  14:../main.cpp   **** 
+  15:../main.cpp   **** 	delete Log;
+  16:../main.cpp   **** 	delete Writer;
+  17:../main.cpp   **** }
+  18:../main.cpp   **** 
+  19:../main.cpp   **** gboolean TimeoutCallback(gpointer data)
+  20:../main.cpp   **** {
+  21:../main.cpp   **** 	FfWriterEngine *PWriter = (FfWriterEngine *) data;
+  22:../main.cpp   **** 
+  23:../main.cpp   **** 	PWriter->TimerCounter++;
+  24:../main.cpp   **** 	PWriter->AppendMemoryData();
+  25:../main.cpp   **** 
+  26:../main.cpp   **** 	if (PWriter->TimerCounter >= REC_TIMEOUT)
+  27:../main.cpp   **** 	{
+  28:../main.cpp   **** 		uint64_t mem = PWriter->GetMemoryConsumption();
+  29:../main.cpp   **** 		sprintf(str, "DEBUG: Timeout callback. Memory: %lld. Delta: %lld\n", mem, mem - Memory);
+  30:../main.cpp   **** 		AppendLog(str, "MAIN");
+  31:../main.cpp   **** 		Memory = mem;
+  32:../main.cpp   **** 		PWriter->TimerCounter = 0;
+  33:../main.cpp   **** 		PWriter->Continue();
+  34:../main.cpp   **** 	}
+  35:../main.cpp   **** 	return true;
+  36:../main.cpp   **** }
+ 14640              		.loc 1 36 0
+ 14641              		.save	{r7, lr}
+ 14642 0000 80B5     		push	{r7, lr}
+ 14643              	.LCFI0:
+ 14644              		.pad #8
+ 14645 0002 82B0     		sub	sp, sp, #8
+ 14646              	.LCFI1:
+ 14647              		.setfp r7, sp, #0
+ 14648 0004 00AF     		add	r7, sp, #0
+ 14649              	.LCFI2:
+ 14650 0006 7860     		str	r0, [r7, #4]
+ 14651 0008 3960     		str	r1, [r7]
+ 14652              		.loc 1 36 0
+ 14653 000a 7B68     		ldr	r3, [r7, #4]
+ 14654 000c 012B     		cmp	r3, #1
+ 14655 000e 0DD1     		bne	.L3
+ 14656 0010 3A68     		ldr	r2, [r7]
+ 14657 0012 084B     		ldr	r3, .L4
+ 14658 0014 9A42     		cmp	r2, r3
+ 14659 0016 09D1     		bne	.L3
+   1:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // Standard iostream objects -*- C++ -*-
+   2:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+   3:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // Copyright (C) 1997, 1998, 1999, 2001, 2002, 2005, 2008
+   4:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // Free Software Foundation, Inc.
+   5:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** //
+   6:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // This file is part of the GNU ISO C++ Library.  This library is free
+   7:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // software; you can redistribute it and/or modify it under the
+   8:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // terms of the GNU General Public License as published by the
+   9:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // Free Software Foundation; either version 2, or (at your option)
+  10:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // any later version.
+  11:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  12:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // This library is distributed in the hope that it will be useful,
+  13:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // but WITHOUT ANY WARRANTY; without even the implied warranty of
+  14:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  15:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // GNU General Public License for more details.
+  16:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  17:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // You should have received a copy of the GNU General Public License
+  18:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // along with this library; see the file COPYING.  If not, write to
+  19:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+  20:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // Boston, MA 02110-1301, USA.
+  21:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  22:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // As a special exception, you may use this file as part of a free software
+  23:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // library without restriction.  Specifically, if other files instantiate
+  24:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // templates or use macros or inline functions from this file, or you compile
+  25:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // this file and link it with other files to produce an executable, this
+  26:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // file does not by itself cause the resulting executable to be covered by
+  27:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // the GNU General Public License.  This exception does not however
+  28:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // invalidate any other reasons why the executable file might be covered by
+  29:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // the GNU General Public License.
+  30:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  31:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** /** @file iostream
+  32:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****  *  This is a Standard C++ Library header. 
+  33:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****  */
+  34:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  35:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** //
+  36:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // ISO C++ 14882: 27.3  Standard iostream objects
+  37:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** //
+  38:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  39:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #ifndef _GLIBCXX_IOSTREAM
+  40:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #define _GLIBCXX_IOSTREAM 1
+  41:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  42:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #pragma GCC system_header
+  43:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  44:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #include <bits/c++config.h>
+  45:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #include <ostream>
+  46:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #include <istream>
+  47:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  48:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** _GLIBCXX_BEGIN_NAMESPACE(std)
+  49:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  50:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   /**
+  51:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  @name Standard Stream Objects
+  52:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *
+  53:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  The &lt;iostream&gt; header declares the eight <em>standard stream
+  54:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  objects</em>.  For other declarations, see
+  55:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  http://gcc.gnu.org/onlinedocs/libstdc++/manual/bk01pt11ch24.html
+  56:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  and the @link s27_2_iosfwd I/O forward declarations @endlink
+  57:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *
+  58:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  They are required by default to cooperate with the global C library's
+  59:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  @c FILE streams, and to be available during program startup and
+  60:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  termination.  For more information, see the HOWTO linked to above.
+  61:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   */
+  62:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   //@{
+  63:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern istream cin;		///< Linked to standard input
+  64:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern ostream cout;		///< Linked to standard output
+  65:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern ostream cerr;		///< Linked to standard error (unbuffered)
+  66:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern ostream clog;		///< Linked to standard error (buffered)
+  67:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  68:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #ifdef _GLIBCXX_USE_WCHAR_T
+  69:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern wistream wcin;		///< Linked to standard input
+  70:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern wostream wcout;	///< Linked to standard output
+  71:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern wostream wcerr;	///< Linked to standard error (unbuffered)
+  72:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern wostream wclog;	///< Linked to standard error (buffered)
+  73:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #endif
+  74:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   //@}
+  75:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  76:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   // For construction of filebuffers for cout, cin, cerr, clog et. al.
+  77:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   static ios_base::Init __ioinit;
+ 14660              		.loc 175 77 0
+ 14661 0018 074B     		ldr	r3, .L4+4
+ 14662 001a 181C     		mov	r0, r3
+ 14663 001c FFF7FEFF 		bl	_ZNSt8ios_base4InitC1Ev
+ 14664 0020 0649     		ldr	r1, .L4+8
+ 14665 0022 054B     		ldr	r3, .L4+4
+ 14666 0024 064A     		ldr	r2, .L4+12
+ 14667 0026 181C     		mov	r0, r3
+ 14668 0028 FFF7FEFF 		bl	__aeabi_atexit
+ 14669              	.L3:
+ 14670              		.loc 1 36 0
+ 14671 002c BD46     		mov	sp, r7
+ 14672 002e 02B0     		add	sp, sp, #8
+ 14673              		@ sp needed for prologue
+ 14674 0030 80BD     		pop	{r7, pc}
+ 14675              	.L5:
+ 14676 0032 C046     		.align	2
+ 14677              	.L4:
+ 14678 0034 FFFF0000 		.word	65535
+ 14679 0038 10000000 		.word	_ZStL8__ioinit
+ 14680 003c 00000000 		.word	_ZNSt8ios_base4InitD1Ev
+ 14681 0040 00000000 		.word	__dso_handle
+ 14682              	.LFE1011:
+ 14683              		.fnend
+ 14685              		.align	2
+ 14686              		.code	16
+ 14687              		.thumb_func
+ 14689              	_GLOBAL__I_MainLoop:
+ 14690              		.fnstart
+ 14691              	.LFB1012:
+ 14692              		.loc 1 36 0
+ 14693              		.save	{r7, lr}
+ 14694 0044 80B5     		push	{r7, lr}
+ 14695              	.LCFI3:
+ 14696              		.setfp r7, sp, #0
+ 14697 0046 00AF     		add	r7, sp, #0
+ 14698              	.LCFI4:
+ 14699              		.loc 1 36 0
+ 14700 0048 034B     		ldr	r3, .L8
+ 14701 004a 0120     		mov	r0, #1
+ 14702 004c 191C     		mov	r1, r3
+ 14703 004e FFF7D7FF 		bl	_Z41__static_initialization_and_destruction_0ii
+ 14704 0052 BD46     		mov	sp, r7
+ 14705              		@ sp needed for prologue
+ 14706 0054 80BD     		pop	{r7, pc}
+ 14707              	.L9:
+ 14708 0056 C046     		.align	2
+ 14709              	.L8:
+ 14710 0058 FFFF0000 		.word	65535
+ 14711              	.LFE1012:
+ 14712              		.fnend
+ 14714              		.section	.init_array,"aw",%init_array
+ 14715              		.align	2
+ 14716 0000 00000000 		.word	_GLOBAL__I_MainLoop(target1)
+ 14717              		.section	.rodata
+ 14718              		.align	2
+ 14719              	.LC5:
+ 14720 0000 44454255 		.ascii	"DEBUG: Timeout callback. Memory: %lld. Delta: %lld\012"
+ 14720      473A2054 
+ 14720      696D656F 
+ 14720      75742063 
+ 14720      616C6C62 
+ 14721 0033 00       		.ascii	"\000"
+ 14722              		.align	2
+ 14723              	.LC7:
+ 14724 0034 4D41494E 		.ascii	"MAIN\000"
+ 14724      00
+ 14725              		.text
+ 14726              		.align	2
+ 14727              		.code	16
+ 14728              		.thumb_func
+ 14730              	_ZL15TimeoutCallbackPv:
+ 14731              		.fnstart
+ 14732              	.LFB981:
+ 14733              		.loc 1 19 0
+ 14734              		.save	{r4, r5, r6, r7, lr}
+ 14735 005c F0B5     		push	{r4, r5, r6, r7, lr}
+ 14736              	.LCFI5:
+ 14737              		.pad #44
+ 14738 005e 8BB0     		sub	sp, sp, #44
+ 14739              	.LCFI6:
+ 14740              		.setfp r7, sp, #8
+ 14741 0060 02AF     		add	r7, sp, #8
+ 14742              	.LCFI7:
+ 14743 0062 7860     		str	r0, [r7, #4]
+ 14744              	.LBB2:
+ 14745              		.loc 1 21 0
+ 14746 0064 7B68     		ldr	r3, [r7, #4]
+ 14747 0066 7B61     		str	r3, [r7, #20]
+ 14748              		.loc 1 23 0
+ 14749 0068 7B69     		ldr	r3, [r7, #20]
+ 14750 006a 1B68     		ldr	r3, [r3]
+ 14751 006c 5A1C     		add	r2, r3, #1
+ 14752 006e 7B69     		ldr	r3, [r7, #20]
+ 14753 0070 1A60     		str	r2, [r3]
+ 14754              		.loc 1 24 0
+ 14755 0072 7B69     		ldr	r3, [r7, #20]
+ 14756 0074 181C     		mov	r0, r3
+ 14757 0076 FFF7FEFF 		bl	_ZN14FfWriterEngine16AppendMemoryDataEv
+ 14758              		.loc 1 26 0
+ 14759 007a 7B69     		ldr	r3, [r7, #20]
+ 14760 007c 1B68     		ldr	r3, [r3]
+ 14761 007e 1D2B     		cmp	r3, #29
+ 14762 0080 4FD9     		bls	.L11
+ 14763              	.LBB3:
+ 14764              		.loc 1 28 0
+ 14765 0082 7B69     		ldr	r3, [r7, #20]
+ 14766 0084 181C     		mov	r0, r3
+ 14767 0086 FFF7FEFF 		bl	_ZN14FfWriterEngine20GetMemoryConsumptionEv
+ 14768 008a 031C     		mov	r3, r0
+ 14769 008c BB61     		str	r3, [r7, #24]
+ 14770 008e DB17     		asr	r3, r3, #31
+ 14771 0090 FB61     		str	r3, [r7, #28]
+ 14772              		.loc 1 29 0
+ 14773 0092 264B     		ldr	r3, .L13
+ 14774 0094 5C68     		ldr	r4, [r3, #4]
+ 14775 0096 1B68     		ldr	r3, [r3]
+ 14776 0098 191C     		mov	r1, r3
+ 14777 009a 221C     		mov	r2, r4
+ 14778 009c BB69     		ldr	r3, [r7, #24]
+ 14779 009e FC69     		ldr	r4, [r7, #28]
+ 14780 00a0 5B1A     		sub	r3, r3, r1
+ 14781 00a2 9441     		sbc	r4, r4, r2
+ 14782 00a4 224A     		ldr	r2, .L13+4
+ 14783 00a6 2349     		ldr	r1, .L13+8
+ 14784 00a8 BD69     		ldr	r5, [r7, #24]
+ 14785 00aa FE69     		ldr	r6, [r7, #28]
+ 14786 00ac 0093     		str	r3, [sp]
+ 14787 00ae 0194     		str	r4, [sp, #4]
+ 14788 00b0 101C     		mov	r0, r2
+ 14789 00b2 2A1C     		mov	r2, r5
+ 14790 00b4 331C     		mov	r3, r6
+ 14791 00b6 FFF7FEFF 		bl	sprintf
+ 14792              		.loc 1 30 0
+ 14793 00ba 3B1C     		mov	r3, r7
+ 14794 00bc 1333     		add	r3, r3, #19
+ 14795 00be 181C     		mov	r0, r3
+ 14796 00c0 FFF7FEFF 		bl	_ZNSaIcEC1Ev
+ 14797 00c4 3B1C     		mov	r3, r7
+ 14798 00c6 0C33     		add	r3, r3, #12
+ 14799 00c8 194A     		ldr	r2, .L13+4
+ 14800 00ca 3C1C     		mov	r4, r7
+ 14801 00cc 1334     		add	r4, r4, #19
+ 14802 00ce 181C     		mov	r0, r3
+ 14803 00d0 111C     		mov	r1, r2
+ 14804 00d2 221C     		mov	r2, r4
+ 14805 00d4 FFF7FEFF 		bl	_ZNSsC1EPKcRKSaIcE
+ 14806 00d8 3B1C     		mov	r3, r7
+ 14807 00da 0833     		add	r3, r3, #8
+ 14808 00dc 3A1C     		mov	r2, r7
+ 14809 00de 0C32     		add	r2, r2, #12
+ 14810 00e0 154C     		ldr	r4, .L13+12
+ 14811 00e2 181C     		mov	r0, r3
+ 14812 00e4 111C     		mov	r1, r2
+ 14813 00e6 221C     		mov	r2, r4
+ 14814 00e8 FFF7FEFF 		bl	_Z9AppendLogSsPKc
+ 14815 00ec 3B1C     		mov	r3, r7
+ 14816 00ee 0833     		add	r3, r3, #8
+ 14817 00f0 181C     		mov	r0, r3
+ 14818 00f2 FFF7FEFF 		bl	_ZNSsD1Ev
+ 14819 00f6 3B1C     		mov	r3, r7
+ 14820 00f8 0C33     		add	r3, r3, #12
+ 14821 00fa 181C     		mov	r0, r3
+ 14822 00fc FFF7FEFF 		bl	_ZNSsD1Ev
+ 14823 0100 3B1C     		mov	r3, r7
+ 14824 0102 1333     		add	r3, r3, #19
+ 14825 0104 181C     		mov	r0, r3
+ 14826 0106 FFF7FEFF 		bl	_ZNSaIcED1Ev
+ 14827              		.loc 1 31 0
+ 14828 010a BB69     		ldr	r3, [r7, #24]
+ 14829 010c FC69     		ldr	r4, [r7, #28]
+ 14830 010e 074A     		ldr	r2, .L13
+ 14831 0110 1360     		str	r3, [r2]
+ 14832 0112 5460     		str	r4, [r2, #4]
+ 14833              		.loc 1 32 0
+ 14834 0114 7A69     		ldr	r2, [r7, #20]
+ 14835 0116 0023     		mov	r3, #0
+ 14836 0118 1360     		str	r3, [r2]
+ 14837              		.loc 1 33 0
+ 14838 011a 7B69     		ldr	r3, [r7, #20]
+ 14839 011c 181C     		mov	r0, r3
+ 14840 011e FFF7FEFF 		bl	_ZN14FfWriterEngine8ContinueEv
+ 14841              	.L11:
+ 14842              	.LBE3:
+ 14843              		.loc 1 35 0
+ 14844 0122 0123     		mov	r3, #1
+ 14845              	.LBE2:
+ 14846              		.loc 1 36 0
+ 14847 0124 181C     		mov	r0, r3
+ 14848 0126 BD46     		mov	sp, r7
+ 14849 0128 09B0     		add	sp, sp, #36
+ 14850              		@ sp needed for prologue
+ 14851 012a F0BD     		pop	{r4, r5, r6, r7, pc}
+ 14852              	.L14:
+ 14853              		.align	2
+ 14854              	.L13:
+ 14855 012c 00000000 		.word	Memory
+ 14856 0130 00000000 		.word	str
+ 14857 0134 00000000 		.word	.LC5
+ 14858 0138 34000000 		.word	.LC7
+ 14859              	.LFE981:
+ 14860              		.fnend
+ 14862              		.section	.rodata
+ 14863 0039 000000   		.align	2
+ 14864              	.LC9:
+ 14865 003c 66665F74 		.ascii	"ff_test_mem.log\000"
+ 14865      6573745F 
+ 14865      6D656D2E 
+ 14865      6C6F6700 
+ 14866              		.text
+ 14867              		.align	2
+ 14868              		.global	main
+ 14869              		.code	16
+ 14870              		.thumb_func
+ 14872              	main:
+ 14873              		.fnstart
+ 14874              	.LFB980:
+ 14875              		.loc 1 5 0
+ 14876              		.save	{r4, r5, r7, lr}
+ 14877 013c B0B5     		push	{r4, r5, r7, lr}
+ 14878              	.LCFI8:
+ 14879              		.pad #32
+ 14880 013e 88B0     		sub	sp, sp, #32
+ 14881              	.LCFI9:
+ 14882              		.setfp r7, sp, #8
+ 14883 0140 02AF     		add	r7, sp, #8
+ 14884              	.LCFI10:
+ 14885              	.LBB4:
+ 14886              		.loc 1 7 0
+ 14887 0142 1020     		mov	r0, #16
+ 14888 0144 FFF7FEFF 		bl	_Znwj
+ 14889 0148 031C     		mov	r3, r0
+ 14890 014a 1C1C     		mov	r4, r3
+ 14891 014c 201C     		mov	r0, r4
+ 14892 014e FFF7FEFF 		bl	_ZN14FfWriterEngineC1Ev
+ 14893 0152 7C61     		str	r4, [r7, #20]
+ 14894              		.loc 1 8 0
+ 14895 0154 3B1C     		mov	r3, r7
+ 14896 0156 1333     		add	r3, r3, #19
+ 14897 0158 181C     		mov	r0, r3
+ 14898 015a FFF7FEFF 		bl	_ZNSaIcEC1Ev
+ 14899 015e 3B1C     		mov	r3, r7
+ 14900 0160 0C33     		add	r3, r3, #12
+ 14901 0162 2E4A     		ldr	r2, .L18
+ 14902 0164 3C1C     		mov	r4, r7
+ 14903 0166 1334     		add	r4, r4, #19
+ 14904 0168 181C     		mov	r0, r3
+ 14905 016a 111C     		mov	r1, r2
+ 14906 016c 221C     		mov	r2, r4
+ 14907 016e FFF7FEFF 		bl	_ZNSsC1EPKcRKSaIcE
+ 14908 0172 3D1C     		mov	r5, r7
+ 14909 0174 0C35     		add	r5, r5, #12
+ 14910 0176 1820     		mov	r0, #24
+ 14911 0178 FFF7FEFF 		bl	_Znwj
+ 14912 017c 031C     		mov	r3, r0
+ 14913 017e 1C1C     		mov	r4, r3
+ 14914 0180 201C     		mov	r0, r4
+ 14915 0182 291C     		mov	r1, r5
+ 14916 0184 0722     		mov	r2, #7
+ 14917 0186 FFF7FEFF 		bl	_ZN9arlogging7LoggingC1ESsi
+ 14918 018a 254B     		ldr	r3, .L18+4
+ 14919 018c 1C60     		str	r4, [r3]
+ 14920 018e 3B1C     		mov	r3, r7
+ 14921 0190 0C33     		add	r3, r3, #12
+ 14922 0192 181C     		mov	r0, r3
+ 14923 0194 FFF7FEFF 		bl	_ZNSsD1Ev
+ 14924 0198 3B1C     		mov	r3, r7
+ 14925 019a 1333     		add	r3, r3, #19
+ 14926 019c 181C     		mov	r0, r3
+ 14927 019e FFF7FEFF 		bl	_ZNSaIcED1Ev
+ 14928              		.loc 1 9 0
+ 14929 01a2 0020     		mov	r0, #0
+ 14930 01a4 0021     		mov	r1, #0
+ 14931 01a6 FFF7FEFF 		bl	g_main_loop_new
+ 14932 01aa 021C     		mov	r2, r0
+ 14933 01ac 1D4B     		ldr	r3, .L18+8
+ 14934 01ae 1A60     		str	r2, [r3]
+ 14935              		.loc 1 10 0
+ 14936 01b0 7B69     		ldr	r3, [r7, #20]
+ 14937 01b2 181C     		mov	r0, r3
+ 14938 01b4 FFF7FEFF 		bl	_ZN14FfWriterEngine13FirstStartRecEv
+ 14939              		.loc 1 11 0
+ 14940 01b8 FA22     		mov	r2, #250
+ 14941 01ba 9200     		lsl	r2, r2, #2
+ 14942 01bc 1A4C     		ldr	r4, .L18+12
+ 14943 01be 7D69     		ldr	r5, [r7, #20]
+ 14944 01c0 0023     		mov	r3, #0
+ 14945 01c2 0093     		str	r3, [sp]
+ 14946 01c4 101C     		mov	r0, r2
+ 14947 01c6 0121     		mov	r1, #1
+ 14948 01c8 221C     		mov	r2, r4
+ 14949 01ca 2B1C     		mov	r3, r5
+ 14950 01cc FFF7FEFF 		bl	g_timeout_add_seconds_full
+ 14951              		.loc 1 12 0
+ 14952 01d0 7B69     		ldr	r3, [r7, #20]
+ 14953 01d2 181C     		mov	r0, r3
+ 14954 01d4 FFF7FEFF 		bl	_ZN14FfWriterEngine20GetMemoryConsumptionEv
+ 14955 01d8 021C     		mov	r2, r0
+ 14956 01da D117     		asr	r1, r2, #31
+ 14957 01dc 131C     		mov	r3, r2
+ 14958 01de 0C1C     		mov	r4, r1
+ 14959 01e0 124A     		ldr	r2, .L18+16
+ 14960 01e2 1360     		str	r3, [r2]
+ 14961 01e4 5460     		str	r4, [r2, #4]
+ 14962              		.loc 1 13 0
+ 14963 01e6 0F4B     		ldr	r3, .L18+8
+ 14964 01e8 1B68     		ldr	r3, [r3]
+ 14965 01ea 181C     		mov	r0, r3
+ 14966 01ec FFF7FEFF 		bl	g_main_loop_run
+ 14967              		.loc 1 15 0
+ 14968 01f0 0B4B     		ldr	r3, .L18+4
+ 14969 01f2 1B68     		ldr	r3, [r3]
+ 14970 01f4 7B60     		str	r3, [r7, #4]
+ 14971 01f6 7B68     		ldr	r3, [r7, #4]
+ 14972 01f8 002B     		cmp	r3, #0
+ 14973 01fa 05D0     		beq	.L16
+ 14974 01fc 7868     		ldr	r0, [r7, #4]
+ 14975 01fe FFF7FEFF 		bl	_ZN9arlogging7LoggingD1Ev
+ 14976 0202 7868     		ldr	r0, [r7, #4]
+ 14977 0204 FFF7FEFF 		bl	_ZdlPv
+ 14978              	.L16:
+ 14979              		.loc 1 16 0
+ 14980 0208 7B69     		ldr	r3, [r7, #20]
+ 14981 020a 181C     		mov	r0, r3
+ 14982 020c FFF7FEFF 		bl	_ZdlPv
+ 14983              	.LBE4:
+ 14984 0210 0023     		mov	r3, #0
+ 14985              		.loc 1 17 0
+ 14986 0212 181C     		mov	r0, r3
+ 14987 0214 BD46     		mov	sp, r7
+ 14988 0216 06B0     		add	sp, sp, #24
+ 14989              		@ sp needed for prologue
+ 14990 0218 B0BD     		pop	{r4, r5, r7, pc}
+ 14991              	.L19:
+ 14992 021a C046     		.align	2
+ 14993              	.L18:
+ 14994 021c 3C000000 		.word	.LC9
+ 14995 0220 00000000 		.word	Log
+ 14996 0224 00000000 		.word	MainLoop
+ 14997 0228 00000000 		.word	_ZL15TimeoutCallbackPv
+ 14998 022c 00000000 		.word	Memory
+ 14999              	.LFE980:
+ 15000              		.fnend
+ 15002              		.global	MainLoop
+ 15003              		.bss
+ 15004              		.align	2
+ 15007              	MainLoop:
+ 15008 0000 00000000 		.space	4
+ 15009              		.global	Memory
+ 15010 0004 00000000 		.align	3
+ 15013              	Memory:
+ 15014 0008 00000000 		.space	8
+ 15014      00000000 
+ 15015              		.local	_ZStL8__ioinit
+ 15016              		.comm	_ZStL8__ioinit,1,1
+ 15017              		.weakref	_ZL20__gthrw_pthread_oncePiPFvvE,pthread_once
+ 15018              		.weakref	_ZL27__gthrw_pthread_getspecificj,pthread_getspecific
+ 15019              		.weakref	_ZL27__gthrw_pthread_setspecificjPKv,pthread_setspecific
+ 15020              		.weakref	_ZL22__gthrw_pthread_createPmPK14pthread_attr_tPFPvS3_ES3_,pthread_create
+ 15021              		.weakref	_ZL22__gthrw_pthread_cancelm,pthread_cancel
+ 15022              		.weakref	_ZL26__gthrw_pthread_mutex_lockP15pthread_mutex_t,pthread_mutex_lock
+ 15023              		.weakref	_ZL29__gthrw_pthread_mutex_trylockP15pthread_mutex_t,pthread_mutex_trylock
+ 15024              		.weakref	_ZL28__gthrw_pthread_mutex_unlockP15pthread_mutex_t,pthread_mutex_unlock
+ 15025              		.weakref	_ZL26__gthrw_pthread_mutex_initP15pthread_mutex_tPK19pthread_mutexattr_t,pthread_mutex_in
+ 15026              		.weakref	_ZL30__gthrw_pthread_cond_broadcastP14pthread_cond_t,pthread_cond_broadcast
+ 15027              		.weakref	_ZL25__gthrw_pthread_cond_waitP14pthread_cond_tP15pthread_mutex_t,pthread_cond_wait
+ 15028              		.weakref	_ZL26__gthrw_pthread_key_createPjPFvPvE,pthread_key_create
+ 15029              		.weakref	_ZL26__gthrw_pthread_key_deletej,pthread_key_delete
+ 15030              		.weakref	_ZL30__gthrw_pthread_mutexattr_initP19pthread_mutexattr_t,pthread_mutexattr_init
+ 15031              		.weakref	_ZL33__gthrw_pthread_mutexattr_settypeP19pthread_mutexattr_ti,pthread_mutexattr_settype
+ 15032              		.weakref	_ZL33__gthrw_pthread_mutexattr_destroyP19pthread_mutexattr_t,pthread_mutexattr_destroy
+ 15153              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.cpp
+     /tmp/ccwzKLWc.s:26     .debug_macinfo:00000000 $d
+     /tmp/ccwzKLWc.s:14633  .text:00000000 $t
+     /tmp/ccwzKLWc.s:14637  .text:00000000 _Z41__static_initialization_and_destruction_0ii
+     /tmp/ccwzKLWc.s:14678  .text:00000034 $d
+                             .bss:00000010 _ZStL8__ioinit
+                       .ARM.extab:00000000 $d
+                       .ARM.exidx:00000000 $d
+     /tmp/ccwzKLWc.s:14685  .text:00000044 $t
+     /tmp/ccwzKLWc.s:14689  .text:00000044 _GLOBAL__I_MainLoop
+     /tmp/ccwzKLWc.s:14710  .text:00000058 $d
+     /tmp/ccwzKLWc.s:14715  .init_array:00000000 $d
+     /tmp/ccwzKLWc.s:14718  .rodata:00000000 $d
+     /tmp/ccwzKLWc.s:14726  .text:0000005c $t
+     /tmp/ccwzKLWc.s:14730  .text:0000005c _ZL15TimeoutCallbackPv
+     /tmp/ccwzKLWc.s:14855  .text:0000012c $d
+     /tmp/ccwzKLWc.s:15013  .bss:00000008 Memory
+     /tmp/ccwzKLWc.s:14867  .text:0000013c $t
+     /tmp/ccwzKLWc.s:14872  .text:0000013c main
+     /tmp/ccwzKLWc.s:14994  .text:0000021c $d
+     /tmp/ccwzKLWc.s:15007  .bss:00000000 MainLoop
+     /tmp/ccwzKLWc.s:15004  .bss:00000000 $d
+
+UNDEFINED SYMBOLS
+_ZNSt8ios_base4InitC1Ev
+__aeabi_atexit
+_ZNSt8ios_base4InitD1Ev
+__dso_handle
+__aeabi_unwind_cpp_pr1
+__aeabi_unwind_cpp_pr0
+_ZN14FfWriterEngine16AppendMemoryDataEv
+_ZN14FfWriterEngine20GetMemoryConsumptionEv
+sprintf
+_ZNSaIcEC1Ev
+_ZNSsC1EPKcRKSaIcE
+_Z9AppendLogSsPKc
+_ZNSsD1Ev
+_ZNSaIcED1Ev
+_ZN14FfWriterEngine8ContinueEv
+str
+_Znwj
+_ZN14FfWriterEngineC1Ev
+_ZN9arlogging7LoggingC1ESsi
+g_main_loop_new
+_ZN14FfWriterEngine13FirstStartRecEv
+g_timeout_add_seconds_full
+g_main_loop_run
+_ZN9arlogging7LoggingD1Ev
+_ZdlPv
+Log

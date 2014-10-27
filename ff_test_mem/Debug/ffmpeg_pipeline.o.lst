@@ -1,0 +1,3891 @@
+   1              		.cpu arm926ej-s
+   2              		.eabi_attribute 27, 3
+   3              		.fpu neon
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 2
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"ffmpeg_pipeline.cpp"
+  23              	.Ltext0:
+  24              		.file 1 "../ffmpeg_pipeline.cpp"
+ 14666              		.align	2
+ 14667              		.global	_ZN10FfPipelineC2Eh
+ 14668              		.code	16
+ 14669              		.thumb_func
+ 14671              	_ZN10FfPipelineC2Eh:
+ 14672              		.fnstart
+ 14673              	.LFB981:
+   1:../ffmpeg_pipeline.cpp **** #include "include/ffmpeg_pipeline.h"
+   2:../ffmpeg_pipeline.cpp **** 
+   3:../ffmpeg_pipeline.cpp **** FfPipeline::FfPipeline(unsigned char slot_num)
+ 14674              		.loc 1 3 0
+ 14675              		.save	{r4, r7, lr}
+ 14676 0000 90B5     		push	{r4, r7, lr}
+ 14677              	.LCFI0:
+ 14678              		.pad #12
+ 14679 0002 83B0     		sub	sp, sp, #12
+ 14680              	.LCFI1:
+ 14681              		.setfp r7, sp, #0
+ 14682 0004 00AF     		add	r7, sp, #0
+ 14683              	.LCFI2:
+ 14684 0006 7860     		str	r0, [r7, #4]
+ 14685 0008 0B1C     		mov	r3, r1
+ 14686 000a FA1C     		add	r2, r7, #3
+ 14687 000c 1370     		strb	r3, [r2]
+   4:../ffmpeg_pipeline.cpp **** {
+   5:../ffmpeg_pipeline.cpp ****   Slot = slot_num;
+ 14688              		.loc 1 5 0
+ 14689 000e 7A68     		ldr	r2, [r7, #4]
+ 14690 0010 FB1C     		add	r3, r7, #3
+ 14691 0012 1B78     		ldrb	r3, [r3]
+ 14692 0014 1371     		strb	r3, [r2, #4]
+   6:../ffmpeg_pipeline.cpp ****   RecState = REC_NOTINITIALIZED;
+ 14693              		.loc 1 6 0
+ 14694 0016 7A68     		ldr	r2, [r7, #4]
+ 14695 0018 0023     		mov	r3, #0
+ 14696 001a 9360     		str	r3, [r2, #8]
+   7:../ffmpeg_pipeline.cpp ****   PrevPadTimestamp = 0;
+ 14697              		.loc 1 7 0
+ 14698 001c 7A68     		ldr	r2, [r7, #4]
+ 14699 001e 0023     		mov	r3, #0
+ 14700 0020 D360     		str	r3, [r2, #12]
+   8:../ffmpeg_pipeline.cpp ****   WaitKeyframeFlag = false;
+ 14701              		.loc 1 8 0
+ 14702 0022 7968     		ldr	r1, [r7, #4]
+ 14703 0024 2922     		mov	r2, #41
+ 14704 0026 0023     		mov	r3, #0
+ 14705 0028 8B54     		strb	r3, [r1, r2]
+   9:../ffmpeg_pipeline.cpp ****   IsNeedStopFlag = false;
+ 14706              		.loc 1 9 0
+ 14707 002a 7968     		ldr	r1, [r7, #4]
+ 14708 002c 2822     		mov	r2, #40
+ 14709 002e 0023     		mov	r3, #0
+ 14710 0030 8B54     		strb	r3, [r1, r2]
+  10:../ffmpeg_pipeline.cpp ****   Index = 0;
+ 14711              		.loc 1 10 0
+ 14712 0032 7A68     		ldr	r2, [r7, #4]
+ 14713 0034 0023     		mov	r3, #0
+ 14714 0036 5362     		str	r3, [r2, #36]
+  11:../ffmpeg_pipeline.cpp ****   Ist = NULL;
+ 14715              		.loc 1 11 0
+ 14716 0038 7A68     		ldr	r2, [r7, #4]
+ 14717 003a 0023     		mov	r3, #0
+ 14718 003c 1362     		str	r3, [r2, #32]
+  12:../ffmpeg_pipeline.cpp ****   Ost = NULL;
+ 14719              		.loc 1 12 0
+ 14720 003e 7A68     		ldr	r2, [r7, #4]
+ 14721 0040 0023     		mov	r3, #0
+ 14722 0042 D361     		str	r3, [r2, #28]
+  13:../ffmpeg_pipeline.cpp ****   Iccx = NULL;
+ 14723              		.loc 1 13 0
+ 14724 0044 7A68     		ldr	r2, [r7, #4]
+ 14725 0046 0023     		mov	r3, #0
+ 14726 0048 9361     		str	r3, [r2, #24]
+  14:../ffmpeg_pipeline.cpp ****   Ofcx = NULL;
+ 14727              		.loc 1 14 0
+ 14728 004a 7A68     		ldr	r2, [r7, #4]
+ 14729 004c 0023     		mov	r3, #0
+ 14730 004e 5361     		str	r3, [r2, #20]
+  15:../ffmpeg_pipeline.cpp ****   Ifcx = NULL;
+ 14731              		.loc 1 15 0
+ 14732 0050 7A68     		ldr	r2, [r7, #4]
+ 14733 0052 0023     		mov	r3, #0
+ 14734 0054 1361     		str	r3, [r2, #16]
+  16:../ffmpeg_pipeline.cpp ****   LastMuxDts = AV_NOPTS_VALUE;
+ 14735              		.loc 1 16 0
+ 14736 0056 7A68     		ldr	r2, [r7, #4]
+ 14737 0058 064C     		ldr	r4, .L4+4
+ 14738 005a 054B     		ldr	r3, .L4
+ 14739 005c 1363     		str	r3, [r2, #48]
+ 14740 005e 5463     		str	r4, [r2, #52]
+  17:../ffmpeg_pipeline.cpp **** }
+ 14741              		.loc 1 17 0
+ 14742 0060 7B68     		ldr	r3, [r7, #4]
+ 14743 0062 181C     		mov	r0, r3
+ 14744 0064 BD46     		mov	sp, r7
+ 14745 0066 03B0     		add	sp, sp, #12
+ 14746              		@ sp needed for prologue
+ 14747 0068 90BD     		pop	{r4, r7, pc}
+ 14748              	.L5:
+ 14749 006a C046C046 		.align	3
+ 14749      C046
+ 14750              	.L4:
+ 14751 0070 00000000 		.word	0
+ 14752 0074 00000080 		.word	-2147483648
+ 14753              	.LFE981:
+ 14754              		.fnend
+ 14756              		.align	2
+ 14757              		.global	_ZN10FfPipelineC1Eh
+ 14758              		.code	16
+ 14759              		.thumb_func
+ 14761              	_ZN10FfPipelineC1Eh:
+ 14762              		.fnstart
+ 14763              	.LFB982:
+ 14764              		.loc 1 3 0
+ 14765              		.save	{r4, r7, lr}
+ 14766 0078 90B5     		push	{r4, r7, lr}
+ 14767              	.LCFI3:
+ 14768              		.pad #12
+ 14769 007a 83B0     		sub	sp, sp, #12
+ 14770              	.LCFI4:
+ 14771              		.setfp r7, sp, #0
+ 14772 007c 00AF     		add	r7, sp, #0
+ 14773              	.LCFI5:
+ 14774 007e 7860     		str	r0, [r7, #4]
+ 14775 0080 0B1C     		mov	r3, r1
+ 14776 0082 FA1C     		add	r2, r7, #3
+ 14777 0084 1370     		strb	r3, [r2]
+ 14778              		.loc 1 5 0
+ 14779 0086 7A68     		ldr	r2, [r7, #4]
+ 14780 0088 FB1C     		add	r3, r7, #3
+ 14781 008a 1B78     		ldrb	r3, [r3]
+ 14782 008c 1371     		strb	r3, [r2, #4]
+ 14783              		.loc 1 6 0
+ 14784 008e 7A68     		ldr	r2, [r7, #4]
+ 14785 0090 0023     		mov	r3, #0
+ 14786 0092 9360     		str	r3, [r2, #8]
+ 14787              		.loc 1 7 0
+ 14788 0094 7A68     		ldr	r2, [r7, #4]
+ 14789 0096 0023     		mov	r3, #0
+ 14790 0098 D360     		str	r3, [r2, #12]
+ 14791              		.loc 1 8 0
+ 14792 009a 7968     		ldr	r1, [r7, #4]
+ 14793 009c 2922     		mov	r2, #41
+ 14794 009e 0023     		mov	r3, #0
+ 14795 00a0 8B54     		strb	r3, [r1, r2]
+ 14796              		.loc 1 9 0
+ 14797 00a2 7968     		ldr	r1, [r7, #4]
+ 14798 00a4 2822     		mov	r2, #40
+ 14799 00a6 0023     		mov	r3, #0
+ 14800 00a8 8B54     		strb	r3, [r1, r2]
+ 14801              		.loc 1 10 0
+ 14802 00aa 7A68     		ldr	r2, [r7, #4]
+ 14803 00ac 0023     		mov	r3, #0
+ 14804 00ae 5362     		str	r3, [r2, #36]
+ 14805              		.loc 1 11 0
+ 14806 00b0 7A68     		ldr	r2, [r7, #4]
+ 14807 00b2 0023     		mov	r3, #0
+ 14808 00b4 1362     		str	r3, [r2, #32]
+ 14809              		.loc 1 12 0
+ 14810 00b6 7A68     		ldr	r2, [r7, #4]
+ 14811 00b8 0023     		mov	r3, #0
+ 14812 00ba D361     		str	r3, [r2, #28]
+ 14813              		.loc 1 13 0
+ 14814 00bc 7A68     		ldr	r2, [r7, #4]
+ 14815 00be 0023     		mov	r3, #0
+ 14816 00c0 9361     		str	r3, [r2, #24]
+ 14817              		.loc 1 14 0
+ 14818 00c2 7A68     		ldr	r2, [r7, #4]
+ 14819 00c4 0023     		mov	r3, #0
+ 14820 00c6 5361     		str	r3, [r2, #20]
+ 14821              		.loc 1 15 0
+ 14822 00c8 7A68     		ldr	r2, [r7, #4]
+ 14823 00ca 0023     		mov	r3, #0
+ 14824 00cc 1361     		str	r3, [r2, #16]
+ 14825              		.loc 1 16 0
+ 14826 00ce 7A68     		ldr	r2, [r7, #4]
+ 14827 00d0 064C     		ldr	r4, .L9+4
+ 14828 00d2 054B     		ldr	r3, .L9
+ 14829 00d4 1363     		str	r3, [r2, #48]
+ 14830 00d6 5463     		str	r4, [r2, #52]
+ 14831              		.loc 1 17 0
+ 14832 00d8 7B68     		ldr	r3, [r7, #4]
+ 14833 00da 181C     		mov	r0, r3
+ 14834 00dc BD46     		mov	sp, r7
+ 14835 00de 03B0     		add	sp, sp, #12
+ 14836              		@ sp needed for prologue
+ 14837 00e0 90BD     		pop	{r4, r7, pc}
+ 14838              	.L10:
+ 14839 00e2 C046C046 		.align	3
+ 14839      C046
+ 14840              	.L9:
+ 14841 00e8 00000000 		.word	0
+ 14842 00ec 00000080 		.word	-2147483648
+ 14843              	.LFE982:
+ 14844              		.fnend
+ 14846              		.align	2
+ 14847              		.global	_ZN10FfPipelineD2Ev
+ 14848              		.code	16
+ 14849              		.thumb_func
+ 14851              	_ZN10FfPipelineD2Ev:
+ 14852              		.fnstart
+ 14853              	.LFB984:
+  18:../ffmpeg_pipeline.cpp **** 
+  19:../ffmpeg_pipeline.cpp **** FfPipeline::~FfPipeline()
+ 14854              		.loc 1 19 0
+ 14855              		.save	{r7, lr}
+ 14856 00f0 80B5     		push	{r7, lr}
+ 14857              	.LCFI6:
+ 14858              		.pad #8
+ 14859 00f2 82B0     		sub	sp, sp, #8
+ 14860              	.LCFI7:
+ 14861              		.setfp r7, sp, #0
+ 14862 00f4 00AF     		add	r7, sp, #0
+ 14863              	.LCFI8:
+ 14864 00f6 7860     		str	r0, [r7, #4]
+  20:../ffmpeg_pipeline.cpp **** {
+  21:../ffmpeg_pipeline.cpp **** }
+ 14865              		.loc 1 21 0
+ 14866 00f8 7B68     		ldr	r3, [r7, #4]
+ 14867 00fa 181C     		mov	r0, r3
+ 14868 00fc BD46     		mov	sp, r7
+ 14869 00fe 02B0     		add	sp, sp, #8
+ 14870              		@ sp needed for prologue
+ 14871 0100 80BD     		pop	{r7, pc}
+ 14872              	.LFE984:
+ 14873              		.fnend
+ 14875 0102 C046     		.align	2
+ 14876              		.global	_ZN10FfPipelineD1Ev
+ 14877              		.code	16
+ 14878              		.thumb_func
+ 14880              	_ZN10FfPipelineD1Ev:
+ 14881              		.fnstart
+ 14882              	.LFB985:
+ 14883              		.loc 1 19 0
+ 14884              		.save	{r7, lr}
+ 14885 0104 80B5     		push	{r7, lr}
+ 14886              	.LCFI9:
+ 14887              		.pad #8
+ 14888 0106 82B0     		sub	sp, sp, #8
+ 14889              	.LCFI10:
+ 14890              		.setfp r7, sp, #0
+ 14891 0108 00AF     		add	r7, sp, #0
+ 14892              	.LCFI11:
+ 14893 010a 7860     		str	r0, [r7, #4]
+ 14894              		.loc 1 21 0
+ 14895 010c 7B68     		ldr	r3, [r7, #4]
+ 14896 010e 181C     		mov	r0, r3
+ 14897 0110 BD46     		mov	sp, r7
+ 14898 0112 02B0     		add	sp, sp, #8
+ 14899              		@ sp needed for prologue
+ 14900 0114 80BD     		pop	{r7, pc}
+ 14901              	.LFE985:
+ 14902              		.fnend
+ 14904 0116 C046     		.align	2
+ 14905              		.global	_ZN10FfPipeline21SetPartnerPipePointerEPv
+ 14906              		.code	16
+ 14907              		.thumb_func
+ 14909              	_ZN10FfPipeline21SetPartnerPipePointerEPv:
+ 14910              		.fnstart
+ 14911              	.LFB989:
+  22:../ffmpeg_pipeline.cpp **** 
+  23:../ffmpeg_pipeline.cpp **** void FfPipeline::r_avformat_close_input_v24(AVFormatContext **ps)
+  24:../ffmpeg_pipeline.cpp **** {
+  25:../ffmpeg_pipeline.cpp ****   return avformat_close_input(ps);
+  26:../ffmpeg_pipeline.cpp **** }
+  27:../ffmpeg_pipeline.cpp **** 
+  28:../ffmpeg_pipeline.cpp **** void FfPipeline::ClearNeedStop()
+  29:../ffmpeg_pipeline.cpp **** {
+  30:../ffmpeg_pipeline.cpp ****   pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+  31:../ffmpeg_pipeline.cpp **** 
+  32:../ffmpeg_pipeline.cpp ****   pthread_mutex_lock(&mutex);
+  33:../ffmpeg_pipeline.cpp ****   IsNeedStopFlag = false;
+  34:../ffmpeg_pipeline.cpp ****   pthread_mutex_unlock(&mutex);
+  35:../ffmpeg_pipeline.cpp **** }
+  36:../ffmpeg_pipeline.cpp **** 
+  37:../ffmpeg_pipeline.cpp **** void FfPipeline::SetNeedStop()
+  38:../ffmpeg_pipeline.cpp **** {
+  39:../ffmpeg_pipeline.cpp ****   pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+  40:../ffmpeg_pipeline.cpp **** 
+  41:../ffmpeg_pipeline.cpp ****   pthread_mutex_lock(&mutex);
+  42:../ffmpeg_pipeline.cpp ****   IsNeedStopFlag = true;
+  43:../ffmpeg_pipeline.cpp ****   pthread_mutex_unlock(&mutex);
+  44:../ffmpeg_pipeline.cpp **** }
+  45:../ffmpeg_pipeline.cpp **** 
+  46:../ffmpeg_pipeline.cpp **** void FfPipeline::SetPartnerPipePointer(gpointer p)
+ 14912              		.loc 1 46 0
+ 14913              		.save	{r7, lr}
+ 14914 0118 80B5     		push	{r7, lr}
+ 14915              	.LCFI12:
+ 14916              		.pad #8
+ 14917 011a 82B0     		sub	sp, sp, #8
+ 14918              	.LCFI13:
+ 14919              		.setfp r7, sp, #0
+ 14920 011c 00AF     		add	r7, sp, #0
+ 14921              	.LCFI14:
+ 14922 011e 7860     		str	r0, [r7, #4]
+ 14923 0120 3960     		str	r1, [r7]
+  47:../ffmpeg_pipeline.cpp **** {
+  48:../ffmpeg_pipeline.cpp ****   PartnerPipePointer = p;
+ 14924              		.loc 1 48 0
+ 14925 0122 7A68     		ldr	r2, [r7, #4]
+ 14926 0124 3B68     		ldr	r3, [r7]
+ 14927 0126 1360     		str	r3, [r2]
+  49:../ffmpeg_pipeline.cpp **** }
+ 14928              		.loc 1 49 0
+ 14929 0128 BD46     		mov	sp, r7
+ 14930 012a 02B0     		add	sp, sp, #8
+ 14931              		@ sp needed for prologue
+ 14932 012c 80BD     		pop	{r7, pc}
+ 14933              	.LFE989:
+ 14934              		.fnend
+ 14936 012e C046     		.align	2
+ 14937              		.global	_ZN10FfPipeline11SetRecStateE14RecordingState
+ 14938              		.code	16
+ 14939              		.thumb_func
+ 14941              	_ZN10FfPipeline11SetRecStateE14RecordingState:
+ 14942              		.fnstart
+ 14943              	.LFB990:
+  50:../ffmpeg_pipeline.cpp **** 
+  51:../ffmpeg_pipeline.cpp **** void FfPipeline::SetRecState(RecordingState rst)
+ 14944              		.loc 1 51 0
+ 14945              		.save	{r7, lr}
+ 14946 0130 80B5     		push	{r7, lr}
+ 14947              	.LCFI15:
+ 14948              		.pad #8
+ 14949 0132 82B0     		sub	sp, sp, #8
+ 14950              	.LCFI16:
+ 14951              		.setfp r7, sp, #0
+ 14952 0134 00AF     		add	r7, sp, #0
+ 14953              	.LCFI17:
+ 14954 0136 7860     		str	r0, [r7, #4]
+ 14955 0138 3960     		str	r1, [r7]
+  52:../ffmpeg_pipeline.cpp **** {
+  53:../ffmpeg_pipeline.cpp ****   RecState = rst;
+ 14956              		.loc 1 53 0
+ 14957 013a 7A68     		ldr	r2, [r7, #4]
+ 14958 013c 3B68     		ldr	r3, [r7]
+ 14959 013e 9360     		str	r3, [r2, #8]
+  54:../ffmpeg_pipeline.cpp **** }
+ 14960              		.loc 1 54 0
+ 14961 0140 BD46     		mov	sp, r7
+ 14962 0142 02B0     		add	sp, sp, #8
+ 14963              		@ sp needed for prologue
+ 14964 0144 80BD     		pop	{r7, pc}
+ 14965              	.LFE990:
+ 14966              		.fnend
+ 14968 0146 C046     		.align	2
+ 14969              		.global	_ZN10FfPipeline22SetWaitingKeyframeFlagEv
+ 14970              		.code	16
+ 14971              		.thumb_func
+ 14973              	_ZN10FfPipeline22SetWaitingKeyframeFlagEv:
+ 14974              		.fnstart
+ 14975              	.LFB992:
+  55:../ffmpeg_pipeline.cpp **** 
+  56:../ffmpeg_pipeline.cpp **** int FfPipeline::SetPartnerToStop()
+  57:../ffmpeg_pipeline.cpp **** {
+  58:../ffmpeg_pipeline.cpp ****   const char *class_name = "FfPipeline::SetPartnerToStop";
+  59:../ffmpeg_pipeline.cpp ****   FfPipeline *Pipe = (FfPipeline *) PartnerPipePointer;
+  60:../ffmpeg_pipeline.cpp **** 
+  61:../ffmpeg_pipeline.cpp ****   Pipe->SetNeedStop();
+  62:../ffmpeg_pipeline.cpp **** 
+  63:../ffmpeg_pipeline.cpp ****   sprintf(str, "DEBUG: Slot '%d' was marked for stopping by SetNeedStopFlag().\n", Pipe->Slot);
+  64:../ffmpeg_pipeline.cpp ****   AppendLog(str, class_name);
+  65:../ffmpeg_pipeline.cpp ****   return 0;
+  66:../ffmpeg_pipeline.cpp **** }
+  67:../ffmpeg_pipeline.cpp **** 
+  68:../ffmpeg_pipeline.cpp **** void FfPipeline::SetWaitingKeyframeFlag()
+ 14976              		.loc 1 68 0
+ 14977              		.save	{r7, lr}
+ 14978 0148 80B5     		push	{r7, lr}
+ 14979              	.LCFI18:
+ 14980              		.pad #8
+ 14981 014a 82B0     		sub	sp, sp, #8
+ 14982              	.LCFI19:
+ 14983              		.setfp r7, sp, #0
+ 14984 014c 00AF     		add	r7, sp, #0
+ 14985              	.LCFI20:
+ 14986 014e 7860     		str	r0, [r7, #4]
+  69:../ffmpeg_pipeline.cpp **** {
+  70:../ffmpeg_pipeline.cpp ****   WaitKeyframeFlag = true;
+ 14987              		.loc 1 70 0
+ 14988 0150 7968     		ldr	r1, [r7, #4]
+ 14989 0152 2922     		mov	r2, #41
+ 14990 0154 0123     		mov	r3, #1
+ 14991 0156 8B54     		strb	r3, [r1, r2]
+  71:../ffmpeg_pipeline.cpp **** }
+ 14992              		.loc 1 71 0
+ 14993 0158 BD46     		mov	sp, r7
+ 14994 015a 02B0     		add	sp, sp, #8
+ 14995              		@ sp needed for prologue
+ 14996 015c 80BD     		pop	{r7, pc}
+ 14997              	.LFE992:
+ 14998              		.fnend
+ 15000 015e C046     		.align	2
+ 15001              		.global	_ZN10FfPipeline24ClearWaitingKeyframeFlagEv
+ 15002              		.code	16
+ 15003              		.thumb_func
+ 15005              	_ZN10FfPipeline24ClearWaitingKeyframeFlagEv:
+ 15006              		.fnstart
+ 15007              	.LFB993:
+  72:../ffmpeg_pipeline.cpp **** 
+  73:../ffmpeg_pipeline.cpp **** void FfPipeline::ClearWaitingKeyframeFlag()
+ 15008              		.loc 1 73 0
+ 15009              		.save	{r7, lr}
+ 15010 0160 80B5     		push	{r7, lr}
+ 15011              	.LCFI21:
+ 15012              		.pad #8
+ 15013 0162 82B0     		sub	sp, sp, #8
+ 15014              	.LCFI22:
+ 15015              		.setfp r7, sp, #0
+ 15016 0164 00AF     		add	r7, sp, #0
+ 15017              	.LCFI23:
+ 15018 0166 7860     		str	r0, [r7, #4]
+  74:../ffmpeg_pipeline.cpp **** {
+  75:../ffmpeg_pipeline.cpp ****   WaitKeyframeFlag = false;
+ 15019              		.loc 1 75 0
+ 15020 0168 7968     		ldr	r1, [r7, #4]
+ 15021 016a 2922     		mov	r2, #41
+ 15022 016c 0023     		mov	r3, #0
+ 15023 016e 8B54     		strb	r3, [r1, r2]
+  76:../ffmpeg_pipeline.cpp **** }
+ 15024              		.loc 1 76 0
+ 15025 0170 BD46     		mov	sp, r7
+ 15026 0172 02B0     		add	sp, sp, #8
+ 15027              		@ sp needed for prologue
+ 15028 0174 80BD     		pop	{r7, pc}
+ 15029              	.LFE993:
+ 15030              		.fnend
+ 15032 0176 C046     		.align	2
+ 15033              		.global	_ZN10FfPipeline17IsWaitingKeyframeEv
+ 15034              		.code	16
+ 15035              		.thumb_func
+ 15037              	_ZN10FfPipeline17IsWaitingKeyframeEv:
+ 15038              		.fnstart
+ 15039              	.LFB994:
+  77:../ffmpeg_pipeline.cpp **** 
+  78:../ffmpeg_pipeline.cpp **** bool FfPipeline::IsWaitingKeyframe()
+ 15040              		.loc 1 78 0
+ 15041              		.save	{r7, lr}
+ 15042 0178 80B5     		push	{r7, lr}
+ 15043              	.LCFI24:
+ 15044              		.pad #8
+ 15045 017a 82B0     		sub	sp, sp, #8
+ 15046              	.LCFI25:
+ 15047              		.setfp r7, sp, #0
+ 15048 017c 00AF     		add	r7, sp, #0
+ 15049              	.LCFI26:
+ 15050 017e 7860     		str	r0, [r7, #4]
+  79:../ffmpeg_pipeline.cpp **** {
+  80:../ffmpeg_pipeline.cpp ****   return WaitKeyframeFlag;
+ 15051              		.loc 1 80 0
+ 15052 0180 7A68     		ldr	r2, [r7, #4]
+ 15053 0182 2923     		mov	r3, #41
+ 15054 0184 D35C     		ldrb	r3, [r2, r3]
+  81:../ffmpeg_pipeline.cpp **** }
+ 15055              		.loc 1 81 0
+ 15056 0186 181C     		mov	r0, r3
+ 15057 0188 BD46     		mov	sp, r7
+ 15058 018a 02B0     		add	sp, sp, #8
+ 15059              		@ sp needed for prologue
+ 15060 018c 80BD     		pop	{r7, pc}
+ 15061              	.LFE994:
+ 15062              		.fnend
+ 15064 018e C046     		.align	2
+ 15065              		.global	_ZN10FfPipeline11GetRecStateEv
+ 15066              		.code	16
+ 15067              		.thumb_func
+ 15069              	_ZN10FfPipeline11GetRecStateEv:
+ 15070              		.fnstart
+ 15071              	.LFB998:
+  82:../ffmpeg_pipeline.cpp **** 
+  83:../ffmpeg_pipeline.cpp **** bool FfPipeline::IsNeedStop()
+  84:../ffmpeg_pipeline.cpp **** {
+  85:../ffmpeg_pipeline.cpp ****   pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+  86:../ffmpeg_pipeline.cpp ****   bool retval;
+  87:../ffmpeg_pipeline.cpp **** 
+  88:../ffmpeg_pipeline.cpp ****   pthread_mutex_lock(&mutex);
+  89:../ffmpeg_pipeline.cpp ****   retval = IsNeedStopFlag;
+  90:../ffmpeg_pipeline.cpp ****   pthread_mutex_unlock(&mutex);
+  91:../ffmpeg_pipeline.cpp **** 
+  92:../ffmpeg_pipeline.cpp ****   return retval;
+  93:../ffmpeg_pipeline.cpp **** }
+  94:../ffmpeg_pipeline.cpp **** 
+  95:../ffmpeg_pipeline.cpp **** int FfPipeline::ThInitiateRecording()
+  96:../ffmpeg_pipeline.cpp **** {
+  97:../ffmpeg_pipeline.cpp ****   const char *class_name = "FfPipeline::ThInitiateRecording";
+  98:../ffmpeg_pipeline.cpp ****   pthread_t ptid;
+  99:../ffmpeg_pipeline.cpp **** 
+ 100:../ffmpeg_pipeline.cpp ****   sprintf(str, "DEBUG: Pipeline slot '%d'. Try to starting thread with stopping...\n", Slot);
+ 101:../ffmpeg_pipeline.cpp ****   AppendLog(str, class_name);
+ 102:../ffmpeg_pipeline.cpp **** 
+ 103:../ffmpeg_pipeline.cpp ****   pthread_create(&ptid, NULL, &ThRecording, (void *) this);
+ 104:../ffmpeg_pipeline.cpp **** 
+ 105:../ffmpeg_pipeline.cpp ****   pthread_detach(ptid);
+ 106:../ffmpeg_pipeline.cpp **** 
+ 107:../ffmpeg_pipeline.cpp ****   sprintf(str, "DEBUG: Pipeline slot '%d'. Starting thread ended!\n", Slot);
+ 108:../ffmpeg_pipeline.cpp ****   AppendLog(str, class_name);
+ 109:../ffmpeg_pipeline.cpp **** 
+ 110:../ffmpeg_pipeline.cpp ****   return 0;
+ 111:../ffmpeg_pipeline.cpp **** }
+ 112:../ffmpeg_pipeline.cpp **** 
+ 113:../ffmpeg_pipeline.cpp **** void *FfPipeline::ThRecording(void *pdata)
+ 114:../ffmpeg_pipeline.cpp **** {
+ 115:../ffmpeg_pipeline.cpp ****   FfPipeline *Pip = (FfPipeline *) pdata;
+ 116:../ffmpeg_pipeline.cpp **** 
+ 117:../ffmpeg_pipeline.cpp ****   Pip->DoRecording();
+ 118:../ffmpeg_pipeline.cpp **** 
+ 119:../ffmpeg_pipeline.cpp ****   return pdata;
+ 120:../ffmpeg_pipeline.cpp **** }
+ 121:../ffmpeg_pipeline.cpp **** 
+ 122:../ffmpeg_pipeline.cpp **** RecordingState FfPipeline::GetRecState()
+ 15072              		.loc 1 122 0
+ 15073              		.save	{r7, lr}
+ 15074 0190 80B5     		push	{r7, lr}
+ 15075              	.LCFI27:
+ 15076              		.pad #8
+ 15077 0192 82B0     		sub	sp, sp, #8
+ 15078              	.LCFI28:
+ 15079              		.setfp r7, sp, #0
+ 15080 0194 00AF     		add	r7, sp, #0
+ 15081              	.LCFI29:
+ 15082 0196 7860     		str	r0, [r7, #4]
+ 123:../ffmpeg_pipeline.cpp **** {
+ 124:../ffmpeg_pipeline.cpp ****   return RecState;
+ 15083              		.loc 1 124 0
+ 15084 0198 7B68     		ldr	r3, [r7, #4]
+ 15085 019a 9B68     		ldr	r3, [r3, #8]
+ 125:../ffmpeg_pipeline.cpp **** }
+ 15086              		.loc 1 125 0
+ 15087 019c 181C     		mov	r0, r3
+ 15088 019e BD46     		mov	sp, r7
+ 15089 01a0 02B0     		add	sp, sp, #8
+ 15090              		@ sp needed for prologue
+ 15091 01a2 80BD     		pop	{r7, pc}
+ 15092              	.LFE998:
+ 15093              		.fnend
+ 15095              		.align	2
+ 15096              		.code	16
+ 15097              		.thumb_func
+ 15099              	_Z41__static_initialization_and_destruction_0ii:
+ 15100              		.fnstart
+ 15101              	.LFB1032:
+ 126:../ffmpeg_pipeline.cpp **** 
+ 127:../ffmpeg_pipeline.cpp **** int FfPipeline::Start()
+ 128:../ffmpeg_pipeline.cpp **** {
+ 129:../ffmpeg_pipeline.cpp **** 	return ThInitiateRecording();
+ 130:../ffmpeg_pipeline.cpp **** }
+ 131:../ffmpeg_pipeline.cpp **** 
+ 132:../ffmpeg_pipeline.cpp **** void FfPipeline::WriteFrame_v242(AVFormatContext *s, AVStream *st, AVPacket *pkt, AVBitStreamFilter
+ 133:../ffmpeg_pipeline.cpp **** {
+ 134:../ffmpeg_pipeline.cpp ****   const char *class_name = "FfPipeline::WriteFrame_v242";
+ 135:../ffmpeg_pipeline.cpp ****   int ret;
+ 136:../ffmpeg_pipeline.cpp ****   AVCodecContext *avctx = st->codec;
+ 137:../ffmpeg_pipeline.cpp **** 
+ 138:../ffmpeg_pipeline.cpp ****   if ((avctx->codec_type == AVMEDIA_TYPE_AUDIO || avctx->codec_type == AVMEDIA_TYPE_VIDEO) && pkt->
+ 139:../ffmpeg_pipeline.cpp ****     {
+ 140:../ffmpeg_pipeline.cpp ****       int64_t max = st->cur_dts + !(s->oformat->flags & AVFMT_TS_NONSTRICT);
+ 141:../ffmpeg_pipeline.cpp ****       if (st->cur_dts && st->cur_dts != AV_NOPTS_VALUE && max > pkt->dts)
+ 142:../ffmpeg_pipeline.cpp ****         {
+ 143:../ffmpeg_pipeline.cpp ****           AppendLog("WARNING: PTS:DTS < PRId64 invalid, clipping\n", class_name);
+ 144:../ffmpeg_pipeline.cpp ****           if (pkt->pts >= pkt->dts)
+ 145:../ffmpeg_pipeline.cpp ****             pkt->pts = FFMAX(pkt->pts, max);
+ 146:../ffmpeg_pipeline.cpp ****           pkt->dts = max;
+ 147:../ffmpeg_pipeline.cpp ****         }
+ 148:../ffmpeg_pipeline.cpp ****     }
+ 149:../ffmpeg_pipeline.cpp **** 
+ 150:../ffmpeg_pipeline.cpp ****   ret = av_interleaved_write_frame(s, pkt);
+ 151:../ffmpeg_pipeline.cpp **** 
+ 152:../ffmpeg_pipeline.cpp ****   if (ret < 0)
+ 153:../ffmpeg_pipeline.cpp ****     {
+ 154:../ffmpeg_pipeline.cpp ****       sprintf(str, "ERROR: Error executing av_interleaved_write_frame()...Error code: %d. Error: '%
+ 155:../ffmpeg_pipeline.cpp ****       AppendLog(str, class_name);
+ 156:../ffmpeg_pipeline.cpp ****     }
+ 157:../ffmpeg_pipeline.cpp **** }
+ 158:../ffmpeg_pipeline.cpp **** 
+ 159:../ffmpeg_pipeline.cpp **** void FfPipeline::RescalePtsDts24(AVPacket *pkt, AVStream *in_stream, AVStream *out_stream)
+ 160:../ffmpeg_pipeline.cpp **** {
+ 161:../ffmpeg_pipeline.cpp ****   pkt->pts = av_rescale_q(pkt->pts, in_stream->time_base, out_stream->time_base);
+ 162:../ffmpeg_pipeline.cpp ****   pkt->dts = av_rescale_q(pkt->dts, in_stream->time_base, out_stream->time_base);
+ 163:../ffmpeg_pipeline.cpp ****   pkt->duration = av_rescale_q(pkt->duration, in_stream->time_base, out_stream->time_base);
+ 164:../ffmpeg_pipeline.cpp **** }
+ 165:../ffmpeg_pipeline.cpp **** 
+ 166:../ffmpeg_pipeline.cpp **** int FfPipeline::DoRecording(void)
+ 167:../ffmpeg_pipeline.cpp **** {
+ 168:../ffmpeg_pipeline.cpp ****   const char *class_name = "FfPipeline::DoRecording";
+ 169:../ffmpeg_pipeline.cpp ****   AVFormatContext *ifcx = NULL;
+ 170:../ffmpeg_pipeline.cpp ****   AVFormatContext *ofcx = NULL;
+ 171:../ffmpeg_pipeline.cpp ****   AVDictionary *opts = NULL;
+ 172:../ffmpeg_pipeline.cpp ****   AVOutputFormat *ofmt = NULL;
+ 173:../ffmpeg_pipeline.cpp ****   AVPacket pkt;
+ 174:../ffmpeg_pipeline.cpp ****   uint64_t a_packets = 0, v_packets = 0;
+ 175:../ffmpeg_pipeline.cpp ****   size_t i;
+ 176:../ffmpeg_pipeline.cpp ****   int ret;
+ 177:../ffmpeg_pipeline.cpp ****   char path[BUF_SIZE];
+ 178:../ffmpeg_pipeline.cpp **** 
+ 179:../ffmpeg_pipeline.cpp ****   sprintf(path, "%s_%d.mkv", SAVE_PATH, ++Count);
+ 180:../ffmpeg_pipeline.cpp **** 
+ 181:../ffmpeg_pipeline.cpp ****   sprintf(str, "DEBUG: Output path: '%s'\n", path);
+ 182:../ffmpeg_pipeline.cpp ****   AppendLog(str, class_name);
+ 183:../ffmpeg_pipeline.cpp **** 
+ 184:../ffmpeg_pipeline.cpp ****   av_dict_set(&opts, "rtsp_transport", "tcp", 0);
+ 185:../ffmpeg_pipeline.cpp **** 
+ 186:../ffmpeg_pipeline.cpp ****   if (avformat_open_input(&ifcx, CAM_URL, NULL, &opts) < 0)
+ 187:../ffmpeg_pipeline.cpp ****     {
+ 188:../ffmpeg_pipeline.cpp ****       avformat_close_input(&ifcx);
+ 189:../ffmpeg_pipeline.cpp ****       ifcx = NULL;
+ 190:../ffmpeg_pipeline.cpp **** 
+ 191:../ffmpeg_pipeline.cpp ****       av_dict_free(&opts);
+ 192:../ffmpeg_pipeline.cpp **** 
+ 193:../ffmpeg_pipeline.cpp ****       return -1;
+ 194:../ffmpeg_pipeline.cpp ****     }
+ 195:../ffmpeg_pipeline.cpp ****   else
+ 196:../ffmpeg_pipeline.cpp ****     {
+ 197:../ffmpeg_pipeline.cpp ****     }
+ 198:../ffmpeg_pipeline.cpp **** 
+ 199:../ffmpeg_pipeline.cpp ****   av_dict_free(&opts);
+ 200:../ffmpeg_pipeline.cpp **** 
+ 201:../ffmpeg_pipeline.cpp ****   if (avformat_find_stream_info(ifcx, NULL) < 0)
+ 202:../ffmpeg_pipeline.cpp ****     {
+ 203:../ffmpeg_pipeline.cpp ****       avformat_close_input(&ifcx);
+ 204:../ffmpeg_pipeline.cpp ****       ifcx = NULL;
+ 205:../ffmpeg_pipeline.cpp **** 
+ 206:../ffmpeg_pipeline.cpp ****       return -1;
+ 207:../ffmpeg_pipeline.cpp ****     }
+ 208:../ffmpeg_pipeline.cpp **** 
+ 209:../ffmpeg_pipeline.cpp ****   avformat_alloc_output_context2(&ofcx, NULL, NULL, path);
+ 210:../ffmpeg_pipeline.cpp **** 
+ 211:../ffmpeg_pipeline.cpp ****   if (ofcx == NULL)
+ 212:../ffmpeg_pipeline.cpp ****     {
+ 213:../ffmpeg_pipeline.cpp ****       return -1;
+ 214:../ffmpeg_pipeline.cpp ****     }
+ 215:../ffmpeg_pipeline.cpp ****   else
+ 216:../ffmpeg_pipeline.cpp ****     {
+ 217:../ffmpeg_pipeline.cpp ****     }
+ 218:../ffmpeg_pipeline.cpp **** 
+ 219:../ffmpeg_pipeline.cpp ****   ofmt = ofcx->oformat;
+ 220:../ffmpeg_pipeline.cpp **** 
+ 221:../ffmpeg_pipeline.cpp ****   if (ofmt == NULL)
+ 222:../ffmpeg_pipeline.cpp ****     {
+ 223:../ffmpeg_pipeline.cpp ****       return -1;
+ 224:../ffmpeg_pipeline.cpp ****     }
+ 225:../ffmpeg_pipeline.cpp **** 
+ 226:../ffmpeg_pipeline.cpp ****   for (i = 0; i < ifcx->nb_streams; i++)
+ 227:../ffmpeg_pipeline.cpp ****     {
+ 228:../ffmpeg_pipeline.cpp ****       AVStream *in_stream = ifcx->streams[i];
+ 229:../ffmpeg_pipeline.cpp ****       AVStream *out_stream = avformat_new_stream(ofcx, in_stream->codec->codec);
+ 230:../ffmpeg_pipeline.cpp **** 
+ 231:../ffmpeg_pipeline.cpp ****       if (!out_stream)
+ 232:../ffmpeg_pipeline.cpp ****         {
+ 233:../ffmpeg_pipeline.cpp ****           AppendLog("Failed allocating output stream\n", class_name);
+ 234:../ffmpeg_pipeline.cpp ****           return -1;
+ 235:../ffmpeg_pipeline.cpp ****         }
+ 236:../ffmpeg_pipeline.cpp **** 
+ 237:../ffmpeg_pipeline.cpp ****       ret = avcodec_copy_context(out_stream->codec, in_stream->codec);
+ 238:../ffmpeg_pipeline.cpp **** 
+ 239:../ffmpeg_pipeline.cpp ****       if (ret < 0)
+ 240:../ffmpeg_pipeline.cpp ****         {
+ 241:../ffmpeg_pipeline.cpp ****           return ret;
+ 242:../ffmpeg_pipeline.cpp ****         }
+ 243:../ffmpeg_pipeline.cpp **** 
+ 244:../ffmpeg_pipeline.cpp ****       out_stream->time_base = in_stream->time_base;
+ 245:../ffmpeg_pipeline.cpp ****       out_stream->codec->time_base = out_stream->time_base;
+ 246:../ffmpeg_pipeline.cpp ****       out_stream->codec->codec_tag = 0;
+ 247:../ffmpeg_pipeline.cpp **** 
+ 248:../ffmpeg_pipeline.cpp ****       if (ofcx->oformat->flags & AVFMT_GLOBALHEADER)
+ 249:../ffmpeg_pipeline.cpp ****         out_stream->codec->flags |= CODEC_FLAG_GLOBAL_HEADER;
+ 250:../ffmpeg_pipeline.cpp **** 
+ 251:../ffmpeg_pipeline.cpp ****     }   // End of for streams
+ 252:../ffmpeg_pipeline.cpp **** 
+ 253:../ffmpeg_pipeline.cpp ****   if (!(ofmt->flags & AVFMT_NOFILE))
+ 254:../ffmpeg_pipeline.cpp ****     {
+ 255:../ffmpeg_pipeline.cpp ****       ret = avio_open(&ofcx->pb, path, AVIO_FLAG_WRITE);
+ 256:../ffmpeg_pipeline.cpp ****       if (ret < 0)
+ 257:../ffmpeg_pipeline.cpp ****         {
+ 258:../ffmpeg_pipeline.cpp ****           return ret;
+ 259:../ffmpeg_pipeline.cpp ****         }
+ 260:../ffmpeg_pipeline.cpp ****     }
+ 261:../ffmpeg_pipeline.cpp ****   else
+ 262:../ffmpeg_pipeline.cpp ****     {
+ 263:../ffmpeg_pipeline.cpp ****       AppendLog("WARNING: for ofmt set flag AVFMT_NOFILE so we skip open file.\n", class_name);
+ 264:../ffmpeg_pipeline.cpp ****     }
+ 265:../ffmpeg_pipeline.cpp **** 
+ 266:../ffmpeg_pipeline.cpp ****   ret = avformat_write_header(ofcx, NULL);
+ 267:../ffmpeg_pipeline.cpp **** 
+ 268:../ffmpeg_pipeline.cpp ****   if (ret < 0)
+ 269:../ffmpeg_pipeline.cpp ****     {
+ 270:../ffmpeg_pipeline.cpp ****       return ret;
+ 271:../ffmpeg_pipeline.cpp ****     }
+ 272:../ffmpeg_pipeline.cpp **** 
+ 273:../ffmpeg_pipeline.cpp ****   SetWaitingKeyframeFlag();
+ 274:../ffmpeg_pipeline.cpp ****   ClearNeedStop();
+ 275:../ffmpeg_pipeline.cpp **** 
+ 276:../ffmpeg_pipeline.cpp ****   while((av_read_frame(ifcx, &pkt) >= 0) && (!IsNeedStop()))
+ 277:../ffmpeg_pipeline.cpp ****     {
+ 278:../ffmpeg_pipeline.cpp ****       AVStream *in_stream = NULL, *out_stream = NULL;
+ 279:../ffmpeg_pipeline.cpp **** 
+ 280:../ffmpeg_pipeline.cpp ****       if ((IsWaitingKeyframe() && !(pkt.flags & AV_PKT_FLAG_KEY)))
+ 281:../ffmpeg_pipeline.cpp ****         {
+ 282:../ffmpeg_pipeline.cpp ****           av_free_packet(&pkt);
+ 283:../ffmpeg_pipeline.cpp ****           continue;
+ 284:../ffmpeg_pipeline.cpp ****         }
+ 285:../ffmpeg_pipeline.cpp **** 
+ 286:../ffmpeg_pipeline.cpp ****       if (IsWaitingKeyframe())
+ 287:../ffmpeg_pipeline.cpp ****         {
+ 288:../ffmpeg_pipeline.cpp ****           ClearWaitingKeyframeFlag();
+ 289:../ffmpeg_pipeline.cpp ****           pkt.pts = pkt.dts = AV_NOPTS_VALUE;
+ 290:../ffmpeg_pipeline.cpp ****           SetRecState(REC_WRITING);
+ 291:../ffmpeg_pipeline.cpp ****           SetPartnerToStop();
+ 292:../ffmpeg_pipeline.cpp ****         }
+ 293:../ffmpeg_pipeline.cpp **** 
+ 294:../ffmpeg_pipeline.cpp ****       in_stream  = ifcx->streams[pkt.stream_index];
+ 295:../ffmpeg_pipeline.cpp ****       out_stream = ofcx->streams[pkt.stream_index];
+ 296:../ffmpeg_pipeline.cpp **** 
+ 297:../ffmpeg_pipeline.cpp ****       if (!in_stream)
+ 298:../ffmpeg_pipeline.cpp ****         {
+ 299:../ffmpeg_pipeline.cpp ****           AppendLog("ERROR: in_stream is NULL pointer! Skip this packet!\n", class_name);
+ 300:../ffmpeg_pipeline.cpp ****           av_free_packet(&pkt);
+ 301:../ffmpeg_pipeline.cpp **** 
+ 302:../ffmpeg_pipeline.cpp ****           continue;
+ 303:../ffmpeg_pipeline.cpp ****         }
+ 304:../ffmpeg_pipeline.cpp **** 
+ 305:../ffmpeg_pipeline.cpp ****       if (!out_stream)
+ 306:../ffmpeg_pipeline.cpp ****         {
+ 307:../ffmpeg_pipeline.cpp ****           AppendLog("ERROR: out_stream is NULL pointer! Skip this packet!\n", class_name);
+ 308:../ffmpeg_pipeline.cpp ****           av_free_packet(&pkt);
+ 309:../ffmpeg_pipeline.cpp **** 
+ 310:../ffmpeg_pipeline.cpp ****           continue;
+ 311:../ffmpeg_pipeline.cpp ****         }
+ 312:../ffmpeg_pipeline.cpp **** 
+ 313:../ffmpeg_pipeline.cpp ****       if (out_stream->codec->codec_type == AVMEDIA_TYPE_AUDIO)
+ 314:../ffmpeg_pipeline.cpp ****         a_packets++;
+ 315:../ffmpeg_pipeline.cpp ****       else if (out_stream->codec->codec_type == AVMEDIA_TYPE_VIDEO)
+ 316:../ffmpeg_pipeline.cpp ****         v_packets++;
+ 317:../ffmpeg_pipeline.cpp **** 
+ 318:../ffmpeg_pipeline.cpp ****       RescalePtsDts24(&pkt, in_stream, out_stream);
+ 319:../ffmpeg_pipeline.cpp **** 
+ 320:../ffmpeg_pipeline.cpp ****       WriteFrame_v242(ofcx, out_stream, &pkt, NULL);
+ 321:../ffmpeg_pipeline.cpp **** 
+ 322:../ffmpeg_pipeline.cpp ****       av_free_packet(&pkt);
+ 323:../ffmpeg_pipeline.cpp ****     }
+ 324:../ffmpeg_pipeline.cpp **** 
+ 325:../ffmpeg_pipeline.cpp ****   // Now we stopping
+ 326:../ffmpeg_pipeline.cpp ****   sprintf(str, "DEBUG: Now we stopping Slot %d\n", Slot);
+ 327:../ffmpeg_pipeline.cpp ****   AppendLog(str, class_name);
+ 328:../ffmpeg_pipeline.cpp **** 
+ 329:../ffmpeg_pipeline.cpp ****   if (!IsNeedStop())
+ 330:../ffmpeg_pipeline.cpp ****     av_free_packet(&pkt);
+ 331:../ffmpeg_pipeline.cpp **** 
+ 332:../ffmpeg_pipeline.cpp ****   sprintf(str, "DEBUG: Try to av_write_trailer() for Slot %d\n", Slot);
+ 333:../ffmpeg_pipeline.cpp ****   AppendLog(str, class_name);
+ 334:../ffmpeg_pipeline.cpp **** 
+ 335:../ffmpeg_pipeline.cpp ****   av_write_trailer(ofcx);
+ 336:../ffmpeg_pipeline.cpp **** 
+ 337:../ffmpeg_pipeline.cpp ****   sprintf(str, "DEBUG: Try to close all streams codec for Slot %d\n", Slot);
+ 338:../ffmpeg_pipeline.cpp ****   AppendLog(str, class_name);
+ 339:../ffmpeg_pipeline.cpp **** 
+ 340:../ffmpeg_pipeline.cpp ****   for (i = 0; i < ofcx->nb_streams; i++)
+ 341:../ffmpeg_pipeline.cpp ****     {
+ 342:../ffmpeg_pipeline.cpp ****       avcodec_close(ofcx->streams[i]->codec);
+ 343:../ffmpeg_pipeline.cpp ****       av_freep(ofcx->streams[i]);
+ 344:../ffmpeg_pipeline.cpp ****     }
+ 345:../ffmpeg_pipeline.cpp **** 
+ 346:../ffmpeg_pipeline.cpp ****   sprintf(str, "DEBUG: Try to avio_close() for Slot %d\n", Slot);
+ 347:../ffmpeg_pipeline.cpp ****   AppendLog(str, class_name);
+ 348:../ffmpeg_pipeline.cpp **** 
+ 349:../ffmpeg_pipeline.cpp ****   avio_close(ofcx->pb);
+ 350:../ffmpeg_pipeline.cpp **** 
+ 351:../ffmpeg_pipeline.cpp ****   sprintf(str, "DEBUG: Try to av_free() for Slot %d\n", Slot);
+ 352:../ffmpeg_pipeline.cpp ****   AppendLog(str, class_name);
+ 353:../ffmpeg_pipeline.cpp **** 
+ 354:../ffmpeg_pipeline.cpp ****   av_free(ofcx);
+ 355:../ffmpeg_pipeline.cpp **** 
+ 356:../ffmpeg_pipeline.cpp ****   sprintf(str, "DEBUG: Try to avformat_close_input() for Slot %d\n", Slot);
+ 357:../ffmpeg_pipeline.cpp ****   AppendLog(str, class_name);
+ 358:../ffmpeg_pipeline.cpp **** 
+ 359:../ffmpeg_pipeline.cpp ****   avformat_close_input(&ifcx);
+ 360:../ffmpeg_pipeline.cpp **** 
+ 361:../ffmpeg_pipeline.cpp ****   SetRecState(REC_STOPPED);
+ 362:../ffmpeg_pipeline.cpp **** 
+ 363:../ffmpeg_pipeline.cpp ****   return 0;
+ 364:../ffmpeg_pipeline.cpp **** }
+ 15102              		.loc 1 364 0
+ 15103              		.save	{r7, lr}
+ 15104 01a4 80B5     		push	{r7, lr}
+ 15105              	.LCFI30:
+ 15106              		.pad #8
+ 15107 01a6 82B0     		sub	sp, sp, #8
+ 15108              	.LCFI31:
+ 15109              		.setfp r7, sp, #0
+ 15110 01a8 00AF     		add	r7, sp, #0
+ 15111              	.LCFI32:
+ 15112 01aa 7860     		str	r0, [r7, #4]
+ 15113 01ac 3960     		str	r1, [r7]
+ 15114              		.loc 1 364 0
+ 15115 01ae 7B68     		ldr	r3, [r7, #4]
+ 15116 01b0 012B     		cmp	r3, #1
+ 15117 01b2 0DD1     		bne	.L31
+ 15118 01b4 3A68     		ldr	r2, [r7]
+ 15119 01b6 084B     		ldr	r3, .L32
+ 15120 01b8 9A42     		cmp	r2, r3
+ 15121 01ba 09D1     		bne	.L31
+   1:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // Standard iostream objects -*- C++ -*-
+   2:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+   3:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // Copyright (C) 1997, 1998, 1999, 2001, 2002, 2005, 2008
+   4:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // Free Software Foundation, Inc.
+   5:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** //
+   6:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // This file is part of the GNU ISO C++ Library.  This library is free
+   7:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // software; you can redistribute it and/or modify it under the
+   8:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // terms of the GNU General Public License as published by the
+   9:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // Free Software Foundation; either version 2, or (at your option)
+  10:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // any later version.
+  11:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  12:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // This library is distributed in the hope that it will be useful,
+  13:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // but WITHOUT ANY WARRANTY; without even the implied warranty of
+  14:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  15:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // GNU General Public License for more details.
+  16:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  17:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // You should have received a copy of the GNU General Public License
+  18:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // along with this library; see the file COPYING.  If not, write to
+  19:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+  20:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // Boston, MA 02110-1301, USA.
+  21:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  22:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // As a special exception, you may use this file as part of a free software
+  23:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // library without restriction.  Specifically, if other files instantiate
+  24:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // templates or use macros or inline functions from this file, or you compile
+  25:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // this file and link it with other files to produce an executable, this
+  26:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // file does not by itself cause the resulting executable to be covered by
+  27:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // the GNU General Public License.  This exception does not however
+  28:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // invalidate any other reasons why the executable file might be covered by
+  29:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // the GNU General Public License.
+  30:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  31:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** /** @file iostream
+  32:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****  *  This is a Standard C++ Library header. 
+  33:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****  */
+  34:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  35:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** //
+  36:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // ISO C++ 14882: 27.3  Standard iostream objects
+  37:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** //
+  38:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  39:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #ifndef _GLIBCXX_IOSTREAM
+  40:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #define _GLIBCXX_IOSTREAM 1
+  41:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  42:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #pragma GCC system_header
+  43:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  44:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #include <bits/c++config.h>
+  45:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #include <ostream>
+  46:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #include <istream>
+  47:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  48:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** _GLIBCXX_BEGIN_NAMESPACE(std)
+  49:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  50:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   /**
+  51:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  @name Standard Stream Objects
+  52:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *
+  53:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  The &lt;iostream&gt; header declares the eight <em>standard stream
+  54:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  objects</em>.  For other declarations, see
+  55:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  http://gcc.gnu.org/onlinedocs/libstdc++/manual/bk01pt11ch24.html
+  56:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  and the @link s27_2_iosfwd I/O forward declarations @endlink
+  57:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *
+  58:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  They are required by default to cooperate with the global C library's
+  59:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  @c FILE streams, and to be available during program startup and
+  60:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  termination.  For more information, see the HOWTO linked to above.
+  61:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   */
+  62:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   //@{
+  63:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern istream cin;		///< Linked to standard input
+  64:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern ostream cout;		///< Linked to standard output
+  65:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern ostream cerr;		///< Linked to standard error (unbuffered)
+  66:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern ostream clog;		///< Linked to standard error (buffered)
+  67:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  68:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #ifdef _GLIBCXX_USE_WCHAR_T
+  69:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern wistream wcin;		///< Linked to standard input
+  70:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern wostream wcout;	///< Linked to standard output
+  71:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern wostream wcerr;	///< Linked to standard error (unbuffered)
+  72:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern wostream wclog;	///< Linked to standard error (buffered)
+  73:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #endif
+  74:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   //@}
+  75:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  76:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   // For construction of filebuffers for cout, cin, cerr, clog et. al.
+  77:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   static ios_base::Init __ioinit;
+ 15122              		.loc 26 77 0
+ 15123 01bc 074B     		ldr	r3, .L32+4
+ 15124 01be 181C     		mov	r0, r3
+ 15125 01c0 FFF7FEFF 		bl	_ZNSt8ios_base4InitC1Ev
+ 15126 01c4 0649     		ldr	r1, .L32+8
+ 15127 01c6 054B     		ldr	r3, .L32+4
+ 15128 01c8 064A     		ldr	r2, .L32+12
+ 15129 01ca 181C     		mov	r0, r3
+ 15130 01cc FFF7FEFF 		bl	__aeabi_atexit
+ 15131              	.L31:
+ 15132              		.loc 1 364 0
+ 15133 01d0 BD46     		mov	sp, r7
+ 15134 01d2 02B0     		add	sp, sp, #8
+ 15135              		@ sp needed for prologue
+ 15136 01d4 80BD     		pop	{r7, pc}
+ 15137              	.L33:
+ 15138 01d6 C046     		.align	2
+ 15139              	.L32:
+ 15140 01d8 FFFF0000 		.word	65535
+ 15141 01dc 00000000 		.word	_ZStL8__ioinit
+ 15142 01e0 00000000 		.word	_ZNSt8ios_base4InitD1Ev
+ 15143 01e4 00000000 		.word	__dso_handle
+ 15144              	.LFE1032:
+ 15145              		.fnend
+ 15147              		.align	2
+ 15148              		.code	16
+ 15149              		.thumb_func
+ 15151              	_GLOBAL__I__ZN10FfPipelineC2Eh:
+ 15152              		.fnstart
+ 15153              	.LFB1033:
+ 15154              		.loc 1 364 0
+ 15155              		.save	{r7, lr}
+ 15156 01e8 80B5     		push	{r7, lr}
+ 15157              	.LCFI33:
+ 15158              		.setfp r7, sp, #0
+ 15159 01ea 00AF     		add	r7, sp, #0
+ 15160              	.LCFI34:
+ 15161              		.loc 1 364 0
+ 15162 01ec 034B     		ldr	r3, .L36
+ 15163 01ee 0120     		mov	r0, #1
+ 15164 01f0 191C     		mov	r1, r3
+ 15165 01f2 FFF7D7FF 		bl	_Z41__static_initialization_and_destruction_0ii
+ 15166 01f6 BD46     		mov	sp, r7
+ 15167              		@ sp needed for prologue
+ 15168 01f8 80BD     		pop	{r7, pc}
+ 15169              	.L37:
+ 15170 01fa C046     		.align	2
+ 15171              	.L36:
+ 15172 01fc FFFF0000 		.word	65535
+ 15173              	.LFE1033:
+ 15174              		.fnend
+ 15176              		.section	.init_array,"aw",%init_array
+ 15177              		.align	2
+ 15178 0000 00000000 		.word	_GLOBAL__I__ZN10FfPipelineC2Eh(target1)
+ 15179              		.text
+ 15180              		.align	2
+ 15181              		.global	_ZN10FfPipeline26r_avformat_close_input_v24EPP15AVFormatContext
+ 15182              		.code	16
+ 15183              		.thumb_func
+ 15185              	_ZN10FfPipeline26r_avformat_close_input_v24EPP15AVFormatContext:
+ 15186              		.fnstart
+ 15187              	.LFB986:
+ 15188              		.loc 1 23 0
+ 15189              		.save	{r7, lr}
+ 15190 0200 80B5     		push	{r7, lr}
+ 15191              	.LCFI35:
+ 15192              		.pad #8
+ 15193 0202 82B0     		sub	sp, sp, #8
+ 15194              	.LCFI36:
+ 15195              		.setfp r7, sp, #0
+ 15196 0204 00AF     		add	r7, sp, #0
+ 15197              	.LCFI37:
+ 15198 0206 7860     		str	r0, [r7, #4]
+ 15199 0208 3960     		str	r1, [r7]
+ 15200              		.loc 1 25 0
+ 15201 020a 3B68     		ldr	r3, [r7]
+ 15202 020c 181C     		mov	r0, r3
+ 15203 020e FFF7FEFF 		bl	avformat_close_input
+ 15204              		.loc 1 26 0
+ 15205 0212 BD46     		mov	sp, r7
+ 15206 0214 02B0     		add	sp, sp, #8
+ 15207              		@ sp needed for prologue
+ 15208 0216 80BD     		pop	{r7, pc}
+ 15209              	.LFE986:
+ 15210              		.fnend
+ 15212              		.align	2
+ 15213              		.global	_ZN10FfPipeline15RescalePtsDts24EP8AVPacketP8AVStreamS3_
+ 15214              		.code	16
+ 15215              		.thumb_func
+ 15217              	_ZN10FfPipeline15RescalePtsDts24EP8AVPacketP8AVStreamS3_:
+ 15218              		.fnstart
+ 15219              	.LFB1001:
+ 15220              		.loc 1 159 0
+ 15221              		.save	{r4, r5, r6, r7, lr}
+ 15222 0218 F0B5     		push	{r4, r5, r6, r7, lr}
+ 15223              	.LCFI38:
+ 15224 021a 4746     		mov	r7, r8
+ 15225              		.save	{r8}
+ 15226 021c 80B4     		push	{r7}
+ 15227              	.LCFI39:
+ 15228              		.pad #48
+ 15229 021e 8CB0     		sub	sp, sp, #48
+ 15230              	.LCFI40:
+ 15231              		.setfp r7, sp, #8
+ 15232 0220 02AF     		add	r7, sp, #8
+ 15233              	.LCFI41:
+ 15234 0222 7862     		str	r0, [r7, #36]
+ 15235 0224 3962     		str	r1, [r7, #32]
+ 15236 0226 FA61     		str	r2, [r7, #28]
+ 15237 0228 BB61     		str	r3, [r7, #24]
+ 15238              		.loc 1 161 0
+ 15239 022a 3B6A     		ldr	r3, [r7, #32]
+ 15240 022c 9968     		ldr	r1, [r3, #8]
+ 15241 022e DA68     		ldr	r2, [r3, #12]
+ 15242 0230 FC69     		ldr	r4, [r7, #28]
+ 15243 0232 BB69     		ldr	r3, [r7, #24]
+ 15244 0234 6846     		mov	r0, sp
+ 15245 0236 8446     		mov	ip, r0
+ 15246 0238 E046     		mov	r8, ip
+ 15247 023a 4546     		mov	r5, r8
+ 15248 023c 7D61     		str	r5, [r7, #20]
+ 15249 023e 181C     		mov	r0, r3
+ 15250 0240 2830     		add	r0, r0, #40
+ 15251 0242 3861     		str	r0, [r7, #16]
+ 15252 0244 7B69     		ldr	r3, [r7, #20]
+ 15253 0246 3D69     		ldr	r5, [r7, #16]
+ 15254 0248 41CD     		ldmia	r5!, {r0, r6}
+ 15255 024a 41C3     		stmia	r3!, {r0, r6}
+ 15256 024c 081C     		mov	r0, r1
+ 15257 024e 111C     		mov	r1, r2
+ 15258 0250 A26A     		ldr	r2, [r4, #40]
+ 15259 0252 E36A     		ldr	r3, [r4, #44]
+ 15260 0254 FFF7FEFF 		bl	av_rescale_q
+ 15261 0258 031C     		mov	r3, r0
+ 15262 025a 0C1C     		mov	r4, r1
+ 15263 025c 3A6A     		ldr	r2, [r7, #32]
+ 15264 025e 9360     		str	r3, [r2, #8]
+ 15265 0260 D460     		str	r4, [r2, #12]
+ 15266              		.loc 1 162 0
+ 15267 0262 3B6A     		ldr	r3, [r7, #32]
+ 15268 0264 1969     		ldr	r1, [r3, #16]
+ 15269 0266 5A69     		ldr	r2, [r3, #20]
+ 15270 0268 FC69     		ldr	r4, [r7, #28]
+ 15271 026a BB69     		ldr	r3, [r7, #24]
+ 15272 026c 6D46     		mov	r5, sp
+ 15273 026e AC46     		mov	ip, r5
+ 15274 0270 E046     		mov	r8, ip
+ 15275 0272 4646     		mov	r6, r8
+ 15276 0274 FE60     		str	r6, [r7, #12]
+ 15277 0276 181C     		mov	r0, r3
+ 15278 0278 2830     		add	r0, r0, #40
+ 15279 027a B860     		str	r0, [r7, #8]
+ 15280 027c FB68     		ldr	r3, [r7, #12]
+ 15281 027e BD68     		ldr	r5, [r7, #8]
+ 15282 0280 41CD     		ldmia	r5!, {r0, r6}
+ 15283 0282 41C3     		stmia	r3!, {r0, r6}
+ 15284 0284 081C     		mov	r0, r1
+ 15285 0286 111C     		mov	r1, r2
+ 15286 0288 A26A     		ldr	r2, [r4, #40]
+ 15287 028a E36A     		ldr	r3, [r4, #44]
+ 15288 028c FFF7FEFF 		bl	av_rescale_q
+ 15289 0290 031C     		mov	r3, r0
+ 15290 0292 0C1C     		mov	r4, r1
+ 15291 0294 3A6A     		ldr	r2, [r7, #32]
+ 15292 0296 1361     		str	r3, [r2, #16]
+ 15293 0298 5461     		str	r4, [r2, #20]
+ 15294              		.loc 1 163 0
+ 15295 029a 3B6A     		ldr	r3, [r7, #32]
+ 15296 029c 1A6B     		ldr	r2, [r3, #48]
+ 15297 029e D117     		asr	r1, r2, #31
+ 15298 02a0 131C     		mov	r3, r2
+ 15299 02a2 0C1C     		mov	r4, r1
+ 15300 02a4 FD69     		ldr	r5, [r7, #28]
+ 15301 02a6 BA69     		ldr	r2, [r7, #24]
+ 15302 02a8 6946     		mov	r1, sp
+ 15303 02aa 8C46     		mov	ip, r1
+ 15304 02ac E046     		mov	r8, ip
+ 15305 02ae 4646     		mov	r6, r8
+ 15306 02b0 7E60     		str	r6, [r7, #4]
+ 15307 02b2 101C     		mov	r0, r2
+ 15308 02b4 2830     		add	r0, r0, #40
+ 15309 02b6 3860     		str	r0, [r7]
+ 15310 02b8 7968     		ldr	r1, [r7, #4]
+ 15311 02ba 3A68     		ldr	r2, [r7]
+ 15312 02bc 41CA     		ldmia	r2!, {r0, r6}
+ 15313 02be 41C1     		stmia	r1!, {r0, r6}
+ 15314 02c0 181C     		mov	r0, r3
+ 15315 02c2 211C     		mov	r1, r4
+ 15316 02c4 AA6A     		ldr	r2, [r5, #40]
+ 15317 02c6 EB6A     		ldr	r3, [r5, #44]
+ 15318 02c8 FFF7FEFF 		bl	av_rescale_q
+ 15319 02cc 031C     		mov	r3, r0
+ 15320 02ce 0C1C     		mov	r4, r1
+ 15321 02d0 1A1C     		mov	r2, r3
+ 15322 02d2 3B6A     		ldr	r3, [r7, #32]
+ 15323 02d4 1A63     		str	r2, [r3, #48]
+ 15324              		.loc 1 164 0
+ 15325 02d6 BD46     		mov	sp, r7
+ 15326 02d8 0AB0     		add	sp, sp, #40
+ 15327              		@ sp needed for prologue
+ 15328 02da 04BC     		pop	{r2}
+ 15329 02dc 9046     		mov	r8, r2
+ 15330 02de F0BD     		pop	{r4, r5, r6, r7, pc}
+ 15331              	.LFE1001:
+ 15332              		.fnend
+ 15334              		.align	2
+ 15335              		.code	16
+ 15336              		.thumb_func
+ 15338              	av_make_error_string:
+ 15339              		.fnstart
+ 15340              	.LFB973:
+   1:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** /*
+   2:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * This file is part of FFmpeg.
+   3:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  *
+   4:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * FFmpeg is free software; you can redistribute it and/or
+   5:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * modify it under the terms of the GNU Lesser General Public
+   6:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * License as published by the Free Software Foundation; either
+   7:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * version 2.1 of the License, or (at your option) any later version.
+   8:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  *
+   9:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * FFmpeg is distributed in the hope that it will be useful,
+  10:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  11:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  12:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * Lesser General Public License for more details.
+  13:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  *
+  14:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * You should have received a copy of the GNU Lesser General Public
+  15:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * License along with FFmpeg; if not, write to the Free Software
+  16:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+  17:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  */
+  18:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** 
+  19:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** /**
+  20:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * @file
+  21:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * error code definitions
+  22:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  */
+  23:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** 
+  24:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #ifndef AVUTIL_ERROR_H
+  25:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVUTIL_ERROR_H
+  26:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** 
+  27:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #include <errno.h>
+  28:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #include <stddef.h>
+  29:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** 
+  30:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** /**
+  31:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * @addtogroup lavu_error
+  32:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  *
+  33:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * @{
+  34:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  */
+  35:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** 
+  36:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** 
+  37:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** /* error handling */
+  38:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #if EDOM > 0
+  39:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR(e) (-(e))   ///< Returns a negative error code from a POSIX error code, to return f
+  40:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVUNERROR(e) (-(e)) ///< Returns a POSIX error code from a library function error return va
+  41:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #else
+  42:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** /* Some platforms have E* and errno already negated. */
+  43:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR(e) (e)
+  44:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVUNERROR(e) (e)
+  45:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #endif
+  46:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** 
+  47:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define FFERRTAG(a, b, c, d) (-(int)MKTAG(a, b, c, d))
+  48:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** 
+  49:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_BSF_NOT_FOUND      FFERRTAG(0xF8,'B','S','F') ///< Bitstream filter not found
+  50:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_BUG                FFERRTAG( 'B','U','G','!') ///< Internal bug, also see AVERROR_B
+  51:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_BUFFER_TOO_SMALL   FFERRTAG( 'B','U','F','S') ///< Buffer too small
+  52:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_DECODER_NOT_FOUND  FFERRTAG(0xF8,'D','E','C') ///< Decoder not found
+  53:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_DEMUXER_NOT_FOUND  FFERRTAG(0xF8,'D','E','M') ///< Demuxer not found
+  54:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_ENCODER_NOT_FOUND  FFERRTAG(0xF8,'E','N','C') ///< Encoder not found
+  55:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_EOF                FFERRTAG( 'E','O','F',' ') ///< End of file
+  56:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_EXIT               FFERRTAG( 'E','X','I','T') ///< Immediate exit was requested; th
+  57:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_EXTERNAL           FFERRTAG( 'E','X','T',' ') ///< Generic error in an external lib
+  58:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_FILTER_NOT_FOUND   FFERRTAG(0xF8,'F','I','L') ///< Filter not found
+  59:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_INVALIDDATA        FFERRTAG( 'I','N','D','A') ///< Invalid data found when processi
+  60:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_MUXER_NOT_FOUND    FFERRTAG(0xF8,'M','U','X') ///< Muxer not found
+  61:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_OPTION_NOT_FOUND   FFERRTAG(0xF8,'O','P','T') ///< Option not found
+  62:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_PATCHWELCOME       FFERRTAG( 'P','A','W','E') ///< Not yet implemented in FFmpeg, p
+  63:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_PROTOCOL_NOT_FOUND FFERRTAG(0xF8,'P','R','O') ///< Protocol not found
+  64:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** 
+  65:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_STREAM_NOT_FOUND   FFERRTAG(0xF8,'S','T','R') ///< Stream not found
+  66:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** /**
+  67:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * This is semantically identical to AVERROR_BUG
+  68:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * it has been introduced in Libav after our AVERROR_BUG and with a modified value.
+  69:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  */
+  70:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_BUG2               FFERRTAG( 'B','U','G',' ')
+  71:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_UNKNOWN            FFERRTAG( 'U','N','K','N') ///< Unknown error, typically from an
+  72:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_EXPERIMENTAL       (-0x2bb2afa8) ///< Requested feature is flagged experimental. Se
+  73:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_INPUT_CHANGED      (-0x636e6701) ///< Input changed between calls. Reconfiguration 
+  74:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AVERROR_OUTPUT_CHANGED     (-0x636e6702) ///< Output changed between calls. Reconfiguration
+  75:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** 
+  76:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** #define AV_ERROR_MAX_STRING_SIZE 64
+  77:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** 
+  78:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** /**
+  79:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * Put a description of the AVERROR code errnum in errbuf.
+  80:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * In case of failure the global variable errno is set to indicate the
+  81:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * error. Even in case of failure av_strerror() will print a generic
+  82:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * error message indicating the errnum provided to errbuf.
+  83:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  *
+  84:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * @param errnum      error code to describe
+  85:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * @param errbuf      buffer to which description is written
+  86:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * @param errbuf_size the size in bytes of errbuf
+  87:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * @return 0 on success, a negative value if a description for errnum
+  88:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * cannot be found
+  89:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  */
+  90:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** int av_strerror(int errnum, char *errbuf, size_t errbuf_size);
+  91:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** 
+  92:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** /**
+  93:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * Fill the provided buffer with a string containing an error string
+  94:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * corresponding to the AVERROR code errnum.
+  95:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  *
+  96:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * @param errbuf         a buffer
+  97:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * @param errbuf_size    size in bytes of errbuf
+  98:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * @param errnum         error code to describe
+  99:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * @return the buffer in input, filled with the error description
+ 100:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  * @see av_strerror()
+ 101:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****  */
+ 102:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** static inline char *av_make_error_string(char *errbuf, size_t errbuf_size, int errnum)
+ 15341              		.loc 225 102 0
+ 15342              		.save	{r4, r7, lr}
+ 15343 02e0 90B5     		push	{r4, r7, lr}
+ 15344              	.LCFI42:
+ 15345              		.pad #20
+ 15346 02e2 85B0     		sub	sp, sp, #20
+ 15347              	.LCFI43:
+ 15348              		.setfp r7, sp, #0
+ 15349 02e4 00AF     		add	r7, sp, #0
+ 15350              	.LCFI44:
+ 15351 02e6 F860     		str	r0, [r7, #12]
+ 15352 02e8 B960     		str	r1, [r7, #8]
+ 15353 02ea 7A60     		str	r2, [r7, #4]
+ 103:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** {
+ 104:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****     av_strerror(errnum, errbuf, errbuf_size);
+ 15354              		.loc 225 104 0
+ 15355 02ec 7B68     		ldr	r3, [r7, #4]
+ 15356 02ee FA68     		ldr	r2, [r7, #12]
+ 15357 02f0 BC68     		ldr	r4, [r7, #8]
+ 15358 02f2 181C     		mov	r0, r3
+ 15359 02f4 111C     		mov	r1, r2
+ 15360 02f6 221C     		mov	r2, r4
+ 15361 02f8 FFF7FEFF 		bl	av_strerror
+ 105:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h ****     return errbuf;
+ 15362              		.loc 225 105 0
+ 15363 02fc FB68     		ldr	r3, [r7, #12]
+ 106:/home/romar/workspace/libs/ffmpeg-2.4-arm/include/libavutil/error.h **** }
+ 15364              		.loc 225 106 0
+ 15365 02fe 181C     		mov	r0, r3
+ 15366 0300 BD46     		mov	sp, r7
+ 15367 0302 05B0     		add	sp, sp, #20
+ 15368              		@ sp needed for prologue
+ 15369 0304 90BD     		pop	{r4, r7, pc}
+ 15370              	.LFE973:
+ 15371              		.fnend
+ 15373              		.section	.rodata
+ 15374              		.align	2
+ 15375              	.LC3:
+ 15376 0000 46665069 		.ascii	"FfPipeline::WriteFrame_v242\000"
+ 15376      70656C69 
+ 15376      6E653A3A 
+ 15376      57726974 
+ 15376      65467261 
+ 15377              		.align	2
+ 15378              	.LC5:
+ 15379 001c 5741524E 		.ascii	"WARNING: PTS:DTS < PRId64 invalid, clipping\012\000"
+ 15379      494E473A 
+ 15379      20505453 
+ 15379      3A445453 
+ 15379      203C2050 
+ 15380 0049 000000   		.align	2
+ 15381              	.LC9:
+ 15382 004c 4552524F 		.ascii	"ERROR: Error executing av_interleaved_write_frame()"
+ 15382      523A2045 
+ 15382      72726F72 
+ 15382      20657865 
+ 15382      63757469 
+ 15383 007f 2E2E2E45 		.ascii	"...Error code: %d. Error: '%s'.\012\000"
+ 15383      72726F72 
+ 15383      20636F64 
+ 15383      653A2025 
+ 15383      642E2045 
+ 15384              		.text
+ 15385 0306 C046     		.align	2
+ 15386              		.global	_ZN10FfPipeline15WriteFrame_v242EP15AVFormatContextP8AVStreamP8AVPacketP24AVBitStreamFilte
+ 15387              		.code	16
+ 15388              		.thumb_func
+ 15390              	_ZN10FfPipeline15WriteFrame_v242EP15AVFormatContextP8AVStreamP8AVPacketP24AVBitStreamFilterContext:
+ 15391              		.fnstart
+ 15392              	.LFB1000:
+ 15393              		.loc 1 132 0
+ 15394              		.save	{r4, r5, r6, r7, lr}
+ 15395 0308 F0B5     		push	{r4, r5, r6, r7, lr}
+ 15396              	.LCFI45:
+ 15397              		.pad #132
+ 15398 030a A1B0     		sub	sp, sp, #132
+ 15399              	.LCFI46:
+ 15400              		.setfp r7, sp, #0
+ 15401 030c 00AF     		add	r7, sp, #0
+ 15402              	.LCFI47:
+ 15403 030e F864     		str	r0, [r7, #76]
+ 15404 0310 B964     		str	r1, [r7, #72]
+ 15405 0312 7A64     		str	r2, [r7, #68]
+ 15406 0314 3B64     		str	r3, [r7, #64]
+ 15407              	.LBB2:
+ 15408              		.loc 1 134 0
+ 15409 0316 7F4B     		ldr	r3, .L62
+ 15410 0318 FB66     		str	r3, [r7, #108]
+ 15411              		.loc 1 136 0
+ 15412 031a 7B6C     		ldr	r3, [r7, #68]
+ 15413 031c 9B68     		ldr	r3, [r3, #8]
+ 15414 031e 7B67     		str	r3, [r7, #116]
+ 15415              		.loc 1 138 0
+ 15416 0320 7B6F     		ldr	r3, [r7, #116]
+ 15417 0322 9B68     		ldr	r3, [r3, #8]
+ 15418 0324 012B     		cmp	r3, #1
+ 15419 0326 04D0     		beq	.L45
+ 15420 0328 7B6F     		ldr	r3, [r7, #116]
+ 15421 032a 9B68     		ldr	r3, [r3, #8]
+ 15422 032c 002B     		cmp	r3, #0
+ 15423 032e 00D0     		beq	.LCB527
+ 15424 0330 AAE0     		b	.L46	@long jump
+ 15425              	.LCB527:
+ 15426              	.L45:
+ 15427 0332 3B6C     		ldr	r3, [r7, #64]
+ 15428 0334 1969     		ldr	r1, [r3, #16]
+ 15429 0336 5A69     		ldr	r2, [r3, #20]
+ 15430 0338 B960     		str	r1, [r7, #8]
+ 15431 033a FA60     		str	r2, [r7, #12]
+ 15432 033c BA68     		ldr	r2, [r7, #8]
+ 15433 033e 002A     		cmp	r2, #0
+ 15434 0340 04D1     		bne	.L57
+ 15435 0342 754B     		ldr	r3, .L62+4
+ 15436 0344 FC68     		ldr	r4, [r7, #12]
+ 15437 0346 9C42     		cmp	r4, r3
+ 15438 0348 00D1     		bne	.LCB538
+ 15439 034a 9DE0     		b	.L46	@long jump
+ 15440              	.LCB538:
+ 15441              	.L57:
+ 15442              	.LBB3:
+ 15443              		.loc 1 140 0
+ 15444 034c 7B6C     		ldr	r3, [r7, #68]
+ 15445 034e D833     		add	r3, r3, #216
+ 15446 0350 1D68     		ldr	r5, [r3]
+ 15447 0352 5E68     		ldr	r6, [r3, #4]
+ 15448 0354 BB6C     		ldr	r3, [r7, #72]
+ 15449 0356 9B68     		ldr	r3, [r3, #8]
+ 15450 0358 DA69     		ldr	r2, [r3, #28]
+ 15451 035a 8023     		mov	r3, #128
+ 15452 035c 9B02     		lsl	r3, r3, #10
+ 15453 035e 1340     		and	r3, r3, r2
+ 15454 0360 5A42     		neg	r2, r3
+ 15455 0362 5A41     		adc	r2, r2, r3
+ 15456 0364 0021     		mov	r1, #0
+ 15457 0366 131C     		mov	r3, r2
+ 15458 0368 0C1C     		mov	r4, r1
+ 15459 036a 5B19     		add	r3, r3, r5
+ 15460 036c 7441     		adc	r4, r4, r6
+ 15461 036e BB67     		str	r3, [r7, #120]
+ 15462 0370 FC67     		str	r4, [r7, #124]
+ 15463              		.loc 1 141 0
+ 15464 0372 7B6C     		ldr	r3, [r7, #68]
+ 15465 0374 D833     		add	r3, r3, #216
+ 15466 0376 1968     		ldr	r1, [r3]
+ 15467 0378 5A68     		ldr	r2, [r3, #4]
+ 15468 037a 0B1C     		mov	r3, r1
+ 15469 037c 1343     		orr	r3, r3, r2
+ 15470 037e 002B     		cmp	r3, #0
+ 15471 0380 00D1     		bne	.LCB562
+ 15472 0382 81E0     		b	.L46	@long jump
+ 15473              	.LCB562:
+ 15474 0384 7B6C     		ldr	r3, [r7, #68]
+ 15475 0386 D833     		add	r3, r3, #216
+ 15476 0388 1968     		ldr	r1, [r3]
+ 15477 038a 5A68     		ldr	r2, [r3, #4]
+ 15478 038c 3961     		str	r1, [r7, #16]
+ 15479 038e 7A61     		str	r2, [r7, #20]
+ 15480 0390 3A69     		ldr	r2, [r7, #16]
+ 15481 0392 002A     		cmp	r2, #0
+ 15482 0394 04D1     		bne	.L58
+ 15483 0396 604B     		ldr	r3, .L62+4
+ 15484 0398 7C69     		ldr	r4, [r7, #20]
+ 15485 039a 9C42     		cmp	r4, r3
+ 15486 039c 00D1     		bne	.LCB573
+ 15487 039e 73E0     		b	.L46	@long jump
+ 15488              	.LCB573:
+ 15489              	.L58:
+ 15490 03a0 3B6C     		ldr	r3, [r7, #64]
+ 15491 03a2 1969     		ldr	r1, [r3, #16]
+ 15492 03a4 5A69     		ldr	r2, [r3, #20]
+ 15493 03a6 B961     		str	r1, [r7, #24]
+ 15494 03a8 FA61     		str	r2, [r7, #28]
+ 15495 03aa FB6F     		ldr	r3, [r7, #124]
+ 15496 03ac FA69     		ldr	r2, [r7, #28]
+ 15497 03ae 9342     		cmp	r3, r2
+ 15498 03b0 07DC     		bgt	.L59
+ 15499 03b2 FB6F     		ldr	r3, [r7, #124]
+ 15500 03b4 FC69     		ldr	r4, [r7, #28]
+ 15501 03b6 A342     		cmp	r3, r4
+ 15502 03b8 66D1     		bne	.L46
+ 15503 03ba BB6F     		ldr	r3, [r7, #120]
+ 15504 03bc B969     		ldr	r1, [r7, #24]
+ 15505 03be 8B42     		cmp	r3, r1
+ 15506 03c0 62D9     		bls	.L46
+ 15507              	.L59:
+ 15508              		.loc 1 143 0
+ 15509 03c2 3B1C     		mov	r3, r7
+ 15510 03c4 5F33     		add	r3, r3, #95
+ 15511 03c6 181C     		mov	r0, r3
+ 15512 03c8 FFF7FEFF 		bl	_ZNSaIcEC1Ev
+ 15513 03cc 3B1C     		mov	r3, r7
+ 15514 03ce 5833     		add	r3, r3, #88
+ 15515 03d0 524A     		ldr	r2, .L62+8
+ 15516 03d2 3C1C     		mov	r4, r7
+ 15517 03d4 5F34     		add	r4, r4, #95
+ 15518 03d6 181C     		mov	r0, r3
+ 15519 03d8 111C     		mov	r1, r2
+ 15520 03da 221C     		mov	r2, r4
+ 15521 03dc FFF7FEFF 		bl	_ZNSsC1EPKcRKSaIcE
+ 15522 03e0 3B1C     		mov	r3, r7
+ 15523 03e2 5433     		add	r3, r3, #84
+ 15524 03e4 3A1C     		mov	r2, r7
+ 15525 03e6 5832     		add	r2, r2, #88
+ 15526 03e8 FC6E     		ldr	r4, [r7, #108]
+ 15527 03ea 181C     		mov	r0, r3
+ 15528 03ec 111C     		mov	r1, r2
+ 15529 03ee 221C     		mov	r2, r4
+ 15530 03f0 FFF7FEFF 		bl	_Z9AppendLogSsPKc
+ 15531 03f4 3B1C     		mov	r3, r7
+ 15532 03f6 5433     		add	r3, r3, #84
+ 15533 03f8 181C     		mov	r0, r3
+ 15534 03fa FFF7FEFF 		bl	_ZNSsD1Ev
+ 15535 03fe 3B1C     		mov	r3, r7
+ 15536 0400 5833     		add	r3, r3, #88
+ 15537 0402 181C     		mov	r0, r3
+ 15538 0404 FFF7FEFF 		bl	_ZNSsD1Ev
+ 15539 0408 3B1C     		mov	r3, r7
+ 15540 040a 5F33     		add	r3, r3, #95
+ 15541 040c 181C     		mov	r0, r3
+ 15542 040e FFF7FEFF 		bl	_ZNSaIcED1Ev
+ 15543              		.loc 1 144 0
+ 15544 0412 3B6C     		ldr	r3, [r7, #64]
+ 15545 0414 9968     		ldr	r1, [r3, #8]
+ 15546 0416 DA68     		ldr	r2, [r3, #12]
+ 15547 0418 3962     		str	r1, [r7, #32]
+ 15548 041a 7A62     		str	r2, [r7, #36]
+ 15549 041c 3B6C     		ldr	r3, [r7, #64]
+ 15550 041e 1969     		ldr	r1, [r3, #16]
+ 15551 0420 5A69     		ldr	r2, [r3, #20]
+ 15552 0422 B962     		str	r1, [r7, #40]
+ 15553 0424 FA62     		str	r2, [r7, #44]
+ 15554 0426 FA6A     		ldr	r2, [r7, #44]
+ 15555 0428 7B6A     		ldr	r3, [r7, #36]
+ 15556 042a 9A42     		cmp	r2, r3
+ 15557 042c 27DC     		bgt	.L50
+ 15558 042e FC6A     		ldr	r4, [r7, #44]
+ 15559 0430 796A     		ldr	r1, [r7, #36]
+ 15560 0432 8C42     		cmp	r4, r1
+ 15561 0434 03D1     		bne	.L60
+ 15562 0436 BA6A     		ldr	r2, [r7, #40]
+ 15563 0438 3B6A     		ldr	r3, [r7, #32]
+ 15564 043a 9A42     		cmp	r2, r3
+ 15565 043c 1FD8     		bhi	.L50
+ 15566              	.L60:
+ 15567              		.loc 1 145 0
+ 15568 043e 3B6C     		ldr	r3, [r7, #64]
+ 15569 0440 9968     		ldr	r1, [r3, #8]
+ 15570 0442 DA68     		ldr	r2, [r3, #12]
+ 15571 0444 B963     		str	r1, [r7, #56]
+ 15572 0446 FA63     		str	r2, [r7, #60]
+ 15573 0448 FB6F     		ldr	r3, [r7, #124]
+ 15574 044a FA6B     		ldr	r2, [r7, #60]
+ 15575 044c 9342     		cmp	r3, r2
+ 15576 044e 07DB     		blt	.L61
+ 15577 0450 FB6F     		ldr	r3, [r7, #124]
+ 15578 0452 FC6B     		ldr	r4, [r7, #60]
+ 15579 0454 A342     		cmp	r3, r4
+ 15580 0456 09D1     		bne	.L52
+ 15581 0458 BB6F     		ldr	r3, [r7, #120]
+ 15582 045a B96B     		ldr	r1, [r7, #56]
+ 15583 045c 8B42     		cmp	r3, r1
+ 15584 045e 05D2     		bcs	.L52
+ 15585              	.L61:
+ 15586 0460 3B6C     		ldr	r3, [r7, #64]
+ 15587 0462 9968     		ldr	r1, [r3, #8]
+ 15588 0464 DA68     		ldr	r2, [r3, #12]
+ 15589 0466 3963     		str	r1, [r7, #48]
+ 15590 0468 7A63     		str	r2, [r7, #52]
+ 15591 046a 03E0     		b	.L54
+ 15592              	.L52:
+ 15593 046c BA6F     		ldr	r2, [r7, #120]
+ 15594 046e FB6F     		ldr	r3, [r7, #124]
+ 15595 0470 3A63     		str	r2, [r7, #48]
+ 15596 0472 7B63     		str	r3, [r7, #52]
+ 15597              	.L54:
+ 15598 0474 3B6C     		ldr	r3, [r7, #64]
+ 15599 0476 396B     		ldr	r1, [r7, #48]
+ 15600 0478 7A6B     		ldr	r2, [r7, #52]
+ 15601 047a 9960     		str	r1, [r3, #8]
+ 15602 047c DA60     		str	r2, [r3, #12]
+ 15603              	.L50:
+ 15604              		.loc 1 146 0
+ 15605 047e 3A6C     		ldr	r2, [r7, #64]
+ 15606 0480 BB6F     		ldr	r3, [r7, #120]
+ 15607 0482 FC6F     		ldr	r4, [r7, #124]
+ 15608 0484 1361     		str	r3, [r2, #16]
+ 15609 0486 5461     		str	r4, [r2, #20]
+ 15610              	.L46:
+ 15611              	.LBE3:
+ 15612              		.loc 1 150 0
+ 15613 0488 BB6C     		ldr	r3, [r7, #72]
+ 15614 048a 3A6C     		ldr	r2, [r7, #64]
+ 15615 048c 181C     		mov	r0, r3
+ 15616 048e 111C     		mov	r1, r2
+ 15617 0490 FFF7FEFF 		bl	av_interleaved_write_frame
+ 15618 0494 031C     		mov	r3, r0
+ 15619 0496 3B67     		str	r3, [r7, #112]
+ 15620              		.loc 1 152 0
+ 15621 0498 3B6F     		ldr	r3, [r7, #112]
+ 15622 049a 002B     		cmp	r3, #0
+ 15623 049c 37DA     		bge	.L56
+ 15624              		.loc 1 154 0
+ 15625 049e 204B     		ldr	r3, .L62+12
+ 15626 04a0 3A6F     		ldr	r2, [r7, #112]
+ 15627 04a2 181C     		mov	r0, r3
+ 15628 04a4 4021     		mov	r1, #64
+ 15629 04a6 FFF71BFF 		bl	av_make_error_string
+ 15630 04aa 051C     		mov	r5, r0
+ 15631 04ac 1D4B     		ldr	r3, .L62+16
+ 15632 04ae 1E4A     		ldr	r2, .L62+20
+ 15633 04b0 3C6F     		ldr	r4, [r7, #112]
+ 15634 04b2 181C     		mov	r0, r3
+ 15635 04b4 111C     		mov	r1, r2
+ 15636 04b6 221C     		mov	r2, r4
+ 15637 04b8 2B1C     		mov	r3, r5
+ 15638 04ba FFF7FEFF 		bl	sprintf
+ 15639              		.loc 1 155 0
+ 15640 04be 3B1C     		mov	r3, r7
+ 15641 04c0 6B33     		add	r3, r3, #107
+ 15642 04c2 181C     		mov	r0, r3
+ 15643 04c4 FFF7FEFF 		bl	_ZNSaIcEC1Ev
+ 15644 04c8 3B1C     		mov	r3, r7
+ 15645 04ca 6433     		add	r3, r3, #100
+ 15646 04cc 154A     		ldr	r2, .L62+16
+ 15647 04ce 3C1C     		mov	r4, r7
+ 15648 04d0 6B34     		add	r4, r4, #107
+ 15649 04d2 181C     		mov	r0, r3
+ 15650 04d4 111C     		mov	r1, r2
+ 15651 04d6 221C     		mov	r2, r4
+ 15652 04d8 FFF7FEFF 		bl	_ZNSsC1EPKcRKSaIcE
+ 15653 04dc 3B1C     		mov	r3, r7
+ 15654 04de 6033     		add	r3, r3, #96
+ 15655 04e0 3A1C     		mov	r2, r7
+ 15656 04e2 6432     		add	r2, r2, #100
+ 15657 04e4 FC6E     		ldr	r4, [r7, #108]
+ 15658 04e6 181C     		mov	r0, r3
+ 15659 04e8 111C     		mov	r1, r2
+ 15660 04ea 221C     		mov	r2, r4
+ 15661 04ec FFF7FEFF 		bl	_Z9AppendLogSsPKc
+ 15662 04f0 3B1C     		mov	r3, r7
+ 15663 04f2 6033     		add	r3, r3, #96
+ 15664 04f4 181C     		mov	r0, r3
+ 15665 04f6 FFF7FEFF 		bl	_ZNSsD1Ev
+ 15666 04fa 3B1C     		mov	r3, r7
+ 15667 04fc 6433     		add	r3, r3, #100
+ 15668 04fe 181C     		mov	r0, r3
+ 15669 0500 FFF7FEFF 		bl	_ZNSsD1Ev
+ 15670 0504 3B1C     		mov	r3, r7
+ 15671 0506 6B33     		add	r3, r3, #107
+ 15672 0508 181C     		mov	r0, r3
+ 15673 050a FFF7FEFF 		bl	_ZNSaIcED1Ev
+ 15674              	.L56:
+ 15675              	.LBE2:
+ 15676              		.loc 1 157 0
+ 15677 050e BD46     		mov	sp, r7
+ 15678 0510 21B0     		add	sp, sp, #132
+ 15679              		@ sp needed for prologue
+ 15680 0512 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 15681              	.L63:
+ 15682              		.align	2
+ 15683              	.L62:
+ 15684 0514 00000000 		.word	.LC3
+ 15685 0518 00000080 		.word	-2147483648
+ 15686 051c 1C000000 		.word	.LC5
+ 15687 0520 00000000 		.word	_ZL12g_szErrorBuf
+ 15688 0524 00000000 		.word	str
+ 15689 0528 4C000000 		.word	.LC9
+ 15690              	.LFE1000:
+ 15691              		.fnend
+ 15693              		.section	.rodata
+ 15694              		.align	2
+ 15695              	.LC11:
+ 15696 00a0 46665069 		.ascii	"FfPipeline::ThInitiateRecording\000"
+ 15696      70656C69 
+ 15696      6E653A3A 
+ 15696      5468496E 
+ 15696      69746961 
+ 15697              		.align	2
+ 15698              	.LC14:
+ 15699 00c0 44454255 		.ascii	"DEBUG: Pipeline slot '%d'. Try to starting thread w"
+ 15699      473A2050 
+ 15699      6970656C 
+ 15699      696E6520 
+ 15699      736C6F74 
+ 15700 00f3 69746820 		.ascii	"ith stopping...\012\000"
+ 15700      73746F70 
+ 15700      70696E67 
+ 15700      2E2E2E0A 
+ 15700      00
+ 15701              		.align	2
+ 15702              	.LC17:
+ 15703 0104 44454255 		.ascii	"DEBUG: Pipeline slot '%d'. Starting thread ended!\012"
+ 15703      473A2050 
+ 15703      6970656C 
+ 15703      696E6520 
+ 15703      736C6F74 
+ 15704 0136 00       		.ascii	"\000"
+ 15705              		.text
+ 15706              		.align	2
+ 15707              		.global	_ZN10FfPipeline19ThInitiateRecordingEv
+ 15708              		.code	16
+ 15709              		.thumb_func
+ 15711              	_ZN10FfPipeline19ThInitiateRecordingEv:
+ 15712              		.fnstart
+ 15713              	.LFB996:
+ 15714              		.loc 1 95 0
+ 15715              		.save	{r4, r7, lr}
+ 15716 052c 90B5     		push	{r4, r7, lr}
+ 15717              	.LCFI48:
+ 15718              		.pad #44
+ 15719 052e 8BB0     		sub	sp, sp, #44
+ 15720              	.LCFI49:
+ 15721              		.setfp r7, sp, #0
+ 15722 0530 00AF     		add	r7, sp, #0
+ 15723              	.LCFI50:
+ 15724 0532 7860     		str	r0, [r7, #4]
+ 15725              	.LBB4:
+ 15726              		.loc 1 97 0
+ 15727 0534 3B4B     		ldr	r3, .L66
+ 15728 0536 7B62     		str	r3, [r7, #36]
+ 15729              		.loc 1 100 0
+ 15730 0538 7B68     		ldr	r3, [r7, #4]
+ 15731 053a 1B79     		ldrb	r3, [r3, #4]
+ 15732 053c 1C1C     		mov	r4, r3
+ 15733 053e 3A4B     		ldr	r3, .L66+4
+ 15734 0540 3A4A     		ldr	r2, .L66+8
+ 15735 0542 181C     		mov	r0, r3
+ 15736 0544 111C     		mov	r1, r2
+ 15737 0546 221C     		mov	r2, r4
+ 15738 0548 FFF7FEFF 		bl	sprintf
+ 15739              		.loc 1 101 0
+ 15740 054c 3B1C     		mov	r3, r7
+ 15741 054e 1733     		add	r3, r3, #23
+ 15742 0550 181C     		mov	r0, r3
+ 15743 0552 FFF7FEFF 		bl	_ZNSaIcEC1Ev
+ 15744 0556 3B1C     		mov	r3, r7
+ 15745 0558 1033     		add	r3, r3, #16
+ 15746 055a 334A     		ldr	r2, .L66+4
+ 15747 055c 3C1C     		mov	r4, r7
+ 15748 055e 1734     		add	r4, r4, #23
+ 15749 0560 181C     		mov	r0, r3
+ 15750 0562 111C     		mov	r1, r2
+ 15751 0564 221C     		mov	r2, r4
+ 15752 0566 FFF7FEFF 		bl	_ZNSsC1EPKcRKSaIcE
+ 15753 056a 3B1C     		mov	r3, r7
+ 15754 056c 0C33     		add	r3, r3, #12
+ 15755 056e 3A1C     		mov	r2, r7
+ 15756 0570 1032     		add	r2, r2, #16
+ 15757 0572 7C6A     		ldr	r4, [r7, #36]
+ 15758 0574 181C     		mov	r0, r3
+ 15759 0576 111C     		mov	r1, r2
+ 15760 0578 221C     		mov	r2, r4
+ 15761 057a FFF7FEFF 		bl	_Z9AppendLogSsPKc
+ 15762 057e 3B1C     		mov	r3, r7
+ 15763 0580 0C33     		add	r3, r3, #12
+ 15764 0582 181C     		mov	r0, r3
+ 15765 0584 FFF7FEFF 		bl	_ZNSsD1Ev
+ 15766 0588 3B1C     		mov	r3, r7
+ 15767 058a 1033     		add	r3, r3, #16
+ 15768 058c 181C     		mov	r0, r3
+ 15769 058e FFF7FEFF 		bl	_ZNSsD1Ev
+ 15770 0592 3B1C     		mov	r3, r7
+ 15771 0594 1733     		add	r3, r3, #23
+ 15772 0596 181C     		mov	r0, r3
+ 15773 0598 FFF7FEFF 		bl	_ZNSaIcED1Ev
+ 15774              		.loc 1 103 0
+ 15775 059c 3B1C     		mov	r3, r7
+ 15776 059e 0833     		add	r3, r3, #8
+ 15777 05a0 234A     		ldr	r2, .L66+12
+ 15778 05a2 7C68     		ldr	r4, [r7, #4]
+ 15779 05a4 181C     		mov	r0, r3
+ 15780 05a6 0021     		mov	r1, #0
+ 15781 05a8 231C     		mov	r3, r4
+ 15782 05aa FFF7FEFF 		bl	pthread_create
+ 15783              		.loc 1 105 0
+ 15784 05ae BB68     		ldr	r3, [r7, #8]
+ 15785 05b0 181C     		mov	r0, r3
+ 15786 05b2 FFF7FEFF 		bl	pthread_detach
+ 15787              		.loc 1 107 0
+ 15788 05b6 7B68     		ldr	r3, [r7, #4]
+ 15789 05b8 1B79     		ldrb	r3, [r3, #4]
+ 15790 05ba 1C1C     		mov	r4, r3
+ 15791 05bc 1A4B     		ldr	r3, .L66+4
+ 15792 05be 1D4A     		ldr	r2, .L66+16
+ 15793 05c0 181C     		mov	r0, r3
+ 15794 05c2 111C     		mov	r1, r2
+ 15795 05c4 221C     		mov	r2, r4
+ 15796 05c6 FFF7FEFF 		bl	sprintf
+ 15797              		.loc 1 108 0
+ 15798 05ca 3B1C     		mov	r3, r7
+ 15799 05cc 2333     		add	r3, r3, #35
+ 15800 05ce 181C     		mov	r0, r3
+ 15801 05d0 FFF7FEFF 		bl	_ZNSaIcEC1Ev
+ 15802 05d4 3B1C     		mov	r3, r7
+ 15803 05d6 1C33     		add	r3, r3, #28
+ 15804 05d8 134A     		ldr	r2, .L66+4
+ 15805 05da 3C1C     		mov	r4, r7
+ 15806 05dc 2334     		add	r4, r4, #35
+ 15807 05de 181C     		mov	r0, r3
+ 15808 05e0 111C     		mov	r1, r2
+ 15809 05e2 221C     		mov	r2, r4
+ 15810 05e4 FFF7FEFF 		bl	_ZNSsC1EPKcRKSaIcE
+ 15811 05e8 3B1C     		mov	r3, r7
+ 15812 05ea 1833     		add	r3, r3, #24
+ 15813 05ec 3A1C     		mov	r2, r7
+ 15814 05ee 1C32     		add	r2, r2, #28
+ 15815 05f0 7C6A     		ldr	r4, [r7, #36]
+ 15816 05f2 181C     		mov	r0, r3
+ 15817 05f4 111C     		mov	r1, r2
+ 15818 05f6 221C     		mov	r2, r4
+ 15819 05f8 FFF7FEFF 		bl	_Z9AppendLogSsPKc
+ 15820 05fc 3B1C     		mov	r3, r7
+ 15821 05fe 1833     		add	r3, r3, #24
+ 15822 0600 181C     		mov	r0, r3
+ 15823 0602 FFF7FEFF 		bl	_ZNSsD1Ev
+ 15824 0606 3B1C     		mov	r3, r7
+ 15825 0608 1C33     		add	r3, r3, #28
+ 15826 060a 181C     		mov	r0, r3
+ 15827 060c FFF7FEFF 		bl	_ZNSsD1Ev
+ 15828 0610 3B1C     		mov	r3, r7
+ 15829 0612 2333     		add	r3, r3, #35
+ 15830 0614 181C     		mov	r0, r3
+ 15831 0616 FFF7FEFF 		bl	_ZNSaIcED1Ev
+ 15832              		.loc 1 110 0
+ 15833 061a 0023     		mov	r3, #0
+ 15834              	.LBE4:
+ 15835              		.loc 1 111 0
+ 15836 061c 181C     		mov	r0, r3
+ 15837 061e BD46     		mov	sp, r7
+ 15838 0620 0BB0     		add	sp, sp, #44
+ 15839              		@ sp needed for prologue
+ 15840 0622 90BD     		pop	{r4, r7, pc}
+ 15841              	.L67:
+ 15842              		.align	2
+ 15843              	.L66:
+ 15844 0624 A0000000 		.word	.LC11
+ 15845 0628 00000000 		.word	str
+ 15846 062c C0000000 		.word	.LC14
+ 15847 0630 00000000 		.word	_ZN10FfPipeline11ThRecordingEPv
+ 15848 0634 04010000 		.word	.LC17
+ 15849              	.LFE996:
+ 15850              		.fnend
+ 15852              		.align	2
+ 15853              		.global	_ZN10FfPipeline5StartEv
+ 15854              		.code	16
+ 15855              		.thumb_func
+ 15857              	_ZN10FfPipeline5StartEv:
+ 15858              		.fnstart
+ 15859              	.LFB999:
+ 15860              		.loc 1 127 0
+ 15861              		.save	{r7, lr}
+ 15862 0638 80B5     		push	{r7, lr}
+ 15863              	.LCFI51:
+ 15864              		.pad #8
+ 15865 063a 82B0     		sub	sp, sp, #8
+ 15866              	.LCFI52:
+ 15867              		.setfp r7, sp, #0
+ 15868 063c 00AF     		add	r7, sp, #0
+ 15869              	.LCFI53:
+ 15870 063e 7860     		str	r0, [r7, #4]
+ 15871              		.loc 1 129 0
+ 15872 0640 7B68     		ldr	r3, [r7, #4]
+ 15873 0642 181C     		mov	r0, r3
+ 15874 0644 FFF7FEFF 		bl	_ZN10FfPipeline19ThInitiateRecordingEv
+ 15875 0648 031C     		mov	r3, r0
+ 15876 064a 9C46     		mov	ip, r3
+ 15877 064c 6346     		mov	r3, ip
+ 15878              		.loc 1 130 0
+ 15879 064e 181C     		mov	r0, r3
+ 15880 0650 BD46     		mov	sp, r7
+ 15881 0652 02B0     		add	sp, sp, #8
+ 15882              		@ sp needed for prologue
+ 15883 0654 80BD     		pop	{r7, pc}
+ 15884              	.LFE999:
+ 15885              		.fnend
+ 15887 0656 C046     		.align	2
+ 15888              		.global	_ZN10FfPipeline10IsNeedStopEv
+ 15889              		.code	16
+ 15890              		.thumb_func
+ 15892              	_ZN10FfPipeline10IsNeedStopEv:
+ 15893              		.fnstart
+ 15894              	.LFB995:
+ 15895              		.loc 1 83 0
+ 15896              		.save	{r7, lr}
+ 15897 0658 80B5     		push	{r7, lr}
+ 15898              	.LCFI54:
+ 15899              		.pad #40
+ 15900 065a 8AB0     		sub	sp, sp, #40
+ 15901              	.LCFI55:
+ 15902              		.setfp r7, sp, #0
+ 15903 065c 00AF     		add	r7, sp, #0
+ 15904              	.LCFI56:
+ 15905 065e 7860     		str	r0, [r7, #4]
+ 15906              	.LBB5:
+ 15907              		.loc 1 85 0
+ 15908 0660 3B1C     		mov	r3, r7
+ 15909 0662 0C33     		add	r3, r3, #12
+ 15910 0664 3B60     		str	r3, [r7]
+ 15911 0666 0023     		mov	r3, #0
+ 15912 0668 3A68     		ldr	r2, [r7]
+ 15913 066a 1360     		str	r3, [r2]
+ 15914 066c 3B68     		ldr	r3, [r7]
+ 15915 066e 0433     		add	r3, r3, #4
+ 15916 0670 3B60     		str	r3, [r7]
+ 15917 0672 0023     		mov	r3, #0
+ 15918 0674 3A68     		ldr	r2, [r7]
+ 15919 0676 1360     		str	r3, [r2]
+ 15920 0678 3B68     		ldr	r3, [r7]
+ 15921 067a 0433     		add	r3, r3, #4
+ 15922 067c 3B60     		str	r3, [r7]
+ 15923 067e 0023     		mov	r3, #0
+ 15924 0680 3A68     		ldr	r2, [r7]
+ 15925 0682 1360     		str	r3, [r2]
+ 15926 0684 3B68     		ldr	r3, [r7]
+ 15927 0686 0433     		add	r3, r3, #4
+ 15928 0688 3B60     		str	r3, [r7]
+ 15929 068a 0023     		mov	r3, #0
+ 15930 068c 3A68     		ldr	r2, [r7]
+ 15931 068e 1360     		str	r3, [r2]
+ 15932 0690 3B68     		ldr	r3, [r7]
+ 15933 0692 0433     		add	r3, r3, #4
+ 15934 0694 3B60     		str	r3, [r7]
+ 15935 0696 0023     		mov	r3, #0
+ 15936 0698 3A68     		ldr	r2, [r7]
+ 15937 069a 1360     		str	r3, [r2]
+ 15938 069c 3B68     		ldr	r3, [r7]
+ 15939 069e 0433     		add	r3, r3, #4
+ 15940 06a0 3B60     		str	r3, [r7]
+ 15941 06a2 0023     		mov	r3, #0
+ 15942 06a4 3A68     		ldr	r2, [r7]
+ 15943 06a6 1360     		str	r3, [r2]
+ 15944 06a8 3B68     		ldr	r3, [r7]
+ 15945 06aa 0433     		add	r3, r3, #4
+ 15946              		.loc 1 88 0
+ 15947 06ac 3B1C     		mov	r3, r7
+ 15948 06ae 0C33     		add	r3, r3, #12
+ 15949 06b0 181C     		mov	r0, r3
+ 15950 06b2 FFF7FEFF 		bl	pthread_mutex_lock
+ 15951              		.loc 1 89 0
+ 15952 06b6 391C     		mov	r1, r7
+ 15953 06b8 2731     		add	r1, r1, #39
+ 15954 06ba 7A68     		ldr	r2, [r7, #4]
+ 15955 06bc 2823     		mov	r3, #40
+ 15956 06be D35C     		ldrb	r3, [r2, r3]
+ 15957 06c0 0B70     		strb	r3, [r1]
+ 15958              		.loc 1 90 0
+ 15959 06c2 3B1C     		mov	r3, r7
+ 15960 06c4 0C33     		add	r3, r3, #12
+ 15961 06c6 181C     		mov	r0, r3
+ 15962 06c8 FFF7FEFF 		bl	pthread_mutex_unlock
+ 15963              		.loc 1 92 0
+ 15964 06cc 3B1C     		mov	r3, r7
+ 15965 06ce 2733     		add	r3, r3, #39
+ 15966 06d0 1B78     		ldrb	r3, [r3]
+ 15967              	.LBE5:
+ 15968              		.loc 1 93 0
+ 15969 06d2 181C     		mov	r0, r3
+ 15970 06d4 BD46     		mov	sp, r7
+ 15971 06d6 0AB0     		add	sp, sp, #40
+ 15972              		@ sp needed for prologue
+ 15973 06d8 80BD     		pop	{r7, pc}
+ 15974              	.LFE995:
+ 15975              		.fnend
+ 15977 06da C046     		.align	2
+ 15978              		.global	_ZN10FfPipeline11SetNeedStopEv
+ 15979              		.code	16
+ 15980              		.thumb_func
+ 15982              	_ZN10FfPipeline11SetNeedStopEv:
+ 15983              		.fnstart
+ 15984              	.LFB988:
+ 15985              		.loc 1 37 0
+ 15986              		.save	{r7, lr}
+ 15987 06dc 80B5     		push	{r7, lr}
+ 15988              	.LCFI57:
+ 15989              		.pad #32
+ 15990 06de 88B0     		sub	sp, sp, #32
+ 15991              	.LCFI58:
+ 15992              		.setfp r7, sp, #0
+ 15993 06e0 00AF     		add	r7, sp, #0
+ 15994              	.LCFI59:
+ 15995 06e2 7860     		str	r0, [r7, #4]
+ 15996              	.LBB6:
+ 15997              		.loc 1 39 0
+ 15998 06e4 3B1C     		mov	r3, r7
+ 15999 06e6 0833     		add	r3, r3, #8
+ 16000 06e8 3B60     		str	r3, [r7]
+ 16001 06ea 0023     		mov	r3, #0
+ 16002 06ec 3A68     		ldr	r2, [r7]
+ 16003 06ee 1360     		str	r3, [r2]
+ 16004 06f0 3B68     		ldr	r3, [r7]
+ 16005 06f2 0433     		add	r3, r3, #4
+ 16006 06f4 3B60     		str	r3, [r7]
+ 16007 06f6 0023     		mov	r3, #0
+ 16008 06f8 3A68     		ldr	r2, [r7]
+ 16009 06fa 1360     		str	r3, [r2]
+ 16010 06fc 3B68     		ldr	r3, [r7]
+ 16011 06fe 0433     		add	r3, r3, #4
+ 16012 0700 3B60     		str	r3, [r7]
+ 16013 0702 0023     		mov	r3, #0
+ 16014 0704 3A68     		ldr	r2, [r7]
+ 16015 0706 1360     		str	r3, [r2]
+ 16016 0708 3B68     		ldr	r3, [r7]
+ 16017 070a 0433     		add	r3, r3, #4
+ 16018 070c 3B60     		str	r3, [r7]
+ 16019 070e 0023     		mov	r3, #0
+ 16020 0710 3A68     		ldr	r2, [r7]
+ 16021 0712 1360     		str	r3, [r2]
+ 16022 0714 3B68     		ldr	r3, [r7]
+ 16023 0716 0433     		add	r3, r3, #4
+ 16024 0718 3B60     		str	r3, [r7]
+ 16025 071a 0023     		mov	r3, #0
+ 16026 071c 3A68     		ldr	r2, [r7]
+ 16027 071e 1360     		str	r3, [r2]
+ 16028 0720 3B68     		ldr	r3, [r7]
+ 16029 0722 0433     		add	r3, r3, #4
+ 16030 0724 3B60     		str	r3, [r7]
+ 16031 0726 0023     		mov	r3, #0
+ 16032 0728 3A68     		ldr	r2, [r7]
+ 16033 072a 1360     		str	r3, [r2]
+ 16034 072c 3B68     		ldr	r3, [r7]
+ 16035 072e 0433     		add	r3, r3, #4
+ 16036              		.loc 1 41 0
+ 16037 0730 3B1C     		mov	r3, r7
+ 16038 0732 0833     		add	r3, r3, #8
+ 16039 0734 181C     		mov	r0, r3
+ 16040 0736 FFF7FEFF 		bl	pthread_mutex_lock
+ 16041              		.loc 1 42 0
+ 16042 073a 7968     		ldr	r1, [r7, #4]
+ 16043 073c 2822     		mov	r2, #40
+ 16044 073e 0123     		mov	r3, #1
+ 16045 0740 8B54     		strb	r3, [r1, r2]
+ 16046              		.loc 1 43 0
+ 16047 0742 3B1C     		mov	r3, r7
+ 16048 0744 0833     		add	r3, r3, #8
+ 16049 0746 181C     		mov	r0, r3
+ 16050 0748 FFF7FEFF 		bl	pthread_mutex_unlock
+ 16051              	.LBE6:
+ 16052              		.loc 1 44 0
+ 16053 074c BD46     		mov	sp, r7
+ 16054 074e 08B0     		add	sp, sp, #32
+ 16055              		@ sp needed for prologue
+ 16056 0750 80BD     		pop	{r7, pc}
+ 16057              	.LFE988:
+ 16058              		.fnend
+ 16060              		.section	.rodata
+ 16061 0137 00       		.align	2
+ 16062              	.LC19:
+ 16063 0138 46665069 		.ascii	"FfPipeline::SetPartnerToStop\000"
+ 16063      70656C69 
+ 16063      6E653A3A 
+ 16063      53657450 
+ 16063      6172746E 
+ 16064 0155 000000   		.align	2
+ 16065              	.LC22:
+ 16066 0158 44454255 		.ascii	"DEBUG: Slot '%d' was marked for stopping by SetNeed"
+ 16066      473A2053 
+ 16066      6C6F7420 
+ 16066      27256427 
+ 16066      20776173 
+ 16067 018b 53746F70 		.ascii	"StopFlag().\012\000"
+ 16067      466C6167 
+ 16067      28292E0A 
+ 16067      00
+ 16068              		.text
+ 16069 0752 C046     		.align	2
+ 16070              		.global	_ZN10FfPipeline16SetPartnerToStopEv
+ 16071              		.code	16
+ 16072              		.thumb_func
+ 16074              	_ZN10FfPipeline16SetPartnerToStopEv:
+ 16075              		.fnstart
+ 16076              	.LFB991:
+ 16077              		.loc 1 56 0
+ 16078              		.save	{r4, r7, lr}
+ 16079 0754 90B5     		push	{r4, r7, lr}
+ 16080              	.LCFI60:
+ 16081              		.pad #36
+ 16082 0756 89B0     		sub	sp, sp, #36
+ 16083              	.LCFI61:
+ 16084              		.setfp r7, sp, #0
+ 16085 0758 00AF     		add	r7, sp, #0
+ 16086              	.LCFI62:
+ 16087 075a 7860     		str	r0, [r7, #4]
+ 16088              	.LBB7:
+ 16089              		.loc 1 58 0
+ 16090 075c 1F4B     		ldr	r3, .L76
+ 16091 075e BB61     		str	r3, [r7, #24]
+ 16092              		.loc 1 59 0
+ 16093 0760 7B68     		ldr	r3, [r7, #4]
+ 16094 0762 1B68     		ldr	r3, [r3]
+ 16095 0764 FB61     		str	r3, [r7, #28]
+ 16096              		.loc 1 61 0
+ 16097 0766 FB69     		ldr	r3, [r7, #28]
+ 16098 0768 181C     		mov	r0, r3
+ 16099 076a FFF7FEFF 		bl	_ZN10FfPipeline11SetNeedStopEv
+ 16100              		.loc 1 63 0
+ 16101 076e FB69     		ldr	r3, [r7, #28]
+ 16102 0770 1B79     		ldrb	r3, [r3, #4]
+ 16103 0772 1C1C     		mov	r4, r3
+ 16104 0774 1A4B     		ldr	r3, .L76+4
+ 16105 0776 1B4A     		ldr	r2, .L76+8
+ 16106 0778 181C     		mov	r0, r3
+ 16107 077a 111C     		mov	r1, r2
+ 16108 077c 221C     		mov	r2, r4
+ 16109 077e FFF7FEFF 		bl	sprintf
+ 16110              		.loc 1 64 0
+ 16111 0782 3B1C     		mov	r3, r7
+ 16112 0784 1733     		add	r3, r3, #23
+ 16113 0786 181C     		mov	r0, r3
+ 16114 0788 FFF7FEFF 		bl	_ZNSaIcEC1Ev
+ 16115 078c 3B1C     		mov	r3, r7
+ 16116 078e 1033     		add	r3, r3, #16
+ 16117 0790 134A     		ldr	r2, .L76+4
+ 16118 0792 3C1C     		mov	r4, r7
+ 16119 0794 1734     		add	r4, r4, #23
+ 16120 0796 181C     		mov	r0, r3
+ 16121 0798 111C     		mov	r1, r2
+ 16122 079a 221C     		mov	r2, r4
+ 16123 079c FFF7FEFF 		bl	_ZNSsC1EPKcRKSaIcE
+ 16124 07a0 3B1C     		mov	r3, r7
+ 16125 07a2 0C33     		add	r3, r3, #12
+ 16126 07a4 3A1C     		mov	r2, r7
+ 16127 07a6 1032     		add	r2, r2, #16
+ 16128 07a8 BC69     		ldr	r4, [r7, #24]
+ 16129 07aa 181C     		mov	r0, r3
+ 16130 07ac 111C     		mov	r1, r2
+ 16131 07ae 221C     		mov	r2, r4
+ 16132 07b0 FFF7FEFF 		bl	_Z9AppendLogSsPKc
+ 16133 07b4 3B1C     		mov	r3, r7
+ 16134 07b6 0C33     		add	r3, r3, #12
+ 16135 07b8 181C     		mov	r0, r3
+ 16136 07ba FFF7FEFF 		bl	_ZNSsD1Ev
+ 16137 07be 3B1C     		mov	r3, r7
+ 16138 07c0 1033     		add	r3, r3, #16
+ 16139 07c2 181C     		mov	r0, r3
+ 16140 07c4 FFF7FEFF 		bl	_ZNSsD1Ev
+ 16141 07c8 3B1C     		mov	r3, r7
+ 16142 07ca 1733     		add	r3, r3, #23
+ 16143 07cc 181C     		mov	r0, r3
+ 16144 07ce FFF7FEFF 		bl	_ZNSaIcED1Ev
+ 16145              		.loc 1 65 0
+ 16146 07d2 0023     		mov	r3, #0
+ 16147              	.LBE7:
+ 16148              		.loc 1 66 0
+ 16149 07d4 181C     		mov	r0, r3
+ 16150 07d6 BD46     		mov	sp, r7
+ 16151 07d8 09B0     		add	sp, sp, #36
+ 16152              		@ sp needed for prologue
+ 16153 07da 90BD     		pop	{r4, r7, pc}
+ 16154              	.L77:
+ 16155              		.align	2
+ 16156              	.L76:
+ 16157 07dc 38010000 		.word	.LC19
+ 16158 07e0 00000000 		.word	str
+ 16159 07e4 58010000 		.word	.LC22
+ 16160              	.LFE991:
+ 16161              		.fnend
+ 16163              		.align	2
+ 16164              		.global	_ZN10FfPipeline13ClearNeedStopEv
+ 16165              		.code	16
+ 16166              		.thumb_func
+ 16168              	_ZN10FfPipeline13ClearNeedStopEv:
+ 16169              		.fnstart
+ 16170              	.LFB987:
+ 16171              		.loc 1 28 0
+ 16172              		.save	{r7, lr}
+ 16173 07e8 80B5     		push	{r7, lr}
+ 16174              	.LCFI63:
+ 16175              		.pad #32
+ 16176 07ea 88B0     		sub	sp, sp, #32
+ 16177              	.LCFI64:
+ 16178              		.setfp r7, sp, #0
+ 16179 07ec 00AF     		add	r7, sp, #0
+ 16180              	.LCFI65:
+ 16181 07ee 7860     		str	r0, [r7, #4]
+ 16182              	.LBB8:
+ 16183              		.loc 1 30 0
+ 16184 07f0 3B1C     		mov	r3, r7
+ 16185 07f2 0833     		add	r3, r3, #8
+ 16186 07f4 3B60     		str	r3, [r7]
+ 16187 07f6 0023     		mov	r3, #0
+ 16188 07f8 3A68     		ldr	r2, [r7]
+ 16189 07fa 1360     		str	r3, [r2]
+ 16190 07fc 3B68     		ldr	r3, [r7]
+ 16191 07fe 0433     		add	r3, r3, #4
+ 16192 0800 3B60     		str	r3, [r7]
+ 16193 0802 0023     		mov	r3, #0
+ 16194 0804 3A68     		ldr	r2, [r7]
+ 16195 0806 1360     		str	r3, [r2]
+ 16196 0808 3B68     		ldr	r3, [r7]
+ 16197 080a 0433     		add	r3, r3, #4
+ 16198 080c 3B60     		str	r3, [r7]
+ 16199 080e 0023     		mov	r3, #0
+ 16200 0810 3A68     		ldr	r2, [r7]
+ 16201 0812 1360     		str	r3, [r2]
+ 16202 0814 3B68     		ldr	r3, [r7]
+ 16203 0816 0433     		add	r3, r3, #4
+ 16204 0818 3B60     		str	r3, [r7]
+ 16205 081a 0023     		mov	r3, #0
+ 16206 081c 3A68     		ldr	r2, [r7]
+ 16207 081e 1360     		str	r3, [r2]
+ 16208 0820 3B68     		ldr	r3, [r7]
+ 16209 0822 0433     		add	r3, r3, #4
+ 16210 0824 3B60     		str	r3, [r7]
+ 16211 0826 0023     		mov	r3, #0
+ 16212 0828 3A68     		ldr	r2, [r7]
+ 16213 082a 1360     		str	r3, [r2]
+ 16214 082c 3B68     		ldr	r3, [r7]
+ 16215 082e 0433     		add	r3, r3, #4
+ 16216 0830 3B60     		str	r3, [r7]
+ 16217 0832 0023     		mov	r3, #0
+ 16218 0834 3A68     		ldr	r2, [r7]
+ 16219 0836 1360     		str	r3, [r2]
+ 16220 0838 3B68     		ldr	r3, [r7]
+ 16221 083a 0433     		add	r3, r3, #4
+ 16222              		.loc 1 32 0
+ 16223 083c 3B1C     		mov	r3, r7
+ 16224 083e 0833     		add	r3, r3, #8
+ 16225 0840 181C     		mov	r0, r3
+ 16226 0842 FFF7FEFF 		bl	pthread_mutex_lock
+ 16227              		.loc 1 33 0
+ 16228 0846 7968     		ldr	r1, [r7, #4]
+ 16229 0848 2822     		mov	r2, #40
+ 16230 084a 0023     		mov	r3, #0
+ 16231 084c 8B54     		strb	r3, [r1, r2]
+ 16232              		.loc 1 34 0
+ 16233 084e 3B1C     		mov	r3, r7
+ 16234 0850 0833     		add	r3, r3, #8
+ 16235 0852 181C     		mov	r0, r3
+ 16236 0854 FFF7FEFF 		bl	pthread_mutex_unlock
+ 16237              	.LBE8:
+ 16238              		.loc 1 35 0
+ 16239 0858 BD46     		mov	sp, r7
+ 16240 085a 08B0     		add	sp, sp, #32
+ 16241              		@ sp needed for prologue
+ 16242 085c 80BD     		pop	{r7, pc}
+ 16243              	.LFE987:
+ 16244              		.fnend
+ 16246              		.section	.rodata
+ 16247              		.align	2
+ 16248              	.LC24:
+ 16249 0198 46665069 		.ascii	"FfPipeline::DoRecording\000"
+ 16249      70656C69 
+ 16249      6E653A3A 
+ 16249      446F5265 
+ 16249      636F7264 
+ 16250              		.align	2
+ 16251              	.LC27:
+ 16252 01b0 25735F25 		.ascii	"%s_%d.mkv\000"
+ 16252      642E6D6B 
+ 16252      7600
+ 16253 01ba 0000     		.align	2
+ 16254              	.LC29:
+ 16255 01bc 2F6D6564 		.ascii	"/media/hdd/video/test\000"
+ 16255      69612F68 
+ 16255      64642F76 
+ 16255      6964656F 
+ 16255      2F746573 
+ 16256 01d2 0000     		.align	2
+ 16257              	.LC32:
+ 16258 01d4 44454255 		.ascii	"DEBUG: Output path: '%s'\012\000"
+ 16258      473A204F 
+ 16258      75747075 
+ 16258      74207061 
+ 16258      74683A20 
+ 16259 01ee 0000     		.align	2
+ 16260              	.LC34:
+ 16261 01f0 72747370 		.ascii	"rtsp_transport\000"
+ 16261      5F747261 
+ 16261      6E73706F 
+ 16261      727400
+ 16262 01ff 00       		.align	2
+ 16263              	.LC36:
+ 16264 0200 74637000 		.ascii	"tcp\000"
+ 16265              		.align	2
+ 16266              	.LC38:
+ 16267 0204 72747370 		.ascii	"rtsp://192.168.0.11:554/mpeg4/media.amp?audio=0\000"
+ 16267      3A2F2F31 
+ 16267      39322E31 
+ 16267      36382E30 
+ 16267      2E31313A 
+ 16268              		.align	2
+ 16269              	.LC40:
+ 16270 0234 4661696C 		.ascii	"Failed allocating output stream\012\000"
+ 16270      65642061 
+ 16270      6C6C6F63 
+ 16270      6174696E 
+ 16270      67206F75 
+ 16271 0255 000000   		.align	2
+ 16272              	.LC42:
+ 16273 0258 5741524E 		.ascii	"WARNING: for ofmt set flag AVFMT_NOFILE so we skip "
+ 16273      494E473A 
+ 16273      20666F72 
+ 16273      206F666D 
+ 16273      74207365 
+ 16274 028b 6F70656E 		.ascii	"open file.\012\000"
+ 16274      2066696C 
+ 16274      652E0A00 
+ 16275 0297 00       		.align	2
+ 16276              	.LC44:
+ 16277 0298 4552524F 		.ascii	"ERROR: in_stream is NULL pointer! Skip this packet!"
+ 16277      523A2069 
+ 16277      6E5F7374 
+ 16277      7265616D 
+ 16277      20697320 
+ 16278 02cb 0A00     		.ascii	"\012\000"
+ 16279 02cd 000000   		.align	2
+ 16280              	.LC46:
+ 16281 02d0 4552524F 		.ascii	"ERROR: out_stream is NULL pointer! Skip this packet"
+ 16281      523A206F 
+ 16281      75745F73 
+ 16281      74726561 
+ 16281      6D206973 
+ 16282 0303 210A00   		.ascii	"!\012\000"
+ 16283 0306 0000     		.align	2
+ 16284              	.LC48:
+ 16285 0308 44454255 		.ascii	"DEBUG: Now we stopping Slot %d\012\000"
+ 16285      473A204E 
+ 16285      6F772077 
+ 16285      65207374 
+ 16285      6F707069 
+ 16286              		.align	2
+ 16287              	.LC50:
+ 16288 0328 44454255 		.ascii	"DEBUG: Try to av_write_trailer() for Slot %d\012\000"
+ 16288      473A2054 
+ 16288      72792074 
+ 16288      6F206176 
+ 16288      5F777269 
+ 16289 0356 0000     		.align	2
+ 16290              	.LC52:
+ 16291 0358 44454255 		.ascii	"DEBUG: Try to close all streams codec for Slot %d\012"
+ 16291      473A2054 
+ 16291      72792074 
+ 16291      6F20636C 
+ 16291      6F736520 
+ 16292 038a 00       		.ascii	"\000"
+ 16293 038b 00       		.align	2
+ 16294              	.LC54:
+ 16295 038c 44454255 		.ascii	"DEBUG: Try to avio_close() for Slot %d\012\000"
+ 16295      473A2054 
+ 16295      72792074 
+ 16295      6F206176 
+ 16295      696F5F63 
+ 16296              		.align	2
+ 16297              	.LC56:
+ 16298 03b4 44454255 		.ascii	"DEBUG: Try to av_free() for Slot %d\012\000"
+ 16298      473A2054 
+ 16298      72792074 
+ 16298      6F206176 
+ 16298      5F667265 
+ 16299 03d9 000000   		.align	2
+ 16300              	.LC58:
+ 16301 03dc 44454255 		.ascii	"DEBUG: Try to avformat_close_input() for Slot %d\012"
+ 16301      473A2054 
+ 16301      72792074 
+ 16301      6F206176 
+ 16301      666F726D 
+ 16302 040d 00       		.ascii	"\000"
+ 16303 040e 0000     		.text
+ 16304 085e C046     		.align	2
+ 16305              		.global	_ZN10FfPipeline11DoRecordingEv
+ 16306              		.code	16
+ 16307              		.thumb_func
+ 16309              	_ZN10FfPipeline11DoRecordingEv:
+ 16310              		.fnstart
+ 16311              	.LFB1002:
+ 16312              		.loc 1 166 0
+ 16313              		.save	{r4, r5, r7, lr}
+ 16314 0860 B0B5     		push	{r4, r5, r7, lr}
+ 16315              	.LCFI66:
+ 16316 0862 EB4C     		ldr	r4, .L111
+ 16317              		.pad #2344
+ 16318 0864 A544     		add	sp, sp, r4
+ 16319              	.LCFI67:
+ 16320              		.setfp r7, sp, #8
+ 16321 0866 02AF     		add	r7, sp, #8
+ 16322              	.LCFI68:
+ 16323 0868 F860     		str	r0, [r7, #12]
+ 16324              	.LBB9:
+ 16325              		.loc 1 168 0
+ 16326 086a EA4B     		ldr	r3, .L111+4
+ 16327 086c 8F20     		mov	r0, #143
+ 16328 086e 0001     		lsl	r0, r0, #4
+ 16329 0870 C019     		add	r0, r0, r7
+ 16330 0872 0360     		str	r3, [r0]
+ 16331              		.loc 1 169 0
+ 16332 0874 0023     		mov	r3, #0
+ 16333 0876 E849     		ldr	r1, .L111+8
+ 16334 0878 C919     		add	r1, r1, r7
+ 16335 087a 0B60     		str	r3, [r1]
+ 16336              		.loc 1 170 0
+ 16337 087c 0023     		mov	r3, #0
+ 16338 087e E74A     		ldr	r2, .L111+12
+ 16339 0880 D219     		add	r2, r2, r7
+ 16340 0882 1360     		str	r3, [r2]
+ 16341              		.loc 1 171 0
+ 16342 0884 0023     		mov	r3, #0
+ 16343 0886 8620     		mov	r0, #134
+ 16344 0888 0001     		lsl	r0, r0, #4
+ 16345 088a C019     		add	r0, r0, r7
+ 16346 088c 0360     		str	r3, [r0]
+ 16347              		.loc 1 172 0
+ 16348 088e 0023     		mov	r3, #0
+ 16349 0890 E349     		ldr	r1, .L111+16
+ 16350 0892 C919     		add	r1, r1, r7
+ 16351 0894 0B60     		str	r3, [r1]
+ 16352              		.loc 1 174 0
+ 16353 0896 0023     		mov	r3, #0
+ 16354 0898 0024     		mov	r4, #0
+ 16355 089a E24A     		ldr	r2, .L111+20
+ 16356 089c D219     		add	r2, r2, r7
+ 16357 089e 1360     		str	r3, [r2]
+ 16358 08a0 5460     		str	r4, [r2, #4]
+ 16359 08a2 0023     		mov	r3, #0
+ 16360 08a4 0024     		mov	r4, #0
+ 16361 08a6 9020     		mov	r0, #144
+ 16362 08a8 0001     		lsl	r0, r0, #4
+ 16363 08aa C019     		add	r0, r0, r7
+ 16364 08ac 0360     		str	r3, [r0]
+ 16365 08ae 4460     		str	r4, [r0, #4]
+ 16366              		.loc 1 179 0
+ 16367 08b0 DD4B     		ldr	r3, .L111+24
+ 16368 08b2 1B68     		ldr	r3, [r3]
+ 16369 08b4 5A1C     		add	r2, r3, #1
+ 16370 08b6 DC4B     		ldr	r3, .L111+24
+ 16371 08b8 1A60     		str	r2, [r3]
+ 16372 08ba DB4B     		ldr	r3, .L111+24
+ 16373 08bc 1D68     		ldr	r5, [r3]
+ 16374 08be 3B1C     		mov	r3, r7
+ 16375 08c0 1033     		add	r3, r3, #16
+ 16376 08c2 DA4A     		ldr	r2, .L111+28
+ 16377 08c4 DA4C     		ldr	r4, .L111+32
+ 16378 08c6 181C     		mov	r0, r3
+ 16379 08c8 111C     		mov	r1, r2
+ 16380 08ca 221C     		mov	r2, r4
+ 16381 08cc 2B1C     		mov	r3, r5
+ 16382 08ce FFF7FEFF 		bl	sprintf
+ 16383              		.loc 1 181 0
+ 16384 08d2 D84B     		ldr	r3, .L111+36
+ 16385 08d4 D84A     		ldr	r2, .L111+40
+ 16386 08d6 3C1C     		mov	r4, r7
+ 16387 08d8 1034     		add	r4, r4, #16
+ 16388 08da 181C     		mov	r0, r3
+ 16389 08dc 111C     		mov	r1, r2
+ 16390 08de 221C     		mov	r2, r4
+ 16391 08e0 FFF7FEFF 		bl	sprintf
+ 16392              		.loc 1 182 0
+ 16393 08e4 D549     		ldr	r1, .L111+44
+ 16394 08e6 7B18     		add	r3, r7, r1
+ 16395 08e8 181C     		mov	r0, r3
+ 16396 08ea FFF7FEFF 		bl	_ZNSaIcEC1Ev
+ 16397 08ee 8722     		mov	r2, #135
+ 16398 08f0 1201     		lsl	r2, r2, #4
+ 16399 08f2 BB18     		add	r3, r7, r2
+ 16400 08f4 CF4A     		ldr	r2, .L111+36
+ 16401 08f6 D148     		ldr	r0, .L111+44
+ 16402 08f8 3C18     		add	r4, r7, r0
+ 16403 08fa 181C     		mov	r0, r3
+ 16404 08fc 111C     		mov	r1, r2
+ 16405 08fe 221C     		mov	r2, r4
+ 16406 0900 FFF7FEFF 		bl	_ZNSsC1EPKcRKSaIcE
+ 16407 0904 CE49     		ldr	r1, .L111+48
+ 16408 0906 7B18     		add	r3, r7, r1
+ 16409 0908 8720     		mov	r0, #135
+ 16410 090a 0001     		lsl	r0, r0, #4
+ 16411 090c 3A18     		add	r2, r7, r0
+ 16412 090e 8F21     		mov	r1, #143
+ 16413 0910 0901     		lsl	r1, r1, #4
+ 16414 0912 C919     		add	r1, r1, r7
+ 16415 0914 0C68     		ldr	r4, [r1]
+ 16416 0916 181C     		mov	r0, r3
+ 16417 0918 111C     		mov	r1, r2
+ 16418 091a 221C     		mov	r2, r4
+ 16419 091c FFF7FEFF 		bl	_Z9AppendLogSsPKc
+ 16420 0920 C74A     		ldr	r2, .L111+48
+ 16421 0922 BB18     		add	r3, r7, r2
+ 16422 0924 181C     		mov	r0, r3
+ 16423 0926 FFF7FEFF 		bl	_ZNSsD1Ev
+ 16424 092a 8720     		mov	r0, #135
+ 16425 092c 0001     		lsl	r0, r0, #4
+ 16426 092e 3B18     		add	r3, r7, r0
+ 16427 0930 181C     		mov	r0, r3
+ 16428 0932 FFF7FEFF 		bl	_ZNSsD1Ev
+ 16429 0936 C149     		ldr	r1, .L111+44
+ 16430 0938 7B18     		add	r3, r7, r1
+ 16431 093a 181C     		mov	r0, r3
+ 16432 093c FFF7FEFF 		bl	_ZNSaIcED1Ev
+ 16433              		.loc 1 184 0
+ 16434 0940 8622     		mov	r2, #134
+ 16435 0942 1201     		lsl	r2, r2, #4
+ 16436 0944 BB18     		add	r3, r7, r2
+ 16437 0946 BF4A     		ldr	r2, .L111+52
+ 16438 0948 BF4C     		ldr	r4, .L111+56
+ 16439 094a 181C     		mov	r0, r3
+ 16440 094c 111C     		mov	r1, r2
+ 16441 094e 221C     		mov	r2, r4
+ 16442 0950 0023     		mov	r3, #0
+ 16443 0952 FFF7FEFF 		bl	av_dict_set
+ 16444              		.loc 1 186 0
+ 16445 0956 B048     		ldr	r0, .L111+8
+ 16446 0958 3B18     		add	r3, r7, r0
+ 16447 095a BC4A     		ldr	r2, .L111+60
+ 16448 095c 8621     		mov	r1, #134
+ 16449 095e 0901     		lsl	r1, r1, #4
+ 16450 0960 7C18     		add	r4, r7, r1
+ 16451 0962 181C     		mov	r0, r3
+ 16452 0964 111C     		mov	r1, r2
+ 16453 0966 0022     		mov	r2, #0
+ 16454 0968 231C     		mov	r3, r4
+ 16455 096a FFF7FEFF 		bl	avformat_open_input
+ 16456 096e 031C     		mov	r3, r0
+ 16457 0970 DB0F     		lsr	r3, r3, #31
+ 16458 0972 1B06     		lsl	r3, r3, #24
+ 16459 0974 1B0E     		lsr	r3, r3, #24
+ 16460 0976 002B     		cmp	r3, #0
+ 16461 0978 15D0     		beq	.L81
+ 16462              		.loc 1 188 0
+ 16463 097a A74A     		ldr	r2, .L111+8
+ 16464 097c BB18     		add	r3, r7, r2
+ 16465 097e 181C     		mov	r0, r3
+ 16466 0980 FFF7FEFF 		bl	avformat_close_input
+ 16467              		.loc 1 189 0
+ 16468 0984 0023     		mov	r3, #0
+ 16469 0986 A448     		ldr	r0, .L111+8
+ 16470 0988 C019     		add	r0, r0, r7
+ 16471 098a 0360     		str	r3, [r0]
+ 16472              		.loc 1 191 0
+ 16473 098c 8621     		mov	r1, #134
+ 16474 098e 0901     		lsl	r1, r1, #4
+ 16475 0990 7B18     		add	r3, r7, r1
+ 16476 0992 181C     		mov	r0, r3
+ 16477 0994 FFF7FEFF 		bl	av_dict_free
+ 16478              		.loc 1 193 0
+ 16479 0998 0122     		mov	r2, #1
+ 16480 099a 3A60     		str	r2, [r7]
+ 16481 099c 3B68     		ldr	r3, [r7]
+ 16482 099e 5B42     		neg	r3, r3
+ 16483 09a0 3B60     		str	r3, [r7]
+ 16484 09a2 00F0E6FC 		bl	.L82	@ far jump
+ 16485              	.L81:
+ 16486              		.loc 1 199 0
+ 16487 09a6 8620     		mov	r0, #134
+ 16488 09a8 0001     		lsl	r0, r0, #4
+ 16489 09aa 3B18     		add	r3, r7, r0
+ 16490 09ac 181C     		mov	r0, r3
+ 16491 09ae FFF7FEFF 		bl	av_dict_free
+ 16492              		.loc 1 201 0
+ 16493 09b2 9949     		ldr	r1, .L111+8
+ 16494 09b4 C919     		add	r1, r1, r7
+ 16495 09b6 0B68     		ldr	r3, [r1]
+ 16496 09b8 181C     		mov	r0, r3
+ 16497 09ba 0021     		mov	r1, #0
+ 16498 09bc FFF7FEFF 		bl	avformat_find_stream_info
+ 16499 09c0 031C     		mov	r3, r0
+ 16500 09c2 DB0F     		lsr	r3, r3, #31
+ 16501 09c4 1B06     		lsl	r3, r3, #24
+ 16502 09c6 1B0E     		lsr	r3, r3, #24
+ 16503 09c8 002B     		cmp	r3, #0
+ 16504 09ca 0FD0     		beq	.L83
+ 16505              		.loc 1 203 0
+ 16506 09cc 924A     		ldr	r2, .L111+8
+ 16507 09ce BB18     		add	r3, r7, r2
+ 16508 09d0 181C     		mov	r0, r3
+ 16509 09d2 FFF7FEFF 		bl	avformat_close_input
+ 16510              		.loc 1 204 0
+ 16511 09d6 0023     		mov	r3, #0
+ 16512 09d8 8F48     		ldr	r0, .L111+8
+ 16513 09da C019     		add	r0, r0, r7
+ 16514 09dc 0360     		str	r3, [r0]
+ 16515              		.loc 1 206 0
+ 16516 09de 0121     		mov	r1, #1
+ 16517 09e0 3960     		str	r1, [r7]
+ 16518 09e2 3A68     		ldr	r2, [r7]
+ 16519 09e4 5242     		neg	r2, r2
+ 16520 09e6 3A60     		str	r2, [r7]
+ 16521 09e8 00F0C3FC 		bl	.L82	@ far jump
+ 16522              	.L83:
+ 16523              		.loc 1 209 0
+ 16524 09ec 8B48     		ldr	r0, .L111+12
+ 16525 09ee 3B18     		add	r3, r7, r0
+ 16526 09f0 3C1C     		mov	r4, r7
+ 16527 09f2 1034     		add	r4, r4, #16
+ 16528 09f4 181C     		mov	r0, r3
+ 16529 09f6 0021     		mov	r1, #0
+ 16530 09f8 0022     		mov	r2, #0
+ 16531 09fa 231C     		mov	r3, r4
+ 16532 09fc FFF7FEFF 		bl	avformat_alloc_output_context2
+ 16533              		.loc 1 211 0
+ 16534 0a00 8649     		ldr	r1, .L111+12
+ 16535 0a02 C919     		add	r1, r1, r7
+ 16536 0a04 0B68     		ldr	r3, [r1]
+ 16537 0a06 002B     		cmp	r3, #0
+ 16538 0a08 06D1     		bne	.L84
+ 16539              		.loc 1 213 0
+ 16540 0a0a 0122     		mov	r2, #1
+ 16541 0a0c 3A60     		str	r2, [r7]
+ 16542 0a0e 3B68     		ldr	r3, [r7]
+ 16543 0a10 5B42     		neg	r3, r3
+ 16544 0a12 3B60     		str	r3, [r7]
+ 16545 0a14 00F0ADFC 		bl	.L82	@ far jump
+ 16546              	.L84:
+ 16547              		.loc 1 219 0
+ 16548 0a18 8048     		ldr	r0, .L111+12
+ 16549 0a1a C019     		add	r0, r0, r7
+ 16550 0a1c 0368     		ldr	r3, [r0]
+ 16551 0a1e 9B68     		ldr	r3, [r3, #8]
+ 16552 0a20 7F49     		ldr	r1, .L111+16
+ 16553 0a22 C919     		add	r1, r1, r7
+ 16554 0a24 0B60     		str	r3, [r1]
+ 16555              		.loc 1 221 0
+ 16556 0a26 7E4A     		ldr	r2, .L111+16
+ 16557 0a28 D219     		add	r2, r2, r7
+ 16558 0a2a 1368     		ldr	r3, [r2]
+ 16559 0a2c 002B     		cmp	r3, #0
+ 16560 0a2e 06D1     		bne	.L85
+ 16561              		.loc 1 223 0
+ 16562 0a30 0123     		mov	r3, #1
+ 16563 0a32 3B60     		str	r3, [r7]
+ 16564 0a34 3868     		ldr	r0, [r7]
+ 16565 0a36 4042     		neg	r0, r0
+ 16566 0a38 3860     		str	r0, [r7]
+ 16567 0a3a 00F09AFC 		bl	.L82	@ far jump
+ 16568              	.L85:
+ 16569              		.loc 1 226 0
+ 16570 0a3e 0023     		mov	r3, #0
+ 16571 0a40 8349     		ldr	r1, .L111+64
+ 16572 0a42 C919     		add	r1, r1, r7
+ 16573 0a44 0B60     		str	r3, [r1]
+ 16574 0a46 B2E0     		b	.L86
+ 16575              	.L90:
+ 16576              	.LBB10:
+ 16577              		.loc 1 228 0
+ 16578 0a48 734A     		ldr	r2, .L111+8
+ 16579 0a4a D219     		add	r2, r2, r7
+ 16580 0a4c 1368     		ldr	r3, [r2]
+ 16581 0a4e DA69     		ldr	r2, [r3, #28]
+ 16582 0a50 7F48     		ldr	r0, .L111+64
+ 16583 0a52 C019     		add	r0, r0, r7
+ 16584 0a54 0368     		ldr	r3, [r0]
+ 16585 0a56 9B00     		lsl	r3, r3, #2
+ 16586 0a58 D318     		add	r3, r2, r3
+ 16587 0a5a 1B68     		ldr	r3, [r3]
+ 16588 0a5c 9121     		mov	r1, #145
+ 16589 0a5e 0901     		lsl	r1, r1, #4
+ 16590 0a60 C919     		add	r1, r1, r7
+ 16591 0a62 0B60     		str	r3, [r1]
+ 16592              		.loc 1 229 0
+ 16593 0a64 6D4B     		ldr	r3, .L111+12
+ 16594 0a66 DB19     		add	r3, r3, r7
+ 16595 0a68 1A68     		ldr	r2, [r3]
+ 16596 0a6a 9120     		mov	r0, #145
+ 16597 0a6c 0001     		lsl	r0, r0, #4
+ 16598 0a6e C019     		add	r0, r0, r7
+ 16599 0a70 0368     		ldr	r3, [r0]
+ 16600 0a72 9B68     		ldr	r3, [r3, #8]
+ 16601 0a74 DB68     		ldr	r3, [r3, #12]
+ 16602 0a76 101C     		mov	r0, r2
+ 16603 0a78 191C     		mov	r1, r3
+ 16604 0a7a FFF7FEFF 		bl	avformat_new_stream
+ 16605 0a7e 031C     		mov	r3, r0
+ 16606 0a80 7449     		ldr	r1, .L111+68
+ 16607 0a82 C919     		add	r1, r1, r7
+ 16608 0a84 0B60     		str	r3, [r1]
+ 16609              		.loc 1 231 0
+ 16610 0a86 734A     		ldr	r2, .L111+68
+ 16611 0a88 D219     		add	r2, r2, r7
+ 16612 0a8a 1368     		ldr	r3, [r2]
+ 16613 0a8c 002B     		cmp	r3, #0
+ 16614 0a8e 31D1     		bne	.L87
+ 16615              		.loc 1 233 0
+ 16616 0a90 7148     		ldr	r0, .L111+72
+ 16617 0a92 3B18     		add	r3, r7, r0
+ 16618 0a94 181C     		mov	r0, r3
+ 16619 0a96 FFF7FEFF 		bl	_ZNSaIcEC1Ev
+ 16620 0a9a 7049     		ldr	r1, .L111+76
+ 16621 0a9c 7B18     		add	r3, r7, r1
+ 16622 0a9e 704A     		ldr	r2, .L111+80
+ 16623 0aa0 6D48     		ldr	r0, .L111+72
+ 16624 0aa2 3C18     		add	r4, r7, r0
+ 16625 0aa4 181C     		mov	r0, r3
+ 16626 0aa6 111C     		mov	r1, r2
+ 16627 0aa8 221C     		mov	r2, r4
+ 16628 0aaa FFF7FEFF 		bl	_ZNSsC1EPKcRKSaIcE
+ 16629 0aae 6D49     		ldr	r1, .L111+84
+ 16630 0ab0 7B18     		add	r3, r7, r1
+ 16631 0ab2 6A48     		ldr	r0, .L111+76
+ 16632 0ab4 3A18     		add	r2, r7, r0
+ 16633 0ab6 8F21     		mov	r1, #143
+ 16634 0ab8 0901     		lsl	r1, r1, #4
+ 16635 0aba C919     		add	r1, r1, r7
+ 16636 0abc 0C68     		ldr	r4, [r1]
+ 16637 0abe 181C     		mov	r0, r3
+ 16638 0ac0 111C     		mov	r1, r2
+ 16639 0ac2 221C     		mov	r2, r4
+ 16640 0ac4 FFF7FEFF 		bl	_Z9AppendLogSsPKc
+ 16641 0ac8 664A     		ldr	r2, .L111+84
+ 16642 0aca BB18     		add	r3, r7, r2
+ 16643 0acc 181C     		mov	r0, r3
+ 16644 0ace FFF7FEFF 		bl	_ZNSsD1Ev
+ 16645 0ad2 6248     		ldr	r0, .L111+76
+ 16646 0ad4 3B18     		add	r3, r7, r0
+ 16647 0ad6 181C     		mov	r0, r3
+ 16648 0ad8 FFF7FEFF 		bl	_ZNSsD1Ev
+ 16649 0adc 5E49     		ldr	r1, .L111+72
+ 16650 0ade 7B18     		add	r3, r7, r1
+ 16651 0ae0 181C     		mov	r0, r3
+ 16652 0ae2 FFF7FEFF 		bl	_ZNSaIcED1Ev
+ 16653              		.loc 1 234 0
+ 16654 0ae6 0122     		mov	r2, #1
+ 16655 0ae8 3A60     		str	r2, [r7]
+ 16656 0aea 3B68     		ldr	r3, [r7]
+ 16657 0aec 5B42     		neg	r3, r3
+ 16658 0aee 3B60     		str	r3, [r7]
+ 16659 0af0 00F03FFC 		bl	.L82	@ far jump
+ 16660              	.L87:
+ 16661              		.loc 1 237 0
+ 16662 0af4 5748     		ldr	r0, .L111+68
+ 16663 0af6 C019     		add	r0, r0, r7
+ 16664 0af8 0368     		ldr	r3, [r0]
+ 16665 0afa 9A68     		ldr	r2, [r3, #8]
+ 16666 0afc 9121     		mov	r1, #145
+ 16667 0afe 0901     		lsl	r1, r1, #4
+ 16668 0b00 C919     		add	r1, r1, r7
+ 16669 0b02 0B68     		ldr	r3, [r1]
+ 16670 0b04 9B68     		ldr	r3, [r3, #8]
+ 16671 0b06 101C     		mov	r0, r2
+ 16672 0b08 191C     		mov	r1, r3
+ 16673 0b0a FFF7FEFF 		bl	avcodec_copy_context
+ 16674 0b0e 031C     		mov	r3, r0
+ 16675 0b10 554A     		ldr	r2, .L111+88
+ 16676 0b12 D219     		add	r2, r2, r7
+ 16677 0b14 1360     		str	r3, [r2]
+ 16678              		.loc 1 239 0
+ 16679 0b16 5448     		ldr	r0, .L111+88
+ 16680 0b18 C019     		add	r0, r0, r7
+ 16681 0b1a 0368     		ldr	r3, [r0]
+ 16682 0b1c 002B     		cmp	r3, #0
+ 16683 0b1e 05DA     		bge	.L88
+ 16684              		.loc 1 241 0
+ 16685 0b20 5149     		ldr	r1, .L111+88
+ 16686 0b22 C919     		add	r1, r1, r7
+ 16687 0b24 0968     		ldr	r1, [r1]
+ 16688 0b26 3960     		str	r1, [r7]
+ 16689 0b28 00F023FC 		bl	.L82	@ far jump
+ 16690              	.L88:
+ 16691              		.loc 1 244 0
+ 16692 0b2c 494A     		ldr	r2, .L111+68
+ 16693 0b2e D219     		add	r2, r2, r7
+ 16694 0b30 1368     		ldr	r3, [r2]
+ 16695 0b32 9120     		mov	r0, #145
+ 16696 0b34 0001     		lsl	r0, r0, #4
+ 16697 0b36 C019     		add	r0, r0, r7
+ 16698 0b38 0268     		ldr	r2, [r0]
+ 16699 0b3a 2833     		add	r3, r3, #40
+ 16700 0b3c 2832     		add	r2, r2, #40
+ 16701 0b3e 0824     		mov	r4, #8
+ 16702 0b40 181C     		mov	r0, r3
+ 16703 0b42 111C     		mov	r1, r2
+ 16704 0b44 221C     		mov	r2, r4
+ 16705 0b46 FFF7FEFF 		bl	memcpy
+ 16706              		.loc 1 245 0
+ 16707 0b4a 4249     		ldr	r1, .L111+68
+ 16708 0b4c C919     		add	r1, r1, r7
+ 16709 0b4e 0B68     		ldr	r3, [r1]
+ 16710 0b50 9B68     		ldr	r3, [r3, #8]
+ 16711 0b52 4048     		ldr	r0, .L111+68
+ 16712 0b54 C019     		add	r0, r0, r7
+ 16713 0b56 0268     		ldr	r2, [r0]
+ 16714 0b58 6833     		add	r3, r3, #104
+ 16715 0b5a 2832     		add	r2, r2, #40
+ 16716 0b5c 0824     		mov	r4, #8
+ 16717 0b5e 181C     		mov	r0, r3
+ 16718 0b60 111C     		mov	r1, r2
+ 16719 0b62 221C     		mov	r2, r4
+ 16720 0b64 FFF7FEFF 		bl	memcpy
+ 16721              		.loc 1 246 0
+ 16722 0b68 3A49     		ldr	r1, .L111+68
+ 16723 0b6a C919     		add	r1, r1, r7
+ 16724 0b6c 0B68     		ldr	r3, [r1]
+ 16725 0b6e 9A68     		ldr	r2, [r3, #8]
+ 16726 0b70 0023     		mov	r3, #0
+ 16727 0b72 5363     		str	r3, [r2, #52]
+ 16728              		.loc 1 248 0
+ 16729 0b74 294A     		ldr	r2, .L111+12
+ 16730 0b76 D219     		add	r2, r2, r7
+ 16731 0b78 1368     		ldr	r3, [r2]
+ 16732 0b7a 9B68     		ldr	r3, [r3, #8]
+ 16733 0b7c DA69     		ldr	r2, [r3, #28]
+ 16734 0b7e 4023     		mov	r3, #64
+ 16735 0b80 1340     		and	r3, r3, r2
+ 16736 0b82 002B     		cmp	r3, #0
+ 16737 0b84 0CD0     		beq	.L89
+ 16738              		.loc 1 249 0
+ 16739 0b86 3348     		ldr	r0, .L111+68
+ 16740 0b88 C019     		add	r0, r0, r7
+ 16741 0b8a 0368     		ldr	r3, [r0]
+ 16742 0b8c 9968     		ldr	r1, [r3, #8]
+ 16743 0b8e 314A     		ldr	r2, .L111+68
+ 16744 0b90 D219     		add	r2, r2, r7
+ 16745 0b92 1368     		ldr	r3, [r2]
+ 16746 0b94 9B68     		ldr	r3, [r3, #8]
+ 16747 0b96 9A6D     		ldr	r2, [r3, #88]
+ 16748 0b98 8023     		mov	r3, #128
+ 16749 0b9a DB03     		lsl	r3, r3, #15
+ 16750 0b9c 1343     		orr	r3, r3, r2
+ 16751 0b9e 8B65     		str	r3, [r1, #88]
+ 16752              	.L89:
+ 16753              	.LBE10:
+ 16754              		.loc 1 226 0
+ 16755 0ba0 2B48     		ldr	r0, .L111+64
+ 16756 0ba2 C019     		add	r0, r0, r7
+ 16757 0ba4 0368     		ldr	r3, [r0]
+ 16758 0ba6 0133     		add	r3, r3, #1
+ 16759 0ba8 2949     		ldr	r1, .L111+64
+ 16760 0baa C919     		add	r1, r1, r7
+ 16761 0bac 0B60     		str	r3, [r1]
+ 16762              	.L86:
+ 16763 0bae 1A4A     		ldr	r2, .L111+8
+ 16764 0bb0 D219     		add	r2, r2, r7
+ 16765 0bb2 1368     		ldr	r3, [r2]
+ 16766 0bb4 9A69     		ldr	r2, [r3, #24]
+ 16767 0bb6 2648     		ldr	r0, .L111+64
+ 16768 0bb8 C019     		add	r0, r0, r7
+ 16769 0bba 0368     		ldr	r3, [r0]
+ 16770 0bbc 9A42     		cmp	r2, r3
+ 16771 0bbe 00D9     		bls	.LCB1632
+ 16772 0bc0 42E7     		b	.L90	@long jump
+ 16773              	.LCB1632:
+ 16774              		.loc 1 253 0
+ 16775 0bc2 1749     		ldr	r1, .L111+16
+ 16776 0bc4 C919     		add	r1, r1, r7
+ 16777 0bc6 0B68     		ldr	r3, [r1]
+ 16778 0bc8 DA69     		ldr	r2, [r3, #28]
+ 16779 0bca 0123     		mov	r3, #1
+ 16780 0bcc 1340     		and	r3, r3, r2
+ 16781 0bce 1B06     		lsl	r3, r3, #24
+ 16782 0bd0 1A0E     		lsr	r2, r3, #24
+ 16783 0bd2 0123     		mov	r3, #1
+ 16784 0bd4 5340     		eor	r3, r3, r2
+ 16785 0bd6 1B06     		lsl	r3, r3, #24
+ 16786 0bd8 1B0E     		lsr	r3, r3, #24
+ 16787 0bda 002B     		cmp	r3, #0
+ 16788 0bdc 46D0     		beq	.L91
+ 16789              		.loc 1 255 0
+ 16790 0bde 0F4A     		ldr	r2, .L111+12
+ 16791 0be0 D219     		add	r2, r2, r7
+ 16792 0be2 1368     		ldr	r3, [r2]
+ 16793 0be4 1033     		add	r3, r3, #16
+ 16794 0be6 3A1C     		mov	r2, r7
+ 16795 0be8 1032     		add	r2, r2, #16
+ 16796 0bea 181C     		mov	r0, r3
+ 16797 0bec 111C     		mov	r1, r2
+ 16798 0bee 0222     		mov	r2, #2
+ 16799 0bf0 FFF7FEFF 		bl	avio_open
+ 16800 0bf4 031C     		mov	r3, r0
+ 16801 0bf6 1C48     		ldr	r0, .L111+88
+ 16802 0bf8 C019     		add	r0, r0, r7
+ 16803 0bfa 0360     		str	r3, [r0]
+ 16804              		.loc 1 256 0
+ 16805 0bfc 1A49     		ldr	r1, .L111+88
+ 16806 0bfe C919     		add	r1, r1, r7
+ 16807 0c00 0B68     		ldr	r3, [r1]
+ 16808 0c02 002B     		cmp	r3, #0
+ 16809 0c04 5DDA     		bge	.L93
+ 16810              		.loc 1 258 0
+ 16811 0c06 184A     		ldr	r2, .L111+88
+ 16812 0c08 D219     		add	r2, r2, r7
+ 16813 0c0a 1268     		ldr	r2, [r2]
+ 16814 0c0c 3A60     		str	r2, [r7]
+ 16815 0c0e B0E3     		b	.L82
+ 16816              	.L112:
+ 16817              		.align	2
+ 16818              	.L111:
+ 16819 0c10 D8F6FFFF 		.word	-2344
+ 16820 0c14 98010000 		.word	.LC24
+ 16821 0c18 68080000 		.word	2152
+ 16822 0c1c 64080000 		.word	2148
+ 16823 0c20 F4080000 		.word	2292
+ 16824 0c24 F8080000 		.word	2296
+ 16825 0c28 00000000 		.word	Count
+ 16826 0c2c B0010000 		.word	.LC27
+ 16827 0c30 BC010000 		.word	.LC29
+ 16828 0c34 00000000 		.word	str
+ 16829 0c38 D4010000 		.word	.LC32
+ 16830 0c3c 77080000 		.word	2167
+ 16831 0c40 6C080000 		.word	2156
+ 16832 0c44 F0010000 		.word	.LC34
+ 16833 0c48 00020000 		.word	.LC36
+ 16834 0c4c 04020000 		.word	.LC38
+ 16835 0c50 08090000 		.word	2312
+ 16836 0c54 14090000 		.word	2324
+ 16837 0c58 83080000 		.word	2179
+ 16838 0c5c 7C080000 		.word	2172
+ 16839 0c60 34020000 		.word	.LC40
+ 16840 0c64 78080000 		.word	2168
+ 16841 0c68 0C090000 		.word	2316
+ 16842              	.L91:
+ 16843              		.loc 1 263 0
+ 16844 0c6c DA48     		ldr	r0, .L113+8
+ 16845 0c6e 3B18     		add	r3, r7, r0
+ 16846 0c70 181C     		mov	r0, r3
+ 16847 0c72 FFF7FEFF 		bl	_ZNSaIcEC1Ev
+ 16848 0c76 D949     		ldr	r1, .L113+12
+ 16849 0c78 7B18     		add	r3, r7, r1
+ 16850 0c7a D94A     		ldr	r2, .L113+16
+ 16851 0c7c D648     		ldr	r0, .L113+8
+ 16852 0c7e 3C18     		add	r4, r7, r0
+ 16853 0c80 181C     		mov	r0, r3
+ 16854 0c82 111C     		mov	r1, r2
+ 16855 0c84 221C     		mov	r2, r4
+ 16856 0c86 FFF7FEFF 		bl	_ZNSsC1EPKcRKSaIcE
+ 16857 0c8a D649     		ldr	r1, .L113+20
+ 16858 0c8c 7B18     		add	r3, r7, r1
+ 16859 0c8e D348     		ldr	r0, .L113+12
+ 16860 0c90 3A18     		add	r2, r7, r0
+ 16861 0c92 8F21     		mov	r1, #143
+ 16862 0c94 0901     		lsl	r1, r1, #4
+ 16863 0c96 C919     		add	r1, r1, r7
+ 16864 0c98 0C68     		ldr	r4, [r1]
+ 16865 0c9a 181C     		mov	r0, r3
+ 16866 0c9c 111C     		mov	r1, r2
+ 16867 0c9e 221C     		mov	r2, r4
+ 16868 0ca0 FFF7FEFF 		bl	_Z9AppendLogSsPKc
+ 16869 0ca4 CF4A     		ldr	r2, .L113+20
+ 16870 0ca6 BB18     		add	r3, r7, r2
+ 16871 0ca8 181C     		mov	r0, r3
+ 16872 0caa FFF7FEFF 		bl	_ZNSsD1Ev
+ 16873 0cae CB48     		ldr	r0, .L113+12
+ 16874 0cb0 3B18     		add	r3, r7, r0
+ 16875 0cb2 181C     		mov	r0, r3
+ 16876 0cb4 FFF7FEFF 		bl	_ZNSsD1Ev
+ 16877 0cb8 C749     		ldr	r1, .L113+8
+ 16878 0cba 7B18     		add	r3, r7, r1
+ 16879 0cbc 181C     		mov	r0, r3
+ 16880 0cbe FFF7FEFF 		bl	_ZNSaIcED1Ev
+ 16881              	.L93:
+ 16882              		.loc 1 266 0
+ 16883 0cc2 C94A     		ldr	r2, .L113+24
+ 16884 0cc4 D219     		add	r2, r2, r7
+ 16885 0cc6 1368     		ldr	r3, [r2]
+ 16886 0cc8 181C     		mov	r0, r3
+ 16887 0cca 0021     		mov	r1, #0
+ 16888 0ccc FFF7FEFF 		bl	avformat_write_header
+ 16889 0cd0 031C     		mov	r3, r0
+ 16890 0cd2 C648     		ldr	r0, .L113+28
+ 16891 0cd4 C019     		add	r0, r0, r7
+ 16892 0cd6 0360     		str	r3, [r0]
+ 16893              		.loc 1 268 0
+ 16894 0cd8 C449     		ldr	r1, .L113+28
+ 16895 0cda C919     		add	r1, r1, r7
+ 16896 0cdc 0B68     		ldr	r3, [r1]
+ 16897 0cde 002B     		cmp	r3, #0
+ 16898 0ce0 04DA     		bge	.L94
+ 16899              		.loc 1 270 0
+ 16900 0ce2 C24A     		ldr	r2, .L113+28
+ 16901 0ce4 D219     		add	r2, r2, r7
+ 16902 0ce6 1268     		ldr	r2, [r2]
+ 16903 0ce8 3A60     		str	r2, [r7]
+ 16904 0cea 42E3     		b	.L82
+ 16905              	.L94:
+ 16906              		.loc 1 273 0
+ 16907 0cec FB68     		ldr	r3, [r7, #12]
+ 16908 0cee 181C     		mov	r0, r3
+ 16909 0cf0 FFF7FEFF 		bl	_ZN10FfPipeline22SetWaitingKeyframeFlagEv
+ 16910              		.loc 1 274 0
+ 16911 0cf4 FB68     		ldr	r3, [r7, #12]
+ 16912 0cf6 181C     		mov	r0, r3
+ 16913 0cf8 FFF7FEFF 		bl	_ZN10FfPipeline13ClearNeedStopEv
+ 16914 0cfc 47E1     		b	.L95
+ 16915              	.L106:
+ 16916              	.LBB11:
+ 16917              		.loc 1 278 0
+ 16918 0cfe 0023     		mov	r3, #0
+ 16919 0d00 BB48     		ldr	r0, .L113+32
+ 16920 0d02 C019     		add	r0, r0, r7
+ 16921 0d04 0360     		str	r3, [r0]
+ 16922 0d06 0023     		mov	r3, #0
+ 16923 0d08 BA49     		ldr	r1, .L113+36
+ 16924 0d0a C919     		add	r1, r1, r7
+ 16925 0d0c 0B60     		str	r3, [r1]
+ 16926              		.loc 1 280 0
+ 16927 0d0e FB68     		ldr	r3, [r7, #12]
+ 16928 0d10 181C     		mov	r0, r3
+ 16929 0d12 FFF7FEFF 		bl	_ZN10FfPipeline17IsWaitingKeyframeEv
+ 16930 0d16 031C     		mov	r3, r0
+ 16931 0d18 9C46     		mov	ip, r3
+ 16932 0d1a 6246     		mov	r2, ip
+ 16933 0d1c 0123     		mov	r3, #1
+ 16934 0d1e 5340     		eor	r3, r3, r2
+ 16935 0d20 1B06     		lsl	r3, r3, #24
+ 16936 0d22 1B0E     		lsr	r3, r3, #24
+ 16937 0d24 002B     		cmp	r3, #0
+ 16938 0d26 16D1     		bne	.L96
+ 16939 0d28 B34B     		ldr	r3, .L113+40
+ 16940 0d2a 9222     		mov	r2, #146
+ 16941 0d2c 1201     		lsl	r2, r2, #4
+ 16942 0d2e D219     		add	r2, r2, r7
+ 16943 0d30 D318     		add	r3, r2, r3
+ 16944 0d32 5A6A     		ldr	r2, [r3, #36]
+ 16945 0d34 0123     		mov	r3, #1
+ 16946 0d36 1340     		and	r3, r3, r2
+ 16947 0d38 1B06     		lsl	r3, r3, #24
+ 16948 0d3a 1A0E     		lsr	r2, r3, #24
+ 16949 0d3c 0123     		mov	r3, #1
+ 16950 0d3e 5340     		eor	r3, r3, r2
+ 16951 0d40 1B06     		lsl	r3, r3, #24
+ 16952 0d42 1A0E     		lsr	r2, r3, #24
+ 16953 0d44 0123     		mov	r3, #1
+ 16954 0d46 5340     		eor	r3, r3, r2
+ 16955 0d48 1B06     		lsl	r3, r3, #24
+ 16956 0d4a 1B0E     		lsr	r3, r3, #24
+ 16957 0d4c 002B     		cmp	r3, #0
+ 16958 0d4e 02D1     		bne	.L96
+ 16959 0d50 0123     		mov	r3, #1
+ 16960 0d52 BB60     		str	r3, [r7, #8]
+ 16961 0d54 01E0     		b	.L97
+ 16962              	.L96:
+ 16963 0d56 0020     		mov	r0, #0
+ 16964 0d58 B860     		str	r0, [r7, #8]
+ 16965              	.L97:
+ 16966 0d5a BB68     		ldr	r3, [r7, #8]
+ 16967 0d5c 002B     		cmp	r3, #0
+ 16968 0d5e 06D0     		beq	.L98
+ 16969              		.loc 1 282 0
+ 16970 0d60 8121     		mov	r1, #129
+ 16971 0d62 0901     		lsl	r1, r1, #4
+ 16972 0d64 7B18     		add	r3, r7, r1
+ 16973 0d66 181C     		mov	r0, r3
+ 16974 0d68 FFF7FEFF 		bl	av_free_packet
+ 16975 0d6c 0FE1     		b	.L95
+ 16976              	.L98:
+ 16977              		.loc 1 286 0
+ 16978 0d6e FB68     		ldr	r3, [r7, #12]
+ 16979 0d70 181C     		mov	r0, r3
+ 16980 0d72 FFF7FEFF 		bl	_ZN10FfPipeline17IsWaitingKeyframeEv
+ 16981 0d76 031C     		mov	r3, r0
+ 16982 0d78 9C46     		mov	ip, r3
+ 16983 0d7a 6346     		mov	r3, ip
+ 16984 0d7c 002B     		cmp	r3, #0
+ 16985 0d7e 23D0     		beq	.L99
+ 16986              		.loc 1 288 0
+ 16987 0d80 FB68     		ldr	r3, [r7, #12]
+ 16988 0d82 181C     		mov	r0, r3
+ 16989 0d84 FFF7FEFF 		bl	_ZN10FfPipeline24ClearWaitingKeyframeFlagEv
+ 16990              		.loc 1 289 0
+ 16991 0d88 9B4B     		ldr	r3, .L113+40
+ 16992 0d8a 9220     		mov	r0, #146
+ 16993 0d8c 0001     		lsl	r0, r0, #4
+ 16994 0d8e C019     		add	r0, r0, r7
+ 16995 0d90 C218     		add	r2, r0, r3
+ 16996 0d92 904C     		ldr	r4, .L113+4
+ 16997 0d94 8E4B     		ldr	r3, .L113
+ 16998 0d96 1361     		str	r3, [r2, #16]
+ 16999 0d98 5461     		str	r4, [r2, #20]
+ 17000 0d9a 974B     		ldr	r3, .L113+40
+ 17001 0d9c 9221     		mov	r1, #146
+ 17002 0d9e 0901     		lsl	r1, r1, #4
+ 17003 0da0 C919     		add	r1, r1, r7
+ 17004 0da2 CB18     		add	r3, r1, r3
+ 17005 0da4 1969     		ldr	r1, [r3, #16]
+ 17006 0da6 5A69     		ldr	r2, [r3, #20]
+ 17007 0da8 934B     		ldr	r3, .L113+40
+ 17008 0daa 9220     		mov	r0, #146
+ 17009 0dac 0001     		lsl	r0, r0, #4
+ 17010 0dae C019     		add	r0, r0, r7
+ 17011 0db0 C318     		add	r3, r0, r3
+ 17012 0db2 9960     		str	r1, [r3, #8]
+ 17013 0db4 DA60     		str	r2, [r3, #12]
+ 17014              		.loc 1 290 0
+ 17015 0db6 FB68     		ldr	r3, [r7, #12]
+ 17016 0db8 181C     		mov	r0, r3
+ 17017 0dba 0321     		mov	r1, #3
+ 17018 0dbc FFF7FEFF 		bl	_ZN10FfPipeline11SetRecStateE14RecordingState
+ 17019              		.loc 1 291 0
+ 17020 0dc0 FB68     		ldr	r3, [r7, #12]
+ 17021 0dc2 181C     		mov	r0, r3
+ 17022 0dc4 FFF7FEFF 		bl	_ZN10FfPipeline16SetPartnerToStopEv
+ 17023              	.L99:
+ 17024              		.loc 1 294 0
+ 17025 0dc8 8C49     		ldr	r1, .L113+44
+ 17026 0dca C919     		add	r1, r1, r7
+ 17027 0dcc 0B68     		ldr	r3, [r1]
+ 17028 0dce DA69     		ldr	r2, [r3, #28]
+ 17029 0dd0 894B     		ldr	r3, .L113+40
+ 17030 0dd2 9220     		mov	r0, #146
+ 17031 0dd4 0001     		lsl	r0, r0, #4
+ 17032 0dd6 C019     		add	r0, r0, r7
+ 17033 0dd8 C318     		add	r3, r0, r3
+ 17034 0dda 1B6A     		ldr	r3, [r3, #32]
+ 17035 0ddc 9B00     		lsl	r3, r3, #2
+ 17036 0dde D318     		add	r3, r2, r3
+ 17037 0de0 1B68     		ldr	r3, [r3]
+ 17038 0de2 8349     		ldr	r1, .L113+32
+ 17039 0de4 C919     		add	r1, r1, r7
+ 17040 0de6 0B60     		str	r3, [r1]
+ 17041              		.loc 1 295 0
+ 17042 0de8 7F4A     		ldr	r2, .L113+24
+ 17043 0dea D219     		add	r2, r2, r7
+ 17044 0dec 1368     		ldr	r3, [r2]
+ 17045 0dee DA69     		ldr	r2, [r3, #28]
+ 17046 0df0 814B     		ldr	r3, .L113+40
+ 17047 0df2 9220     		mov	r0, #146
+ 17048 0df4 0001     		lsl	r0, r0, #4
+ 17049 0df6 C019     		add	r0, r0, r7
+ 17050 0df8 C318     		add	r3, r0, r3
+ 17051 0dfa 1B6A     		ldr	r3, [r3, #32]
+ 17052 0dfc 9B00     		lsl	r3, r3, #2
+ 17053 0dfe D318     		add	r3, r2, r3
+ 17054 0e00 1B68     		ldr	r3, [r3]
+ 17055 0e02 7C49     		ldr	r1, .L113+36
+ 17056 0e04 C919     		add	r1, r1, r7
+ 17057 0e06 0B60     		str	r3, [r1]
+ 17058              		.loc 1 297 0
+ 17059 0e08 794A     		ldr	r2, .L113+32
+ 17060 0e0a D219     		add	r2, r2, r7
+ 17061 0e0c 1368     		ldr	r3, [r2]
+ 17062 0e0e 002B     		cmp	r3, #0
+ 17063 0e10 33D1     		bne	.L100
+ 17064              		.loc 1 299 0
+ 17065 0e12 7B48     		ldr	r0, .L113+48
+ 17066 0e14 3B18     		add	r3, r7, r0
+ 17067 0e16 181C     		mov	r0, r3
+ 17068 0e18 FFF7FEFF 		bl	_ZNSaIcEC1Ev
+ 17069 0e1c 7949     		ldr	r1, .L113+52
+ 17070 0e1e 7B18     		add	r3, r7, r1
+ 17071 0e20 794A     		ldr	r2, .L113+56
+ 17072 0e22 7748     		ldr	r0, .L113+48
+ 17073 0e24 3C18     		add	r4, r7, r0
+ 17074 0e26 181C     		mov	r0, r3
+ 17075 0e28 111C     		mov	r1, r2
+ 17076 0e2a 221C     		mov	r2, r4
+ 17077 0e2c FFF7FEFF 		bl	_ZNSsC1EPKcRKSaIcE
+ 17078 0e30 8921     		mov	r1, #137
+ 17079 0e32 0901     		lsl	r1, r1, #4
+ 17080 0e34 7B18     		add	r3, r7, r1
+ 17081 0e36 7348     		ldr	r0, .L113+52
+ 17082 0e38 3A18     		add	r2, r7, r0
+ 17083 0e3a 8F21     		mov	r1, #143
+ 17084 0e3c 0901     		lsl	r1, r1, #4
+ 17085 0e3e C919     		add	r1, r1, r7
+ 17086 0e40 0C68     		ldr	r4, [r1]
+ 17087 0e42 181C     		mov	r0, r3
+ 17088 0e44 111C     		mov	r1, r2
+ 17089 0e46 221C     		mov	r2, r4
+ 17090 0e48 FFF7FEFF 		bl	_Z9AppendLogSsPKc
+ 17091 0e4c 8922     		mov	r2, #137
+ 17092 0e4e 1201     		lsl	r2, r2, #4
+ 17093 0e50 BB18     		add	r3, r7, r2
+ 17094 0e52 181C     		mov	r0, r3
+ 17095 0e54 FFF7FEFF 		bl	_ZNSsD1Ev
+ 17096 0e58 6A48     		ldr	r0, .L113+52
+ 17097 0e5a 3B18     		add	r3, r7, r0
+ 17098 0e5c 181C     		mov	r0, r3
+ 17099 0e5e FFF7FEFF 		bl	_ZNSsD1Ev
+ 17100 0e62 6749     		ldr	r1, .L113+48
+ 17101 0e64 7B18     		add	r3, r7, r1
+ 17102 0e66 181C     		mov	r0, r3
+ 17103 0e68 FFF7FEFF 		bl	_ZNSaIcED1Ev
+ 17104              		.loc 1 300 0
+ 17105 0e6c 8122     		mov	r2, #129
+ 17106 0e6e 1201     		lsl	r2, r2, #4
+ 17107 0e70 BB18     		add	r3, r7, r2
+ 17108 0e72 181C     		mov	r0, r3
+ 17109 0e74 FFF7FEFF 		bl	av_free_packet
+ 17110 0e78 89E0     		b	.L95
+ 17111              	.L100:
+ 17112              		.loc 1 305 0
+ 17113 0e7a 5E48     		ldr	r0, .L113+36
+ 17114 0e7c C019     		add	r0, r0, r7
+ 17115 0e7e 0368     		ldr	r3, [r0]
+ 17116 0e80 002B     		cmp	r3, #0
+ 17117 0e82 34D1     		bne	.L101
+ 17118              		.loc 1 307 0
+ 17119 0e84 6149     		ldr	r1, .L113+60
+ 17120 0e86 7B18     		add	r3, r7, r1
+ 17121 0e88 181C     		mov	r0, r3
+ 17122 0e8a FFF7FEFF 		bl	_ZNSaIcEC1Ev
+ 17123 0e8e 8A22     		mov	r2, #138
+ 17124 0e90 1201     		lsl	r2, r2, #4
+ 17125 0e92 BB18     		add	r3, r7, r2
+ 17126 0e94 5E4A     		ldr	r2, .L113+64
+ 17127 0e96 5D48     		ldr	r0, .L113+60
+ 17128 0e98 3C18     		add	r4, r7, r0
+ 17129 0e9a 181C     		mov	r0, r3
+ 17130 0e9c 111C     		mov	r1, r2
+ 17131 0e9e 221C     		mov	r2, r4
+ 17132 0ea0 FFF7FEFF 		bl	_ZNSsC1EPKcRKSaIcE
+ 17133 0ea4 5B49     		ldr	r1, .L113+68
+ 17134 0ea6 7B18     		add	r3, r7, r1
+ 17135 0ea8 8A20     		mov	r0, #138
+ 17136 0eaa 0001     		lsl	r0, r0, #4
+ 17137 0eac 3A18     		add	r2, r7, r0
+ 17138 0eae 8F21     		mov	r1, #143
+ 17139 0eb0 0901     		lsl	r1, r1, #4
+ 17140 0eb2 C919     		add	r1, r1, r7
+ 17141 0eb4 0C68     		ldr	r4, [r1]
+ 17142 0eb6 181C     		mov	r0, r3
+ 17143 0eb8 111C     		mov	r1, r2
+ 17144 0eba 221C     		mov	r2, r4
+ 17145 0ebc FFF7FEFF 		bl	_Z9AppendLogSsPKc
+ 17146 0ec0 544A     		ldr	r2, .L113+68
+ 17147 0ec2 BB18     		add	r3, r7, r2
+ 17148 0ec4 181C     		mov	r0, r3
+ 17149 0ec6 FFF7FEFF 		bl	_ZNSsD1Ev
+ 17150 0eca 8A20     		mov	r0, #138
+ 17151 0ecc 0001     		lsl	r0, r0, #4
+ 17152 0ece 3B18     		add	r3, r7, r0
+ 17153 0ed0 181C     		mov	r0, r3
+ 17154 0ed2 FFF7FEFF 		bl	_ZNSsD1Ev
+ 17155 0ed6 4D49     		ldr	r1, .L113+60
+ 17156 0ed8 7B18     		add	r3, r7, r1
+ 17157 0eda 181C     		mov	r0, r3
+ 17158 0edc FFF7FEFF 		bl	_ZNSaIcED1Ev
+ 17159              		.loc 1 308 0
+ 17160 0ee0 8122     		mov	r2, #129
+ 17161 0ee2 1201     		lsl	r2, r2, #4
+ 17162 0ee4 BB18     		add	r3, r7, r2
+ 17163 0ee6 181C     		mov	r0, r3
+ 17164 0ee8 FFF7FEFF 		bl	av_free_packet
+ 17165 0eec 4FE0     		b	.L95
+ 17166              	.L101:
+ 17167              		.loc 1 313 0
+ 17168 0eee 4148     		ldr	r0, .L113+36
+ 17169 0ef0 C019     		add	r0, r0, r7
+ 17170 0ef2 0368     		ldr	r3, [r0]
+ 17171 0ef4 9B68     		ldr	r3, [r3, #8]
+ 17172 0ef6 9B68     		ldr	r3, [r3, #8]
+ 17173 0ef8 012B     		cmp	r3, #1
+ 17174 0efa 0CD1     		bne	.L102
+ 17175              		.loc 1 314 0
+ 17176 0efc 4649     		ldr	r1, .L113+72
+ 17177 0efe C919     		add	r1, r1, r7
+ 17178 0f00 0B68     		ldr	r3, [r1]
+ 17179 0f02 4C68     		ldr	r4, [r1, #4]
+ 17180 0f04 0121     		mov	r1, #1
+ 17181 0f06 0022     		mov	r2, #0
+ 17182 0f08 5B18     		add	r3, r3, r1
+ 17183 0f0a 5441     		adc	r4, r4, r2
+ 17184 0f0c 424A     		ldr	r2, .L113+72
+ 17185 0f0e D219     		add	r2, r2, r7
+ 17186 0f10 1360     		str	r3, [r2]
+ 17187 0f12 5460     		str	r4, [r2, #4]
+ 17188 0f14 14E0     		b	.L103
+ 17189              	.L102:
+ 17190              		.loc 1 315 0
+ 17191 0f16 3748     		ldr	r0, .L113+36
+ 17192 0f18 C019     		add	r0, r0, r7
+ 17193 0f1a 0368     		ldr	r3, [r0]
+ 17194 0f1c 9B68     		ldr	r3, [r3, #8]
+ 17195 0f1e 9B68     		ldr	r3, [r3, #8]
+ 17196 0f20 002B     		cmp	r3, #0
+ 17197 0f22 0DD1     		bne	.L103
+ 17198              		.loc 1 316 0
+ 17199 0f24 9021     		mov	r1, #144
+ 17200 0f26 0901     		lsl	r1, r1, #4
+ 17201 0f28 C919     		add	r1, r1, r7
+ 17202 0f2a 0B68     		ldr	r3, [r1]
+ 17203 0f2c 4C68     		ldr	r4, [r1, #4]
+ 17204 0f2e 0121     		mov	r1, #1
+ 17205 0f30 0022     		mov	r2, #0
+ 17206 0f32 5B18     		add	r3, r3, r1
+ 17207 0f34 5441     		adc	r4, r4, r2
+ 17208 0f36 9022     		mov	r2, #144
+ 17209 0f38 1201     		lsl	r2, r2, #4
+ 17210 0f3a D219     		add	r2, r2, r7
+ 17211 0f3c 1360     		str	r3, [r2]
+ 17212 0f3e 5460     		str	r4, [r2, #4]
+ 17213              	.L103:
+ 17214              		.loc 1 318 0
+ 17215 0f40 FB68     		ldr	r3, [r7, #12]
+ 17216 0f42 8120     		mov	r0, #129
+ 17217 0f44 0001     		lsl	r0, r0, #4
+ 17218 0f46 3A18     		add	r2, r7, r0
+ 17219 0f48 2949     		ldr	r1, .L113+32
+ 17220 0f4a C919     		add	r1, r1, r7
+ 17221 0f4c 0C68     		ldr	r4, [r1]
+ 17222 0f4e 2948     		ldr	r0, .L113+36
+ 17223 0f50 C019     		add	r0, r0, r7
+ 17224 0f52 0568     		ldr	r5, [r0]
+ 17225 0f54 181C     		mov	r0, r3
+ 17226 0f56 111C     		mov	r1, r2
+ 17227 0f58 221C     		mov	r2, r4
+ 17228 0f5a 2B1C     		mov	r3, r5
+ 17229 0f5c FFF7FEFF 		bl	_ZN10FfPipeline15RescalePtsDts24EP8AVPacketP8AVStreamS3_
+ 17230              		.loc 1 320 0
+ 17231 0f60 214A     		ldr	r2, .L113+24
+ 17232 0f62 D219     		add	r2, r2, r7
+ 17233 0f64 1168     		ldr	r1, [r2]
+ 17234 0f66 FA68     		ldr	r2, [r7, #12]
+ 17235 0f68 224B     		ldr	r3, .L113+36
+ 17236 0f6a DB19     		add	r3, r3, r7
+ 17237 0f6c 1C68     		ldr	r4, [r3]
+ 17238 0f6e 8120     		mov	r0, #129
+ 17239 0f70 0001     		lsl	r0, r0, #4
+ 17240 0f72 3D18     		add	r5, r7, r0
+ 17241 0f74 0023     		mov	r3, #0
+ 17242 0f76 0093     		str	r3, [sp]
+ 17243 0f78 101C     		mov	r0, r2
+ 17244 0f7a 221C     		mov	r2, r4
+ 17245 0f7c 2B1C     		mov	r3, r5
+ 17246 0f7e FFF7FEFF 		bl	_ZN10FfPipeline15WriteFrame_v242EP15AVFormatContextP8AVStreamP8AVPacketP24AVBitStreamFilterCont
+ 17247              		.loc 1 322 0
+ 17248 0f82 8121     		mov	r1, #129
+ 17249 0f84 0901     		lsl	r1, r1, #4
+ 17250 0f86 7B18     		add	r3, r7, r1
+ 17251 0f88 181C     		mov	r0, r3
+ 17252 0f8a FFF7FEFF 		bl	av_free_packet
+ 17253              	.L95:
+ 17254              	.LBE11:
+ 17255              		.loc 1 276 0
+ 17256 0f8e 1B4A     		ldr	r2, .L113+44
+ 17257 0f90 D219     		add	r2, r2, r7
+ 17258 0f92 1368     		ldr	r3, [r2]
+ 17259 0f94 8120     		mov	r0, #129
+ 17260 0f96 0001     		lsl	r0, r0, #4
+ 17261 0f98 3A18     		add	r2, r7, r0
+ 17262 0f9a 181C     		mov	r0, r3
+ 17263 0f9c 111C     		mov	r1, r2
+ 17264 0f9e FFF7FEFF 		bl	av_read_frame
+ 17265 0fa2 031C     		mov	r3, r0
+ 17266 0fa4 002B     		cmp	r3, #0
+ 17267 0fa6 39DB     		blt	.L104
+ 17268 0fa8 FB68     		ldr	r3, [r7, #12]
+ 17269 0faa 181C     		mov	r0, r3
+ 17270 0fac FFF7FEFF 		bl	_ZN10FfPipeline10IsNeedStopEv
+ 17271 0fb0 031C     		mov	r3, r0
+ 17272 0fb2 9C46     		mov	ip, r3
+ 17273 0fb4 6246     		mov	r2, ip
+ 17274 0fb6 0123     		mov	r3, #1
+ 17275 0fb8 5340     		eor	r3, r3, r2
+ 17276 0fba 1B06     		lsl	r3, r3, #24
+ 17277 0fbc 1A0E     		lsr	r2, r3, #24
+ 17278 0fbe 0123     		mov	r3, #1
+ 17279 0fc0 5340     		eor	r3, r3, r2
+ 17280 0fc2 1B06     		lsl	r3, r3, #24
+ 17281 0fc4 1B0E     		lsr	r3, r3, #24
+ 17282 0fc6 002B     		cmp	r3, #0
+ 17283 0fc8 28D1     		bne	.L104
+ 17284 0fca 0121     		mov	r1, #1
+ 17285 0fcc 7960     		str	r1, [r7, #4]
+ 17286 0fce 27E0     		b	.L105
+ 17287              	.L114:
+ 17288              		.align	3
+ 17289              	.L113:
+ 17290 0fd0 00000000 		.word	0
+ 17291 0fd4 00000080 		.word	-2147483648
+ 17292 0fd8 8F080000 		.word	2191
+ 17293 0fdc 88080000 		.word	2184
+ 17294 0fe0 58020000 		.word	.LC42
+ 17295 0fe4 84080000 		.word	2180
+ 17296 0fe8 64080000 		.word	2148
+ 17297 0fec 0C090000 		.word	2316
+ 17298 0ff0 18090000 		.word	2328
+ 17299 0ff4 1C090000 		.word	2332
+ 17300 0ff8 F0FEFFFF 		.word	-272
+ 17301 0ffc 68080000 		.word	2152
+ 17302 1000 9B080000 		.word	2203
+ 17303 1004 94080000 		.word	2196
+ 17304 1008 98020000 		.word	.LC44
+ 17305 100c A7080000 		.word	2215
+ 17306 1010 D0020000 		.word	.LC46
+ 17307 1014 9C080000 		.word	2204
+ 17308 1018 F8080000 		.word	2296
+ 17309              	.L104:
+ 17310 101c 0022     		mov	r2, #0
+ 17311 101e 7A60     		str	r2, [r7, #4]
+ 17312              	.L105:
+ 17313 1020 7B68     		ldr	r3, [r7, #4]
+ 17314 1022 002B     		cmp	r3, #0
+ 17315 1024 00D0     		beq	.LCB2155
+ 17316 1026 6AE6     		b	.L106	@long jump
+ 17317              	.LCB2155:
+ 17318              		.loc 1 326 0
+ 17319 1028 FB68     		ldr	r3, [r7, #12]
+ 17320 102a 1B79     		ldrb	r3, [r3, #4]
+ 17321 102c 1C1C     		mov	r4, r3
+ 17322 102e D44B     		ldr	r3, .L115
+ 17323 1030 D44A     		ldr	r2, .L115+4
+ 17324 1032 181C     		mov	r0, r3
+ 17325 1034 111C     		mov	r1, r2
+ 17326 1036 221C     		mov	r2, r4
+ 17327 1038 FFF7FEFF 		bl	sprintf
+ 17328              		.loc 1 327 0
+ 17329 103c D248     		ldr	r0, .L115+8
+ 17330 103e 3B18     		add	r3, r7, r0
+ 17331 1040 181C     		mov	r0, r3
+ 17332 1042 FFF7FEFF 		bl	_ZNSaIcEC1Ev
+ 17333 1046 D149     		ldr	r1, .L115+12
+ 17334 1048 7B18     		add	r3, r7, r1
+ 17335 104a CD4A     		ldr	r2, .L115
+ 17336 104c CE48     		ldr	r0, .L115+8
+ 17337 104e 3C18     		add	r4, r7, r0
+ 17338 1050 181C     		mov	r0, r3
+ 17339 1052 111C     		mov	r1, r2
+ 17340 1054 221C     		mov	r2, r4
+ 17341 1056 FFF7FEFF 		bl	_ZNSsC1EPKcRKSaIcE
+ 17342 105a CD49     		ldr	r1, .L115+16
+ 17343 105c 7B18     		add	r3, r7, r1
+ 17344 105e CB48     		ldr	r0, .L115+12
+ 17345 1060 3A18     		add	r2, r7, r0
+ 17346 1062 8F21     		mov	r1, #143
+ 17347 1064 0901     		lsl	r1, r1, #4
+ 17348 1066 C919     		add	r1, r1, r7
+ 17349 1068 0C68     		ldr	r4, [r1]
+ 17350 106a 181C     		mov	r0, r3
+ 17351 106c 111C     		mov	r1, r2
+ 17352 106e 221C     		mov	r2, r4
+ 17353 1070 FFF7FEFF 		bl	_Z9AppendLogSsPKc
+ 17354 1074 C64A     		ldr	r2, .L115+16
+ 17355 1076 BB18     		add	r3, r7, r2
+ 17356 1078 181C     		mov	r0, r3
+ 17357 107a FFF7FEFF 		bl	_ZNSsD1Ev
+ 17358 107e C348     		ldr	r0, .L115+12
+ 17359 1080 3B18     		add	r3, r7, r0
+ 17360 1082 181C     		mov	r0, r3
+ 17361 1084 FFF7FEFF 		bl	_ZNSsD1Ev
+ 17362 1088 BF49     		ldr	r1, .L115+8
+ 17363 108a 7B18     		add	r3, r7, r1
+ 17364 108c 181C     		mov	r0, r3
+ 17365 108e FFF7FEFF 		bl	_ZNSaIcED1Ev
+ 17366              		.loc 1 329 0
+ 17367 1092 FB68     		ldr	r3, [r7, #12]
+ 17368 1094 181C     		mov	r0, r3
+ 17369 1096 FFF7FEFF 		bl	_ZN10FfPipeline10IsNeedStopEv
+ 17370 109a 031C     		mov	r3, r0
+ 17371 109c 9C46     		mov	ip, r3
+ 17372 109e 6246     		mov	r2, ip
+ 17373 10a0 0123     		mov	r3, #1
+ 17374 10a2 5340     		eor	r3, r3, r2
+ 17375 10a4 1B06     		lsl	r3, r3, #24
+ 17376 10a6 1B0E     		lsr	r3, r3, #24
+ 17377 10a8 002B     		cmp	r3, #0
+ 17378 10aa 05D0     		beq	.L107
+ 17379              		.loc 1 330 0
+ 17380 10ac 8122     		mov	r2, #129
+ 17381 10ae 1201     		lsl	r2, r2, #4
+ 17382 10b0 BB18     		add	r3, r7, r2
+ 17383 10b2 181C     		mov	r0, r3
+ 17384 10b4 FFF7FEFF 		bl	av_free_packet
+ 17385              	.L107:
+ 17386              		.loc 1 332 0
+ 17387 10b8 FB68     		ldr	r3, [r7, #12]
+ 17388 10ba 1B79     		ldrb	r3, [r3, #4]
+ 17389 10bc 1C1C     		mov	r4, r3
+ 17390 10be B04B     		ldr	r3, .L115
+ 17391 10c0 B44A     		ldr	r2, .L115+20
+ 17392 10c2 181C     		mov	r0, r3
+ 17393 10c4 111C     		mov	r1, r2
+ 17394 10c6 221C     		mov	r2, r4
+ 17395 10c8 FFF7FEFF 		bl	sprintf
+ 17396              		.loc 1 333 0
+ 17397 10cc B248     		ldr	r0, .L115+24
+ 17398 10ce 3B18     		add	r3, r7, r0
+ 17399 10d0 181C     		mov	r0, r3
+ 17400 10d2 FFF7FEFF 		bl	_ZNSaIcEC1Ev
+ 17401 10d6 B149     		ldr	r1, .L115+28
+ 17402 10d8 7B18     		add	r3, r7, r1
+ 17403 10da A94A     		ldr	r2, .L115
+ 17404 10dc AE48     		ldr	r0, .L115+24
+ 17405 10de 3C18     		add	r4, r7, r0
+ 17406 10e0 181C     		mov	r0, r3
+ 17407 10e2 111C     		mov	r1, r2
+ 17408 10e4 221C     		mov	r2, r4
+ 17409 10e6 FFF7FEFF 		bl	_ZNSsC1EPKcRKSaIcE
+ 17410 10ea AD49     		ldr	r1, .L115+32
+ 17411 10ec 7B18     		add	r3, r7, r1
+ 17412 10ee AB48     		ldr	r0, .L115+28
+ 17413 10f0 3A18     		add	r2, r7, r0
+ 17414 10f2 8F21     		mov	r1, #143
+ 17415 10f4 0901     		lsl	r1, r1, #4
+ 17416 10f6 C919     		add	r1, r1, r7
+ 17417 10f8 0C68     		ldr	r4, [r1]
+ 17418 10fa 181C     		mov	r0, r3
+ 17419 10fc 111C     		mov	r1, r2
+ 17420 10fe 221C     		mov	r2, r4
+ 17421 1100 FFF7FEFF 		bl	_Z9AppendLogSsPKc
+ 17422 1104 A64A     		ldr	r2, .L115+32
+ 17423 1106 BB18     		add	r3, r7, r2
+ 17424 1108 181C     		mov	r0, r3
+ 17425 110a FFF7FEFF 		bl	_ZNSsD1Ev
+ 17426 110e A348     		ldr	r0, .L115+28
+ 17427 1110 3B18     		add	r3, r7, r0
+ 17428 1112 181C     		mov	r0, r3
+ 17429 1114 FFF7FEFF 		bl	_ZNSsD1Ev
+ 17430 1118 9F49     		ldr	r1, .L115+24
+ 17431 111a 7B18     		add	r3, r7, r1
+ 17432 111c 181C     		mov	r0, r3
+ 17433 111e FFF7FEFF 		bl	_ZNSaIcED1Ev
+ 17434              		.loc 1 335 0
+ 17435 1122 A04A     		ldr	r2, .L115+36
+ 17436 1124 D219     		add	r2, r2, r7
+ 17437 1126 1368     		ldr	r3, [r2]
+ 17438 1128 181C     		mov	r0, r3
+ 17439 112a FFF7FEFF 		bl	av_write_trailer
+ 17440              		.loc 1 337 0
+ 17441 112e FB68     		ldr	r3, [r7, #12]
+ 17442 1130 1B79     		ldrb	r3, [r3, #4]
+ 17443 1132 1C1C     		mov	r4, r3
+ 17444 1134 924B     		ldr	r3, .L115
+ 17445 1136 9C4A     		ldr	r2, .L115+40
+ 17446 1138 181C     		mov	r0, r3
+ 17447 113a 111C     		mov	r1, r2
+ 17448 113c 221C     		mov	r2, r4
+ 17449 113e FFF7FEFF 		bl	sprintf
+ 17450              		.loc 1 338 0
+ 17451 1142 9A48     		ldr	r0, .L115+44
+ 17452 1144 3B18     		add	r3, r7, r0
+ 17453 1146 181C     		mov	r0, r3
+ 17454 1148 FFF7FEFF 		bl	_ZNSaIcEC1Ev
+ 17455 114c 9849     		ldr	r1, .L115+48
+ 17456 114e 7B18     		add	r3, r7, r1
+ 17457 1150 8B4A     		ldr	r2, .L115
+ 17458 1152 9648     		ldr	r0, .L115+44
+ 17459 1154 3C18     		add	r4, r7, r0
+ 17460 1156 181C     		mov	r0, r3
+ 17461 1158 111C     		mov	r1, r2
+ 17462 115a 221C     		mov	r2, r4
+ 17463 115c FFF7FEFF 		bl	_ZNSsC1EPKcRKSaIcE
+ 17464 1160 8C21     		mov	r1, #140
+ 17465 1162 0901     		lsl	r1, r1, #4
+ 17466 1164 7B18     		add	r3, r7, r1
+ 17467 1166 9248     		ldr	r0, .L115+48
+ 17468 1168 3A18     		add	r2, r7, r0
+ 17469 116a 8F21     		mov	r1, #143
+ 17470 116c 0901     		lsl	r1, r1, #4
+ 17471 116e C919     		add	r1, r1, r7
+ 17472 1170 0C68     		ldr	r4, [r1]
+ 17473 1172 181C     		mov	r0, r3
+ 17474 1174 111C     		mov	r1, r2
+ 17475 1176 221C     		mov	r2, r4
+ 17476 1178 FFF7FEFF 		bl	_Z9AppendLogSsPKc
+ 17477 117c 8C22     		mov	r2, #140
+ 17478 117e 1201     		lsl	r2, r2, #4
+ 17479 1180 BB18     		add	r3, r7, r2
+ 17480 1182 181C     		mov	r0, r3
+ 17481 1184 FFF7FEFF 		bl	_ZNSsD1Ev
+ 17482 1188 8948     		ldr	r0, .L115+48
+ 17483 118a 3B18     		add	r3, r7, r0
+ 17484 118c 181C     		mov	r0, r3
+ 17485 118e FFF7FEFF 		bl	_ZNSsD1Ev
+ 17486 1192 8649     		ldr	r1, .L115+44
+ 17487 1194 7B18     		add	r3, r7, r1
+ 17488 1196 181C     		mov	r0, r3
+ 17489 1198 FFF7FEFF 		bl	_ZNSaIcED1Ev
+ 17490              		.loc 1 340 0
+ 17491 119c 0023     		mov	r3, #0
+ 17492 119e 854A     		ldr	r2, .L115+52
+ 17493 11a0 D219     		add	r2, r2, r7
+ 17494 11a2 1360     		str	r3, [r2]
+ 17495 11a4 21E0     		b	.L108
+ 17496              	.L109:
+ 17497              		.loc 1 342 0
+ 17498 11a6 7F48     		ldr	r0, .L115+36
+ 17499 11a8 C019     		add	r0, r0, r7
+ 17500 11aa 0368     		ldr	r3, [r0]
+ 17501 11ac DA69     		ldr	r2, [r3, #28]
+ 17502 11ae 8149     		ldr	r1, .L115+52
+ 17503 11b0 C919     		add	r1, r1, r7
+ 17504 11b2 0B68     		ldr	r3, [r1]
+ 17505 11b4 9B00     		lsl	r3, r3, #2
+ 17506 11b6 D318     		add	r3, r2, r3
+ 17507 11b8 1B68     		ldr	r3, [r3]
+ 17508 11ba 9B68     		ldr	r3, [r3, #8]
+ 17509 11bc 181C     		mov	r0, r3
+ 17510 11be FFF7FEFF 		bl	avcodec_close
+ 17511              		.loc 1 343 0
+ 17512 11c2 784A     		ldr	r2, .L115+36
+ 17513 11c4 D219     		add	r2, r2, r7
+ 17514 11c6 1368     		ldr	r3, [r2]
+ 17515 11c8 DA69     		ldr	r2, [r3, #28]
+ 17516 11ca 7A48     		ldr	r0, .L115+52
+ 17517 11cc C019     		add	r0, r0, r7
+ 17518 11ce 0368     		ldr	r3, [r0]
+ 17519 11d0 9B00     		lsl	r3, r3, #2
+ 17520 11d2 D318     		add	r3, r2, r3
+ 17521 11d4 1B68     		ldr	r3, [r3]
+ 17522 11d6 181C     		mov	r0, r3
+ 17523 11d8 FFF7FEFF 		bl	av_freep
+ 17524              		.loc 1 340 0
+ 17525 11dc 7549     		ldr	r1, .L115+52
+ 17526 11de C919     		add	r1, r1, r7
+ 17527 11e0 0B68     		ldr	r3, [r1]
+ 17528 11e2 0133     		add	r3, r3, #1
+ 17529 11e4 734A     		ldr	r2, .L115+52
+ 17530 11e6 D219     		add	r2, r2, r7
+ 17531 11e8 1360     		str	r3, [r2]
+ 17532              	.L108:
+ 17533 11ea 6E48     		ldr	r0, .L115+36
+ 17534 11ec C019     		add	r0, r0, r7
+ 17535 11ee 0368     		ldr	r3, [r0]
+ 17536 11f0 9A69     		ldr	r2, [r3, #24]
+ 17537 11f2 7049     		ldr	r1, .L115+52
+ 17538 11f4 C919     		add	r1, r1, r7
+ 17539 11f6 0B68     		ldr	r3, [r1]
+ 17540 11f8 9A42     		cmp	r2, r3
+ 17541 11fa D4D8     		bhi	.L109
+ 17542              		.loc 1 346 0
+ 17543 11fc FB68     		ldr	r3, [r7, #12]
+ 17544 11fe 1B79     		ldrb	r3, [r3, #4]
+ 17545 1200 1C1C     		mov	r4, r3
+ 17546 1202 5F4B     		ldr	r3, .L115
+ 17547 1204 6C4A     		ldr	r2, .L115+56
+ 17548 1206 181C     		mov	r0, r3
+ 17549 1208 111C     		mov	r1, r2
+ 17550 120a 221C     		mov	r2, r4
+ 17551 120c FFF7FEFF 		bl	sprintf
+ 17552              		.loc 1 347 0
+ 17553 1210 6A4A     		ldr	r2, .L115+60
+ 17554 1212 BB18     		add	r3, r7, r2
+ 17555 1214 181C     		mov	r0, r3
+ 17556 1216 FFF7FEFF 		bl	_ZNSaIcEC1Ev
+ 17557 121a 8D20     		mov	r0, #141
+ 17558 121c 0001     		lsl	r0, r0, #4
+ 17559 121e 3B18     		add	r3, r7, r0
+ 17560 1220 574A     		ldr	r2, .L115
+ 17561 1222 6649     		ldr	r1, .L115+60
+ 17562 1224 7C18     		add	r4, r7, r1
+ 17563 1226 181C     		mov	r0, r3
+ 17564 1228 111C     		mov	r1, r2
+ 17565 122a 221C     		mov	r2, r4
+ 17566 122c FFF7FEFF 		bl	_ZNSsC1EPKcRKSaIcE
+ 17567 1230 634A     		ldr	r2, .L115+64
+ 17568 1232 BB18     		add	r3, r7, r2
+ 17569 1234 8D20     		mov	r0, #141
+ 17570 1236 0001     		lsl	r0, r0, #4
+ 17571 1238 3A18     		add	r2, r7, r0
+ 17572 123a 8F21     		mov	r1, #143
+ 17573 123c 0901     		lsl	r1, r1, #4
+ 17574 123e C919     		add	r1, r1, r7
+ 17575 1240 0C68     		ldr	r4, [r1]
+ 17576 1242 181C     		mov	r0, r3
+ 17577 1244 111C     		mov	r1, r2
+ 17578 1246 221C     		mov	r2, r4
+ 17579 1248 FFF7FEFF 		bl	_Z9AppendLogSsPKc
+ 17580 124c 5C4A     		ldr	r2, .L115+64
+ 17581 124e BB18     		add	r3, r7, r2
+ 17582 1250 181C     		mov	r0, r3
+ 17583 1252 FFF7FEFF 		bl	_ZNSsD1Ev
+ 17584 1256 8D20     		mov	r0, #141
+ 17585 1258 0001     		lsl	r0, r0, #4
+ 17586 125a 3B18     		add	r3, r7, r0
+ 17587 125c 181C     		mov	r0, r3
+ 17588 125e FFF7FEFF 		bl	_ZNSsD1Ev
+ 17589 1262 5649     		ldr	r1, .L115+60
+ 17590 1264 7B18     		add	r3, r7, r1
+ 17591 1266 181C     		mov	r0, r3
+ 17592 1268 FFF7FEFF 		bl	_ZNSaIcED1Ev
+ 17593              		.loc 1 349 0
+ 17594 126c 4D4A     		ldr	r2, .L115+36
+ 17595 126e D219     		add	r2, r2, r7
+ 17596 1270 1368     		ldr	r3, [r2]
+ 17597 1272 1B69     		ldr	r3, [r3, #16]
+ 17598 1274 181C     		mov	r0, r3
+ 17599 1276 FFF7FEFF 		bl	avio_close
+ 17600              		.loc 1 351 0
+ 17601 127a FB68     		ldr	r3, [r7, #12]
+ 17602 127c 1B79     		ldrb	r3, [r3, #4]
+ 17603 127e 1C1C     		mov	r4, r3
+ 17604 1280 3F4B     		ldr	r3, .L115
+ 17605 1282 504A     		ldr	r2, .L115+68
+ 17606 1284 181C     		mov	r0, r3
+ 17607 1286 111C     		mov	r1, r2
+ 17608 1288 221C     		mov	r2, r4
+ 17609 128a FFF7FEFF 		bl	sprintf
+ 17610              		.loc 1 352 0
+ 17611 128e 4E48     		ldr	r0, .L115+72
+ 17612 1290 3B18     		add	r3, r7, r0
+ 17613 1292 181C     		mov	r0, r3
+ 17614 1294 FFF7FEFF 		bl	_ZNSaIcEC1Ev
+ 17615 1298 4C49     		ldr	r1, .L115+76
+ 17616 129a 7B18     		add	r3, r7, r1
+ 17617 129c 384A     		ldr	r2, .L115
+ 17618 129e 4A48     		ldr	r0, .L115+72
+ 17619 12a0 3C18     		add	r4, r7, r0
+ 17620 12a2 181C     		mov	r0, r3
+ 17621 12a4 111C     		mov	r1, r2
+ 17622 12a6 221C     		mov	r2, r4
+ 17623 12a8 FFF7FEFF 		bl	_ZNSsC1EPKcRKSaIcE
+ 17624 12ac 4849     		ldr	r1, .L115+80
+ 17625 12ae 7B18     		add	r3, r7, r1
+ 17626 12b0 4648     		ldr	r0, .L115+76
+ 17627 12b2 3A18     		add	r2, r7, r0
+ 17628 12b4 8F21     		mov	r1, #143
+ 17629 12b6 0901     		lsl	r1, r1, #4
+ 17630 12b8 C919     		add	r1, r1, r7
+ 17631 12ba 0C68     		ldr	r4, [r1]
+ 17632 12bc 181C     		mov	r0, r3
+ 17633 12be 111C     		mov	r1, r2
+ 17634 12c0 221C     		mov	r2, r4
+ 17635 12c2 FFF7FEFF 		bl	_Z9AppendLogSsPKc
+ 17636 12c6 424A     		ldr	r2, .L115+80
+ 17637 12c8 BB18     		add	r3, r7, r2
+ 17638 12ca 181C     		mov	r0, r3
+ 17639 12cc FFF7FEFF 		bl	_ZNSsD1Ev
+ 17640 12d0 3E48     		ldr	r0, .L115+76
+ 17641 12d2 3B18     		add	r3, r7, r0
+ 17642 12d4 181C     		mov	r0, r3
+ 17643 12d6 FFF7FEFF 		bl	_ZNSsD1Ev
+ 17644 12da 3B49     		ldr	r1, .L115+72
+ 17645 12dc 7B18     		add	r3, r7, r1
+ 17646 12de 181C     		mov	r0, r3
+ 17647 12e0 FFF7FEFF 		bl	_ZNSaIcED1Ev
+ 17648              		.loc 1 354 0
+ 17649 12e4 2F4A     		ldr	r2, .L115+36
+ 17650 12e6 D219     		add	r2, r2, r7
+ 17651 12e8 1368     		ldr	r3, [r2]
+ 17652 12ea 181C     		mov	r0, r3
+ 17653 12ec FFF7FEFF 		bl	av_free
+ 17654              		.loc 1 356 0
+ 17655 12f0 FB68     		ldr	r3, [r7, #12]
+ 17656 12f2 1B79     		ldrb	r3, [r3, #4]
+ 17657 12f4 1C1C     		mov	r4, r3
+ 17658 12f6 224B     		ldr	r3, .L115
+ 17659 12f8 364A     		ldr	r2, .L115+84
+ 17660 12fa 181C     		mov	r0, r3
+ 17661 12fc 111C     		mov	r1, r2
+ 17662 12fe 221C     		mov	r2, r4
+ 17663 1300 FFF7FEFF 		bl	sprintf
+ 17664              		.loc 1 357 0
+ 17665 1304 3448     		ldr	r0, .L115+88
+ 17666 1306 3B18     		add	r3, r7, r0
+ 17667 1308 181C     		mov	r0, r3
+ 17668 130a FFF7FEFF 		bl	_ZNSaIcEC1Ev
+ 17669 130e 3349     		ldr	r1, .L115+92
+ 17670 1310 7B18     		add	r3, r7, r1
+ 17671 1312 1B4A     		ldr	r2, .L115
+ 17672 1314 3048     		ldr	r0, .L115+88
+ 17673 1316 3C18     		add	r4, r7, r0
+ 17674 1318 181C     		mov	r0, r3
+ 17675 131a 111C     		mov	r1, r2
+ 17676 131c 221C     		mov	r2, r4
+ 17677 131e FFF7FEFF 		bl	_ZNSsC1EPKcRKSaIcE
+ 17678 1322 2F49     		ldr	r1, .L115+96
+ 17679 1324 7B18     		add	r3, r7, r1
+ 17680 1326 2D48     		ldr	r0, .L115+92
+ 17681 1328 3A18     		add	r2, r7, r0
+ 17682 132a 8F21     		mov	r1, #143
+ 17683 132c 0901     		lsl	r1, r1, #4
+ 17684 132e C919     		add	r1, r1, r7
+ 17685 1330 0C68     		ldr	r4, [r1]
+ 17686 1332 181C     		mov	r0, r3
+ 17687 1334 111C     		mov	r1, r2
+ 17688 1336 221C     		mov	r2, r4
+ 17689 1338 FFF7FEFF 		bl	_Z9AppendLogSsPKc
+ 17690 133c 284A     		ldr	r2, .L115+96
+ 17691 133e BB18     		add	r3, r7, r2
+ 17692 1340 181C     		mov	r0, r3
+ 17693 1342 FFF7FEFF 		bl	_ZNSsD1Ev
+ 17694 1346 2548     		ldr	r0, .L115+92
+ 17695 1348 3B18     		add	r3, r7, r0
+ 17696 134a 181C     		mov	r0, r3
+ 17697 134c FFF7FEFF 		bl	_ZNSsD1Ev
+ 17698 1350 2149     		ldr	r1, .L115+88
+ 17699 1352 7B18     		add	r3, r7, r1
+ 17700 1354 181C     		mov	r0, r3
+ 17701 1356 FFF7FEFF 		bl	_ZNSaIcED1Ev
+ 17702              		.loc 1 359 0
+ 17703 135a 224A     		ldr	r2, .L115+100
+ 17704 135c BB18     		add	r3, r7, r2
+ 17705 135e 181C     		mov	r0, r3
+ 17706 1360 FFF7FEFF 		bl	avformat_close_input
+ 17707              		.loc 1 361 0
+ 17708 1364 FB68     		ldr	r3, [r7, #12]
+ 17709 1366 181C     		mov	r0, r3
+ 17710 1368 0221     		mov	r1, #2
+ 17711 136a FFF7FEFF 		bl	_ZN10FfPipeline11SetRecStateE14RecordingState
+ 17712              		.loc 1 363 0
+ 17713 136e 0023     		mov	r3, #0
+ 17714 1370 3B60     		str	r3, [r7]
+ 17715              	.L82:
+ 17716 1372 3B68     		ldr	r3, [r7]
+ 17717              	.LBE9:
+ 17718              		.loc 1 364 0
+ 17719 1374 181C     		mov	r0, r3
+ 17720 1376 BD46     		mov	sp, r7
+ 17721 1378 9223     		mov	r3, #146
+ 17722 137a 1B01     		lsl	r3, r3, #4
+ 17723 137c 9D44     		add	sp, sp, r3
+ 17724              		@ sp needed for prologue
+ 17725 137e B0BD     		pop	{r4, r5, r7, pc}
+ 17726              	.L116:
+ 17727              		.align	2
+ 17728              	.L115:
+ 17729 1380 00000000 		.word	str
+ 17730 1384 08030000 		.word	.LC48
+ 17731 1388 B3080000 		.word	2227
+ 17732 138c AC080000 		.word	2220
+ 17733 1390 A8080000 		.word	2216
+ 17734 1394 28030000 		.word	.LC50
+ 17735 1398 BF080000 		.word	2239
+ 17736 139c B8080000 		.word	2232
+ 17737 13a0 B4080000 		.word	2228
+ 17738 13a4 64080000 		.word	2148
+ 17739 13a8 58030000 		.word	.LC52
+ 17740 13ac CB080000 		.word	2251
+ 17741 13b0 C4080000 		.word	2244
+ 17742 13b4 08090000 		.word	2312
+ 17743 13b8 8C030000 		.word	.LC54
+ 17744 13bc D7080000 		.word	2263
+ 17745 13c0 CC080000 		.word	2252
+ 17746 13c4 B4030000 		.word	.LC56
+ 17747 13c8 E3080000 		.word	2275
+ 17748 13cc DC080000 		.word	2268
+ 17749 13d0 D8080000 		.word	2264
+ 17750 13d4 DC030000 		.word	.LC58
+ 17751 13d8 EF080000 		.word	2287
+ 17752 13dc E8080000 		.word	2280
+ 17753 13e0 E4080000 		.word	2276
+ 17754 13e4 68080000 		.word	2152
+ 17755              	.LFE1002:
+ 17756              		.fnend
+ 17758              		.align	2
+ 17759              		.global	_ZN10FfPipeline11ThRecordingEPv
+ 17760              		.code	16
+ 17761              		.thumb_func
+ 17763              	_ZN10FfPipeline11ThRecordingEPv:
+ 17764              		.fnstart
+ 17765              	.LFB997:
+ 17766              		.loc 1 113 0
+ 17767              		.save	{r7, lr}
+ 17768 13e8 80B5     		push	{r7, lr}
+ 17769              	.LCFI69:
+ 17770              		.pad #16
+ 17771 13ea 84B0     		sub	sp, sp, #16
+ 17772              	.LCFI70:
+ 17773              		.setfp r7, sp, #0
+ 17774 13ec 00AF     		add	r7, sp, #0
+ 17775              	.LCFI71:
+ 17776 13ee 7860     		str	r0, [r7, #4]
+ 17777              	.LBB12:
+ 17778              		.loc 1 115 0
+ 17779 13f0 7B68     		ldr	r3, [r7, #4]
+ 17780 13f2 FB60     		str	r3, [r7, #12]
+ 17781              		.loc 1 117 0
+ 17782 13f4 FB68     		ldr	r3, [r7, #12]
+ 17783 13f6 181C     		mov	r0, r3
+ 17784 13f8 FFF7FEFF 		bl	_ZN10FfPipeline11DoRecordingEv
+ 17785              		.loc 1 119 0
+ 17786 13fc 7B68     		ldr	r3, [r7, #4]
+ 17787              	.LBE12:
+ 17788              		.loc 1 120 0
+ 17789 13fe 181C     		mov	r0, r3
+ 17790 1400 BD46     		mov	sp, r7
+ 17791 1402 04B0     		add	sp, sp, #16
+ 17792              		@ sp needed for prologue
+ 17793 1404 80BD     		pop	{r7, pc}
+ 17794              	.LFE997:
+ 17795              		.fnend
+ 17797              		.local	_ZStL8__ioinit
+ 17798              		.comm	_ZStL8__ioinit,1,1
+ 17799              		.data
+ 17800              		.align	2
+ 17803              	_ZL12g_szErrorBuf:
+ 17804 0000 00       		.ascii	"\000"
+ 17805 0001 00000000 		.space	63
+ 17805      00000000 
+ 17805      00000000 
+ 17805      00000000 
+ 17805      00000000 
+ 17806              		.weakref	_ZL20__gthrw_pthread_oncePiPFvvE,pthread_once
+ 17807              		.weakref	_ZL27__gthrw_pthread_getspecificj,pthread_getspecific
+ 17808              		.weakref	_ZL27__gthrw_pthread_setspecificjPKv,pthread_setspecific
+ 17809              		.weakref	_ZL22__gthrw_pthread_createPmPK14pthread_attr_tPFPvS3_ES3_,pthread_create
+ 17810              		.weakref	_ZL22__gthrw_pthread_cancelm,pthread_cancel
+ 17811              		.weakref	_ZL26__gthrw_pthread_mutex_lockP15pthread_mutex_t,pthread_mutex_lock
+ 17812              		.weakref	_ZL29__gthrw_pthread_mutex_trylockP15pthread_mutex_t,pthread_mutex_trylock
+ 17813              		.weakref	_ZL28__gthrw_pthread_mutex_unlockP15pthread_mutex_t,pthread_mutex_unlock
+ 17814              		.weakref	_ZL26__gthrw_pthread_mutex_initP15pthread_mutex_tPK19pthread_mutexattr_t,pthread_mutex_in
+ 17815              		.weakref	_ZL30__gthrw_pthread_cond_broadcastP14pthread_cond_t,pthread_cond_broadcast
+ 17816              		.weakref	_ZL25__gthrw_pthread_cond_waitP14pthread_cond_tP15pthread_mutex_t,pthread_cond_wait
+ 17817              		.weakref	_ZL26__gthrw_pthread_key_createPjPFvPvE,pthread_key_create
+ 17818              		.weakref	_ZL26__gthrw_pthread_key_deletej,pthread_key_delete
+ 17819              		.weakref	_ZL30__gthrw_pthread_mutexattr_initP19pthread_mutexattr_t,pthread_mutexattr_init
+ 17820              		.weakref	_ZL33__gthrw_pthread_mutexattr_settypeP19pthread_mutexattr_ti,pthread_mutexattr_settype
+ 17821              		.weakref	_ZL33__gthrw_pthread_mutexattr_destroyP19pthread_mutexattr_t,pthread_mutexattr_destroy
+ 18444              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 ffmpeg_pipeline.cpp
+     /tmp/ccRfVJFk.s:26     .debug_macinfo:00000000 $d
+     /tmp/ccRfVJFk.s:14666  .text:00000000 $t
+     /tmp/ccRfVJFk.s:14671  .text:00000000 _ZN10FfPipelineC2Eh
+     /tmp/ccRfVJFk.s:14751  .text:00000070 $d
+                       .ARM.extab:00000000 $d
+                       .ARM.exidx:00000000 $d
+     /tmp/ccRfVJFk.s:14756  .text:00000078 $t
+     /tmp/ccRfVJFk.s:14761  .text:00000078 _ZN10FfPipelineC1Eh
+     /tmp/ccRfVJFk.s:14841  .text:000000e8 $d
+     /tmp/ccRfVJFk.s:14846  .text:000000f0 $t
+     /tmp/ccRfVJFk.s:14851  .text:000000f0 _ZN10FfPipelineD2Ev
+     /tmp/ccRfVJFk.s:14875  .text:00000102 $t
+     /tmp/ccRfVJFk.s:14880  .text:00000104 _ZN10FfPipelineD1Ev
+     /tmp/ccRfVJFk.s:14904  .text:00000116 $t
+     /tmp/ccRfVJFk.s:14909  .text:00000118 _ZN10FfPipeline21SetPartnerPipePointerEPv
+     /tmp/ccRfVJFk.s:14936  .text:0000012e $t
+     /tmp/ccRfVJFk.s:14941  .text:00000130 _ZN10FfPipeline11SetRecStateE14RecordingState
+     /tmp/ccRfVJFk.s:14968  .text:00000146 $t
+     /tmp/ccRfVJFk.s:14973  .text:00000148 _ZN10FfPipeline22SetWaitingKeyframeFlagEv
+     /tmp/ccRfVJFk.s:15000  .text:0000015e $t
+     /tmp/ccRfVJFk.s:15005  .text:00000160 _ZN10FfPipeline24ClearWaitingKeyframeFlagEv
+     /tmp/ccRfVJFk.s:15032  .text:00000176 $t
+     /tmp/ccRfVJFk.s:15037  .text:00000178 _ZN10FfPipeline17IsWaitingKeyframeEv
+     /tmp/ccRfVJFk.s:15064  .text:0000018e $t
+     /tmp/ccRfVJFk.s:15069  .text:00000190 _ZN10FfPipeline11GetRecStateEv
+     /tmp/ccRfVJFk.s:15095  .text:000001a4 $t
+     /tmp/ccRfVJFk.s:15099  .text:000001a4 _Z41__static_initialization_and_destruction_0ii
+     /tmp/ccRfVJFk.s:15140  .text:000001d8 $d
+                             .bss:00000000 _ZStL8__ioinit
+     /tmp/ccRfVJFk.s:15147  .text:000001e8 $t
+     /tmp/ccRfVJFk.s:15151  .text:000001e8 _GLOBAL__I__ZN10FfPipelineC2Eh
+     /tmp/ccRfVJFk.s:15172  .text:000001fc $d
+     /tmp/ccRfVJFk.s:15177  .init_array:00000000 $d
+     /tmp/ccRfVJFk.s:15180  .text:00000200 $t
+     /tmp/ccRfVJFk.s:15185  .text:00000200 _ZN10FfPipeline26r_avformat_close_input_v24EPP15AVFormatContext
+     /tmp/ccRfVJFk.s:15212  .text:00000218 $t
+     /tmp/ccRfVJFk.s:15217  .text:00000218 _ZN10FfPipeline15RescalePtsDts24EP8AVPacketP8AVStreamS3_
+     /tmp/ccRfVJFk.s:15334  .text:000002e0 $t
+     /tmp/ccRfVJFk.s:15338  .text:000002e0 av_make_error_string
+     /tmp/ccRfVJFk.s:15374  .rodata:00000000 $d
+     /tmp/ccRfVJFk.s:15390  .text:00000308 _ZN10FfPipeline15WriteFrame_v242EP15AVFormatContextP8AVStreamP8AVPacketP24AVBitStreamFilterContext
+     /tmp/ccRfVJFk.s:15684  .text:00000514 $d
+     /tmp/ccRfVJFk.s:17803  .data:00000000 _ZL12g_szErrorBuf
+     /tmp/ccRfVJFk.s:15706  .text:0000052c $t
+     /tmp/ccRfVJFk.s:15711  .text:0000052c _ZN10FfPipeline19ThInitiateRecordingEv
+     /tmp/ccRfVJFk.s:15844  .text:00000624 $d
+     /tmp/ccRfVJFk.s:17763  .text:000013e8 _ZN10FfPipeline11ThRecordingEPv
+     /tmp/ccRfVJFk.s:15852  .text:00000638 $t
+     /tmp/ccRfVJFk.s:15857  .text:00000638 _ZN10FfPipeline5StartEv
+     /tmp/ccRfVJFk.s:15887  .text:00000656 $t
+     /tmp/ccRfVJFk.s:15892  .text:00000658 _ZN10FfPipeline10IsNeedStopEv
+     /tmp/ccRfVJFk.s:15977  .text:000006da $t
+     /tmp/ccRfVJFk.s:15982  .text:000006dc _ZN10FfPipeline11SetNeedStopEv
+     /tmp/ccRfVJFk.s:16074  .text:00000754 _ZN10FfPipeline16SetPartnerToStopEv
+     /tmp/ccRfVJFk.s:16157  .text:000007dc $d
+     /tmp/ccRfVJFk.s:16163  .text:000007e8 $t
+     /tmp/ccRfVJFk.s:16168  .text:000007e8 _ZN10FfPipeline13ClearNeedStopEv
+     /tmp/ccRfVJFk.s:16309  .text:00000860 _ZN10FfPipeline11DoRecordingEv
+     /tmp/ccRfVJFk.s:16819  .text:00000c10 $d
+     /tmp/ccRfVJFk.s:16844  .text:00000c6c $t
+     /tmp/ccRfVJFk.s:17290  .text:00000fd0 $d
+     /tmp/ccRfVJFk.s:17310  .text:0000101c $t
+     /tmp/ccRfVJFk.s:17729  .text:00001380 $d
+     /tmp/ccRfVJFk.s:17758  .text:000013e8 $t
+     /tmp/ccRfVJFk.s:17800  .data:00000000 $d
+     /tmp/ccRfVJFk.s:18448  .debug_loc:00000000 $d
+     /tmp/ccRfVJFk.s:18445  .text:00001406 $t
+
+UNDEFINED SYMBOLS
+__aeabi_unwind_cpp_pr1
+_ZNSt8ios_base4InitC1Ev
+__aeabi_atexit
+_ZNSt8ios_base4InitD1Ev
+__dso_handle
+__aeabi_unwind_cpp_pr0
+avformat_close_input
+av_rescale_q
+av_strerror
+_ZNSaIcEC1Ev
+_ZNSsC1EPKcRKSaIcE
+_Z9AppendLogSsPKc
+_ZNSsD1Ev
+_ZNSaIcED1Ev
+av_interleaved_write_frame
+sprintf
+str
+pthread_create
+pthread_detach
+pthread_mutex_lock
+pthread_mutex_unlock
+av_dict_set
+avformat_open_input
+av_dict_free
+avformat_find_stream_info
+avformat_alloc_output_context2
+avformat_new_stream
+avcodec_copy_context
+memcpy
+avio_open
+Count
+avformat_write_header
+av_free_packet
+av_read_frame
+av_write_trailer
+avcodec_close
+av_freep
+avio_close
+av_free

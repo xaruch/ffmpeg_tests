@@ -1,0 +1,252 @@
+   1              		.cpu arm926ej-s
+   2              		.eabi_attribute 27, 3
+   3              		.fpu neon
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 2
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"vars.cpp"
+  23              	.Ltext0:
+  24              		.file 1 "../vars.cpp"
+ 6543              		.align	2
+ 6544              		.code	16
+ 6545              		.thumb_func
+ 6547              	_Z41__static_initialization_and_destruction_0ii:
+ 6548              		.fnstart
+ 6549              	.LFB941:
+   1:../vars.cpp   **** #include "../arlogging/arlogging.h"
+   2:../vars.cpp   **** 
+   3:../vars.cpp   **** #include <stdio.h>
+   4:../vars.cpp   **** #include <stdlib.h>
+   5:../vars.cpp   **** 
+   6:../vars.cpp   **** #ifdef __arm__
+   7:../vars.cpp   ****   using namespace arlogging;
+   8:../vars.cpp   **** #else
+   9:../vars.cpp   ****   using namespace arlogging_i386;
+  10:../vars.cpp   **** #endif
+  11:../vars.cpp   **** 
+  12:../vars.cpp   **** char str[2048];
+  13:../vars.cpp   **** int cfdn;
+  14:../vars.cpp   **** Logging *Log;
+  15:../vars.cpp   **** size_t Count = 0;
+ 6550              		.loc 1 15 0
+ 6551              		.save	{r7, lr}
+ 6552 0000 80B5     		push	{r7, lr}
+ 6553              	.LCFI0:
+ 6554              		.pad #8
+ 6555 0002 82B0     		sub	sp, sp, #8
+ 6556              	.LCFI1:
+ 6557              		.setfp r7, sp, #0
+ 6558 0004 00AF     		add	r7, sp, #0
+ 6559              	.LCFI2:
+ 6560 0006 7860     		str	r0, [r7, #4]
+ 6561 0008 3960     		str	r1, [r7]
+ 6562              		.loc 1 15 0
+ 6563 000a 7B68     		ldr	r3, [r7, #4]
+ 6564 000c 012B     		cmp	r3, #1
+ 6565 000e 0DD1     		bne	.L3
+ 6566 0010 3A68     		ldr	r2, [r7]
+ 6567 0012 084B     		ldr	r3, .L4
+ 6568 0014 9A42     		cmp	r2, r3
+ 6569 0016 09D1     		bne	.L3
+   1:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // Standard iostream objects -*- C++ -*-
+   2:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+   3:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // Copyright (C) 1997, 1998, 1999, 2001, 2002, 2005, 2008
+   4:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // Free Software Foundation, Inc.
+   5:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** //
+   6:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // This file is part of the GNU ISO C++ Library.  This library is free
+   7:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // software; you can redistribute it and/or modify it under the
+   8:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // terms of the GNU General Public License as published by the
+   9:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // Free Software Foundation; either version 2, or (at your option)
+  10:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // any later version.
+  11:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  12:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // This library is distributed in the hope that it will be useful,
+  13:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // but WITHOUT ANY WARRANTY; without even the implied warranty of
+  14:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  15:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // GNU General Public License for more details.
+  16:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  17:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // You should have received a copy of the GNU General Public License
+  18:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // along with this library; see the file COPYING.  If not, write to
+  19:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+  20:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // Boston, MA 02110-1301, USA.
+  21:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  22:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // As a special exception, you may use this file as part of a free software
+  23:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // library without restriction.  Specifically, if other files instantiate
+  24:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // templates or use macros or inline functions from this file, or you compile
+  25:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // this file and link it with other files to produce an executable, this
+  26:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // file does not by itself cause the resulting executable to be covered by
+  27:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // the GNU General Public License.  This exception does not however
+  28:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // invalidate any other reasons why the executable file might be covered by
+  29:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // the GNU General Public License.
+  30:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  31:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** /** @file iostream
+  32:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****  *  This is a Standard C++ Library header. 
+  33:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****  */
+  34:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  35:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** //
+  36:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** // ISO C++ 14882: 27.3  Standard iostream objects
+  37:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** //
+  38:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  39:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #ifndef _GLIBCXX_IOSTREAM
+  40:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #define _GLIBCXX_IOSTREAM 1
+  41:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  42:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #pragma GCC system_header
+  43:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  44:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #include <bits/c++config.h>
+  45:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #include <ostream>
+  46:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #include <istream>
+  47:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  48:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** _GLIBCXX_BEGIN_NAMESPACE(std)
+  49:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  50:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   /**
+  51:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  @name Standard Stream Objects
+  52:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *
+  53:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  The &lt;iostream&gt; header declares the eight <em>standard stream
+  54:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  objects</em>.  For other declarations, see
+  55:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  http://gcc.gnu.org/onlinedocs/libstdc++/manual/bk01pt11ch24.html
+  56:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  and the @link s27_2_iosfwd I/O forward declarations @endlink
+  57:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *
+  58:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  They are required by default to cooperate with the global C library's
+  59:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  @c FILE streams, and to be available during program startup and
+  60:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****    *  termination.  For more information, see the HOWTO linked to above.
+  61:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   */
+  62:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   //@{
+  63:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern istream cin;		///< Linked to standard input
+  64:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern ostream cout;		///< Linked to standard output
+  65:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern ostream cerr;		///< Linked to standard error (unbuffered)
+  66:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern ostream clog;		///< Linked to standard error (buffered)
+  67:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  68:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #ifdef _GLIBCXX_USE_WCHAR_T
+  69:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern wistream wcin;		///< Linked to standard input
+  70:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern wostream wcout;	///< Linked to standard output
+  71:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern wostream wcerr;	///< Linked to standard error (unbuffered)
+  72:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   extern wostream wclog;	///< Linked to standard error (buffered)
+  73:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** #endif
+  74:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   //@}
+  75:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream **** 
+  76:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   // For construction of filebuffers for cout, cin, cerr, clog et. al.
+  77:/home/romar/CodeSourcery/Sourcery_G++_Lite/bin/../lib/gcc/arm-none-linux-gnueabi/4.3.3/../../../../arm-none-linux-gnueabi/include/c++/4.3.3/iostream ****   static ios_base::Init __ioinit;
+ 6570              		.loc 24 77 0
+ 6571 0018 074B     		ldr	r3, .L4+4
+ 6572 001a 181C     		mov	r0, r3
+ 6573 001c FFF7FEFF 		bl	_ZNSt8ios_base4InitC1Ev
+ 6574 0020 0649     		ldr	r1, .L4+8
+ 6575 0022 054B     		ldr	r3, .L4+4
+ 6576 0024 064A     		ldr	r2, .L4+12
+ 6577 0026 181C     		mov	r0, r3
+ 6578 0028 FFF7FEFF 		bl	__aeabi_atexit
+ 6579              	.L3:
+ 6580              		.loc 1 15 0
+ 6581 002c BD46     		mov	sp, r7
+ 6582 002e 02B0     		add	sp, sp, #8
+ 6583              		@ sp needed for prologue
+ 6584 0030 80BD     		pop	{r7, pc}
+ 6585              	.L5:
+ 6586 0032 C046     		.align	2
+ 6587              	.L4:
+ 6588 0034 FFFF0000 		.word	65535
+ 6589 0038 0C080000 		.word	_ZStL8__ioinit
+ 6590 003c 00000000 		.word	_ZNSt8ios_base4InitD1Ev
+ 6591 0040 00000000 		.word	__dso_handle
+ 6592              	.LFE941:
+ 6593              		.fnend
+ 6595              		.align	2
+ 6596              		.code	16
+ 6597              		.thumb_func
+ 6599              	_GLOBAL__I_str:
+ 6600              		.fnstart
+ 6601              	.LFB942:
+ 6602              		.loc 1 15 0
+ 6603              		.save	{r7, lr}
+ 6604 0044 80B5     		push	{r7, lr}
+ 6605              	.LCFI3:
+ 6606              		.setfp r7, sp, #0
+ 6607 0046 00AF     		add	r7, sp, #0
+ 6608              	.LCFI4:
+ 6609              		.loc 1 15 0
+ 6610 0048 034B     		ldr	r3, .L8
+ 6611 004a 0120     		mov	r0, #1
+ 6612 004c 191C     		mov	r1, r3
+ 6613 004e FFF7D7FF 		bl	_Z41__static_initialization_and_destruction_0ii
+ 6614 0052 BD46     		mov	sp, r7
+ 6615              		@ sp needed for prologue
+ 6616 0054 80BD     		pop	{r7, pc}
+ 6617              	.L9:
+ 6618 0056 C046     		.align	2
+ 6619              	.L8:
+ 6620 0058 FFFF0000 		.word	65535
+ 6621              	.LFE942:
+ 6622              		.fnend
+ 6624              		.section	.init_array,"aw",%init_array
+ 6625              		.align	2
+ 6626 0000 00000000 		.word	_GLOBAL__I_str(target1)
+ 6627              		.global	str
+ 6628              		.bss
+ 6631              	str:
+ 6632 0000 00000000 		.space	2048
+ 6632      00000000 
+ 6632      00000000 
+ 6632      00000000 
+ 6632      00000000 
+ 6633              		.global	cfdn
+ 6634              		.align	2
+ 6637              	cfdn:
+ 6638 0800 00000000 		.space	4
+ 6639              		.global	Log
+ 6640              		.align	2
+ 6643              	Log:
+ 6644 0804 00000000 		.space	4
+ 6645              		.global	Count
+ 6646              		.align	2
+ 6649              	Count:
+ 6650 0808 00000000 		.space	4
+ 6651              		.local	_ZStL8__ioinit
+ 6652              		.comm	_ZStL8__ioinit,1,1
+ 6653              		.weakref	_ZL20__gthrw_pthread_oncePiPFvvE,pthread_once
+ 6654              		.weakref	_ZL27__gthrw_pthread_getspecificj,pthread_getspecific
+ 6655              		.weakref	_ZL27__gthrw_pthread_setspecificjPKv,pthread_setspecific
+ 6656              		.weakref	_ZL22__gthrw_pthread_createPmPK14pthread_attr_tPFPvS3_ES3_,pthread_create
+ 6657              		.weakref	_ZL22__gthrw_pthread_cancelm,pthread_cancel
+ 6658              		.weakref	_ZL26__gthrw_pthread_mutex_lockP15pthread_mutex_t,pthread_mutex_lock
+ 6659              		.weakref	_ZL29__gthrw_pthread_mutex_trylockP15pthread_mutex_t,pthread_mutex_trylock
+ 6660              		.weakref	_ZL28__gthrw_pthread_mutex_unlockP15pthread_mutex_t,pthread_mutex_unlock
+ 6661              		.weakref	_ZL26__gthrw_pthread_mutex_initP15pthread_mutex_tPK19pthread_mutexattr_t,pthread_mutex_in
+ 6662              		.weakref	_ZL30__gthrw_pthread_cond_broadcastP14pthread_cond_t,pthread_cond_broadcast
+ 6663              		.weakref	_ZL25__gthrw_pthread_cond_waitP14pthread_cond_tP15pthread_mutex_t,pthread_cond_wait
+ 6664              		.weakref	_ZL26__gthrw_pthread_key_createPjPFvPvE,pthread_key_create
+ 6665              		.weakref	_ZL26__gthrw_pthread_key_deletej,pthread_key_delete
+ 6666              		.weakref	_ZL30__gthrw_pthread_mutexattr_initP19pthread_mutexattr_t,pthread_mutexattr_init
+ 6667              		.weakref	_ZL33__gthrw_pthread_mutexattr_settypeP19pthread_mutexattr_ti,pthread_mutexattr_settype
+ 6668              		.weakref	_ZL33__gthrw_pthread_mutexattr_destroyP19pthread_mutexattr_t,pthread_mutexattr_destroy
+ 6729              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 vars.cpp
+     /tmp/ccmb6qnG.s:26     .debug_macinfo:00000000 $d
+     /tmp/ccmb6qnG.s:6543   .text:00000000 $t
+     /tmp/ccmb6qnG.s:6547   .text:00000000 _Z41__static_initialization_and_destruction_0ii
+     /tmp/ccmb6qnG.s:6588   .text:00000034 $d
+                             .bss:0000080c _ZStL8__ioinit
+                       .ARM.extab:00000000 $d
+                       .ARM.exidx:00000000 $d
+     /tmp/ccmb6qnG.s:6595   .text:00000044 $t
+     /tmp/ccmb6qnG.s:6599   .text:00000044 _GLOBAL__I_str
+     /tmp/ccmb6qnG.s:6620   .text:00000058 $d
+     /tmp/ccmb6qnG.s:6625   .init_array:00000000 $d
+     /tmp/ccmb6qnG.s:6631   .bss:00000000 str
+     /tmp/ccmb6qnG.s:6632   .bss:00000000 $d
+     /tmp/ccmb6qnG.s:6637   .bss:00000800 cfdn
+     /tmp/ccmb6qnG.s:6643   .bss:00000804 Log
+     /tmp/ccmb6qnG.s:6649   .bss:00000808 Count
+
+UNDEFINED SYMBOLS
+_ZNSt8ios_base4InitC1Ev
+__aeabi_atexit
+_ZNSt8ios_base4InitD1Ev
+__dso_handle
+__aeabi_unwind_cpp_pr1
+__aeabi_unwind_cpp_pr0

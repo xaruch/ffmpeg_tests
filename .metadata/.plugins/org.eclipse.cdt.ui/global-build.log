@@ -1,0 +1,54 @@
+
+**** Clean-only build of configuration Debug for project ff_test_mem ****
+
+make clean 
+rm -rf  ./ff_writer_engine.o ./ffmpeg_pipeline.o ./logs.o ./main.o ./vars.o  ff_test_mem.hex  ff_test_mem.lst  ff_test_mem.siz  ./ff_writer_engine.d ./ffmpeg_pipeline.d ./logs.d ./main.d ./vars.d  ff_test_mem.elf
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project ff_test_mem ****
+
+make all 
+Building file: ../ff_writer_engine.cpp
+Invoking: ARM Sourcery Linux GCC C++ Compiler
+arm-none-eabi-g++ -D__STDC_CONSTANT_MACROS -I/home/romar/workspace/libs/ffmpeg-2.4-arm/include -I/home/romar/workspace/ff_test_mem -I/home/romar/ti-ezsdk_dm816x-evm_5_05_01_04/linux-devkit/arm-none-linux-gnueabi/usr/include/glib-2.0 -I/home/romar/ti-ezsdk_dm816x-evm_5_05_01_04/linux-devkit/arm-none-linux-gnueabi/usr/lib/glib-2.0/include -I/home/romar/ti-ezsdk_dm816x-evm_5_05_01_04/linux-devkit/arm-none-linux-gnueabi/usr/include/glib-2.0/glib -I/home/romar/ti-ezsdk_dm816x-evm_5_05_01_04/linux-devkit/arm-none-linux-gnueabi/usr/include/glib-2.0 -O0 -Wall -Wa,-adhlns="ff_writer_engine.o.lst" -fno-exceptions -fno-rtti -c -fmessage-length=0 -MMD -MP -MF"ff_writer_engine.d" -MT"ff_writer_engine.d" -mcpu=arm926ej-s -mthumb -mfloat-abi=softfp -mfpu=neon -g3 -gdwarf-2 -o "ff_writer_engine.o" "../ff_writer_engine.cpp"
+In file included from ../include/ff_writer_engine.h:14,
+                 from ../ff_writer_engine.cpp:1:
+Finished building: ../ff_writer_engine.cpp
+ 
+Building file: ../ffmpeg_pipeline.cpp
+Invoking: ARM Sourcery Linux GCC C++ Compiler
+../include/ffmpeg_pipeline.h:35: warning: ignoring #pragma comment 
+arm-none-eabi-g++ -D__STDC_CONSTANT_MACROS -I/home/romar/workspace/libs/ffmpeg-2.4-arm/include -I/home/romar/workspace/ff_test_mem -I/home/romar/ti-ezsdk_dm816x-evm_5_05_01_04/linux-devkit/arm-none-linux-gnueabi/usr/include/glib-2.0 -I/home/romar/ti-ezsdk_dm816x-evm_5_05_01_04/linux-devkit/arm-none-linux-gnueabi/usr/lib/glib-2.0/include -I/home/romar/ti-ezsdk_dm816x-evm_5_05_01_04/linux-devkit/arm-none-linux-gnueabi/usr/include/glib-2.0/glib -I/home/romar/ti-ezsdk_dm816x-evm_5_05_01_04/linux-devkit/arm-none-linux-gnueabi/usr/include/glib-2.0 -O0 -Wall -Wa,-adhlns="ffmpeg_pipeline.o.lst" -fno-exceptions -fno-rtti -c -fmessage-length=0 -MMD -MP -MF"ffmpeg_pipeline.d" -MT"ffmpeg_pipeline.d" -mcpu=arm926ej-s -mthumb -mfloat-abi=softfp -mfpu=neon -g3 -gdwarf-2 -o "ffmpeg_pipeline.o" "../ffmpeg_pipeline.cpp"
+../include/ffmpeg_pipeline.h:36: warning: ignoring #pragma comment 
+Finished building: ../ffmpeg_pipeline.cpp
+ 
+../include/ffmpeg_pipeline.h:37: warning: ignoring #pragma comment 
+../include/ffmpeg_pipeline.h:38: warning: ignoring #pragma comment 
+Building file: ../logs.cpp
+../include/ffmpeg_pipeline.h:33: warning: 'g_szErrorBuf' defined but not used
+In file included from ../ffmpeg_pipeline.cpp:1:
+../include/ffmpeg_pipeline.h:35: warning: ignoring #pragma comment 
+../include/ffmpeg_pipeline.h:36: warning: ignoring #pragma comment 
+../include/ffmpeg_pipeline.h:37: warning: ignoring #pragma comment 
+../include/ffmpeg_pipeline.h:38: warning: ignoring #pragma comment 
+In file included from ../logs.cpp:1:
+Invoking: ARM Sourcery Linux GCC C++ Compiler
+../include/logs.h:16:41: error: ../../arlogging/arlogging.h: No such file or directory
+In file included from ../logs.cpp:1:
+../include/logs.h:24: error: 'arlogging' is not a namespace-name
+arm-none-eabi-g++ -D__STDC_CONSTANT_MACROS -I/home/romar/workspace/libs/ffmpeg-2.4-arm/include -I/home/romar/workspace/ff_test_mem -I/home/romar/ti-ezsdk_dm816x-evm_5_05_01_04/linux-devkit/arm-none-linux-gnueabi/usr/include/glib-2.0 -I/home/romar/ti-ezsdk_dm816x-evm_5_05_01_04/linux-devkit/arm-none-linux-gnueabi/usr/lib/glib-2.0/include -I/home/romar/ti-ezsdk_dm816x-evm_5_05_01_04/linux-devkit/arm-none-linux-gnueabi/usr/include/glib-2.0/glib -I/home/romar/ti-ezsdk_dm816x-evm_5_05_01_04/linux-devkit/arm-none-linux-gnueabi/usr/include/glib-2.0 -O0 -Wall -Wa,-adhlns="logs.o.lst" -fno-exceptions -fno-rtti -c -fmessage-length=0 -MMD -MP -MF"logs.d" -MT"logs.d" -mcpu=arm926ej-s -mthumb -mfloat-abi=softfp -mfpu=neon -g3 -gdwarf-2 -o "logs.o" "../logs.cpp"
+../include/logs.h:24: error: expected namespace-name before ';' token
+In file included from ../logs.cpp:2:
+../include/vars.h:5: error: 'arlogging' is not a namespace-name
+../include/vars.h:5: error: expected namespace-name before ';' token
+../include/vars.h:29: error: expected initializer before '*' token
+../logs.cpp:4: error: 'arlogging' is not a namespace-name
+../logs.cpp:4: error: expected namespace-name before ';' token
+../logs.cpp: In function 'std::string AppendLog(std::string, const char*)':
+../logs.cpp:38: error: 'Log' was not declared in this scope
+../logs.cpp:44: error: 'Log' was not declared in this scope
+make: *** [logs.o] Error 1
+
+**** Build Finished ****

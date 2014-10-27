@@ -7,12 +7,6 @@ FfPipeline::FfPipeline(unsigned char slot_num)
   PrevPadTimestamp = 0;
   WaitKeyframeFlag = false;
   IsNeedStopFlag = false;
-  Index = 0;
-  Ist = NULL;
-  Ost = NULL;
-  Iccx = NULL;
-  Ofcx = NULL;
-  Ifcx = NULL;
   LastMuxDts = AV_NOPTS_VALUE;
 }
 

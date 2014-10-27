@@ -67,12 +67,6 @@ public:
 private:
   RecordingState RecState;
   time_t PrevPadTimestamp;
-  AVFormatContext *Ifcx;
-  AVFormatContext *Ofcx;
-  AVCodecContext *Iccx;
-  AVStream *Ost;
-  AVStream *Ist;
-  int Index;
   bool IsNeedStopFlag;
   bool WaitKeyframeFlag;
   int64_t LastMuxDts;
